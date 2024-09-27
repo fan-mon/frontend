@@ -11,8 +11,8 @@ function App() {
       <Router>
         <Routes>
           <Route path="/chat" element={<ChatPage />} />
-          <Route path="/goods" element={<GoodsList/>}/>
-          <Route path="/goods/detail" element={<GoodsDetail/>}/>
+          <Route path="/shop/goods" element={<GoodsList/>}/>
+          <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
         </Routes>
       </Router>
   );

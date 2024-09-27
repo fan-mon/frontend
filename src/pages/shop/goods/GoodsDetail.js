@@ -47,6 +47,4 @@ function GoodsDetail(){
     )
 }
 
-
-
 export default GoodsDetail;
