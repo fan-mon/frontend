@@ -6,7 +6,7 @@ function GoodsDetail(){
     return (
         <>
             <GoodsNav/>
-            <div class="container">
+            <div class="container goods-frame">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="single-detail">
