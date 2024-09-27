@@ -4,7 +4,6 @@ import ChatPage from "./pages/ChatPage";
 import GoodsList from './goods/goodsList';
 import GoodsDetail from './goods/goodsDetail';
 
-
 function App() {
 
   return (
