@@ -1,11 +1,12 @@
 import "./detail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import logo from "./logo_white.png";
+import GoodsNav from "./GoodsNav";
 
 function GoodsDetail(){
     return (
         <>
-            <div class="container">
+            <GoodsNav/>
+            <div class="container goods-frame">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="single-detail">
@@ -37,7 +38,7 @@ function GoodsDetail(){
                     <div class="col-sm-5">
                         <div class="single-welcome-hero">
                             <div class="welcome-hero-img">
-                                <img class="sliderimage" src={logo} alt="slider image"/>
+                                <img class="sliderimage" src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="slider image"/>
                             </div>
                         </div>
                     </div>

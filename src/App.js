@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import ChatPage from "./pages/ChatPage";
-import GoodsList from "./goods/GoodsList";
-import GoodsDetail from './goods/GoodsDetail';
+import GoodsList from './pages/shop/goods/GoodsList';
+import GoodsDetail from './pages/shop/goods/GoodsDetail';
 
 
 function App() {

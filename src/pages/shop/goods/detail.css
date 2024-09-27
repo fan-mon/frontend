@@ -1,10 +1,8 @@
 /*welcome-hero-content*/
 .single-detail{
     display: flex;
-    align-items: center;
     flex-direction: column;
     justify-content: center;
-    height: 920px;
 }
 .welcome-detail-txt h4 {
     color: #998d80;
