@@ -2,7 +2,6 @@ import "./communal.css";
 import "./list.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-
 function GoodsList(){
     return(
         <>
