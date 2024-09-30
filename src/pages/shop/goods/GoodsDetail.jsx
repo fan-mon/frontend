@@ -10,7 +10,7 @@ function GoodsDetail(){
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="single-detail">
-                            <div class="welcome-detail-txt">
+                        <div class="welcome-detail-txt">
                                 <h2>귀여운 응원봉</h2>
                                 <p>
                                     엔하이픈의 응원봉은 로그의 심볼인 하이픈 기호의 비율을 모티브로 디자인 되었습니다.<br/><br/>
