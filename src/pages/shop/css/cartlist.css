@@ -1,0 +1,13 @@
+.cart-content{
+    margin-top: 160px;
+}
+
+.cart-content h2{
+    font-size: 2em;
+}
+
+.cart-content-list{
+    margin-top:30px;
+    padding:10px;
+    width: 100%;
+}

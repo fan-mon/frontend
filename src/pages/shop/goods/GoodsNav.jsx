@@ -10,11 +10,11 @@ function GoodsNav(){
         <>
         <Navbar bg="#000000" data-bs-theme="dark">
             <Nav className="me-auto">
-                <Nav.Link href="#">분류1</Nav.Link>
-                <Nav.Link href="#">분류2</Nav.Link>
+                <Nav.Link href="/shop/goods">분류1</Nav.Link>
+                <Nav.Link href="/shop/goods">분류2</Nav.Link>
             </Nav>
             <Nav>
-                <Nav.Link href="#"><Icon.Cart2 /></Nav.Link>
+                <Nav.Link href="/shop/cart"><Icon.Cart2 /></Nav.Link>
             </Nav>
         </Navbar>
 

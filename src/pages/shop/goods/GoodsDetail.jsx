@@ -1,4 +1,4 @@
-import "./detail.css";
+import "../css/goodsdetail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 
