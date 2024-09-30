@@ -1,16 +1,16 @@
-import "./detail.css";
+import "../css/goodsdetail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 
 function GoodsDetail(){
     return (
         <>
+            <div class="container detail-content">
             <GoodsNav/>
-            <div class="container goods-frame">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="single-detail">
-                            <div class="welcome-detail-txt">
+                        <div class="welcome-detail-txt">
                                 <h2>귀여운 응원봉</h2>
                                 <p>
                                     엔하이픈의 응원봉은 로그의 심볼인 하이픈 기호의 비율을 모티브로 디자인 되었습니다.<br/><br/>
@@ -29,7 +29,7 @@ function GoodsDetail(){
                                         59,000원
                                     </p>
                                 </div>
-                                <button class="welcome-add-cart">
+                                <button class="welcome-add-cart"  onClick="#">
                                     Add to Cart
                                 </button>
                             </div>
@@ -38,7 +38,7 @@ function GoodsDetail(){
                     <div class="col-sm-5">
                         <div class="single-welcome-hero">
                             <div class="welcome-hero-img">
-                                <img class="sliderimage" src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="slider image"/>
+                                <img class="sliderimage" src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="slider image"/>
                             </div>
                         </div>
                     </div>

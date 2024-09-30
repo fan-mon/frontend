@@ -6,8 +6,9 @@ import {ListUl, ArrowBarLeft, BellFill, HeartFill, ThreeDotsVertical, HouseDoorF
 
 const Header = () => {
     const handleMenuToggle = () => {
-        document.querySelector('.header').classList.toggle('side-min');
-        document.querySelector('.sidemenu').classList.toggle('side-min');
+        document.querySelector('.header-wrap').classList.toggle('side-min');
+        //document.querySelector('.header').classList.toggle('side-min');
+        //document.querySelector('.sidemenu').classList.toggle('side-min');
     };
     const handleSearchToggle = () => {
         document.querySelector('.header').classList.toggle('search-all');

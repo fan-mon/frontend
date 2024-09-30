@@ -1,3 +1,4 @@
+.goods-frame {padding: 100px;}
 .goodslist-content{margin-top: 80px;}
 .single-goods{margin-bottom: 50px;text-align: center;}
 .single-goods-bg {
@@ -70,7 +71,7 @@
 
 .add-to-cart {
     background-color:#EAB70E;
-    color: #ffffff;
+    color: #000000;
 }
 
 
@@ -81,3 +82,8 @@
 }
 .single-goods:hover h4 a{color:#EAB70E;}
 
+
+.more-info{
+    background-color: #ffffff;
+    color: #000000;
+}
