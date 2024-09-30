@@ -3,9 +3,15 @@ import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-route
 import ChatPage from "./pages/chat/ChatPage";
 import GoodsList from './pages/shop/goods/GoodsList';
 import GoodsDetail from './pages/shop/goods/GoodsDetail';
+
 import Header from './pages/common/Header'
 import MessageBox from "./pages/chat/MessageBox";
 import ArtistPage from "./pages/Artist/ArtistPage";
+
+import GoodsForm from './pages/management/goods/GoodsForm';
+import CartList from './pages/shop/cart/CartList';
+import CartBuying from './pages/shop/cart/CartBuying';
+import CartBought from './pages/shop/cart/CartBought';
 
 
 function App() {
@@ -16,15 +22,21 @@ function App() {
 
   return (
       <BrowserRouter>
-        <Header />
-        <div className="content">
-            <Routes>
-              <Route path="/chat/ws" element={<ChatPage user={user}/>} />
-              <Route path="/chat/subscribe" element={<ArtistPage artistuuid={artistuuid}/>} />
-              <Route path="/chat/box" element={<MessageBox />} />
-              <Route path="/shop/goods" element={<GoodsList/>}/>
-              <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
-            </Routes>
+        <div className='header-wrap'>
+          <Header />
+          <div className="content">
+              <Routes>
+                <Route path="/chat/ws" element={<ChatPage user={user}/>} />
+                <Route path="/chat/subscribe" element={<ArtistPage artistuuid={artistuuid}/>} />
+                <Route path="/chat/box" element={<MessageBox />} />
+                <Route path="/shop/goods" element={<GoodsList/>}/>
+                <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
+                <Route path="/shop/cart" element={<CartList/>}/>
+                <Route path="/shop/cart/buying" element={<CartBuying/>}/>
+                <Route path="/shop/cart/bought" element={<CartBought/>}/>
+                <Route path="/management/goods" element={<GoodsForm/>}/>
+              </Routes>
+          </div>
         </div>
       </BrowserRouter>
   );

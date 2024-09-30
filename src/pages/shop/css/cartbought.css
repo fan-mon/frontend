@@ -1,0 +1,28 @@
+.bought-content{
+    width: 100%;
+    margin-top: 165px; 
+    text-align: center;
+    font-size: 3.0em;
+}
+
+.bought-content > div{
+    margin-top: 100px;
+}
+
+
+.bought-content button {
+    width: 170px;
+    height: 60px;
+    font-size: 0.5em;
+    margin: 30px;
+    border-radius: 1px;
+    font-weight: bold;
+}
+
+.bought-content a:first-child button {
+    background: #EAB70E;
+}
+
+.bought-content a:last-child button {
+    background: #ffffff;
+}
