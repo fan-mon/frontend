@@ -13,13 +13,15 @@ function App() {
 
   return (
       <BrowserRouter>
-        <Header />
-        <div className="content">
-            <Routes>
-              <Route path="/chat" element={<ChatPage user={user}/>} />
-              <Route path="/shop/goods" element={<GoodsList/>}/>
-              <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
-            </Routes>
+        <div className='header-wrap'>
+          <Header />
+          <div className="content">
+              <Routes>
+                <Route path="/chat" element={<ChatPage user={user}/>} />
+                <Route path="/shop/goods" element={<GoodsList/>}/>
+                <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
+              </Routes>
+          </div>
         </div>
       </BrowserRouter>
   );
