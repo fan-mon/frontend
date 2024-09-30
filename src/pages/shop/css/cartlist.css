@@ -8,7 +8,7 @@
 }
 
 .cart-content-list{
-    margin:30px 0;
+    margin:50px 0;
     width: 90%;
     font-size: 15px;
     line-height: 50px;
@@ -27,8 +27,18 @@
     text-align: center;
 }
 
-.total-price{
+.total-result{
     padding: 0;
+    
+}
+
+.total-result > div:nth-child(1){
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}
+
+
+.total-result > div:nth-child(2){
     font-size: 1.5em;
 }
 
@@ -57,6 +67,10 @@
 
 #cart-list-delete{
     width: 100px;
+}
+
+.row > a{
+    padding:0;
 }
 
 .buying-button {

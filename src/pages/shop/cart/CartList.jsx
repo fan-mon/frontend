@@ -16,7 +16,7 @@ function CartList(){
                             <td id="cart-list-name"><a href="#">귀여운 요술봉</a></td>
                             <th id="cart-list-price">59,000원</th>
                             <th id="cart-list-qty" class="cart-list-center">5</th>
-                            <td id="cart-list-delete" class="cart-list-center"><a href="#"><Icon.XLg/></a></td>
+                            <td id="cart-list-delete" class="cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
                         </tr>
                         <tr>
                             <td id="cart-list-no" class="cart-list-center">2</td>
@@ -24,17 +24,22 @@ function CartList(){
                             <td id="cart-list-name"><a href="#">안귀여운 요술봉</a></td>
                             <th id="cart-list-price">39,000원</th>
                             <th id="cart-list-qty" class="cart-list-center">5</th>
-                            <td id="cart-list-delete" class="cart-list-center"><a href="#"><Icon.XLg/></a></td>
+                            <td id="cart-list-delete" class="cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
                         </tr>
-                        
                     </table>
-                    <div class="total-price">
-                        <span>총액</span>
-                        <span>59,000원</span>
+                    <div class="total-result">
+                        <div>
+                            <span>수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>2</span><span>개</span>
+                        </div>
+                        <div>
+                            <span>총액&nbsp;&nbsp;&nbsp;</span><span>59,900</span><span>원</span>
+                        </div>
                     </div>
-                    <button class="buying-button">
-                        Buying
-                    </button>
+                    <a href="/shop/cart/buying">
+                        <button class="buying-button">
+                            Buying
+                        </button>
+                    </a>
                 </div>
             </div>
         </>

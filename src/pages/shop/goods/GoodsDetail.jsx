@@ -29,7 +29,7 @@ function GoodsDetail(){
                                         59,000원
                                     </p>
                                 </div>
-                                <button class="welcome-add-cart">
+                                <button class="welcome-add-cart"  onClick="#">
                                     Add to Cart
                                 </button>
                             </div>
