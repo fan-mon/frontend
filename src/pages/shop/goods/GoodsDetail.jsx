@@ -5,8 +5,8 @@ import GoodsNav from "./GoodsNav";
 function GoodsDetail(){
     return (
         <>
+            <div class="container detail-content">
             <GoodsNav/>
-            <div class="container goods-frame">
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="single-detail">
