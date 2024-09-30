@@ -38,7 +38,7 @@ function GoodsDetail(){
                     <div class="col-sm-5">
                         <div class="single-welcome-hero">
                             <div class="welcome-hero-img">
-                                <img class="sliderimage" src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="slider image"/>
+                                <img class="sliderimage" src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="slider image"/>
                             </div>
                         </div>
                     </div>
