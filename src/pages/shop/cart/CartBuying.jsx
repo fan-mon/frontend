@@ -2,7 +2,9 @@
 function CartBuying(){
     return(
         <>
-            결제 페이지
+            <div>
+                결제 페이지
+            </div>
         </>
     )
 }
