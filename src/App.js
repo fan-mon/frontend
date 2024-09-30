@@ -4,6 +4,7 @@ import ChatPage from "./pages/chat/ChatPage";
 import GoodsList from './pages/shop/goods/GoodsList';
 import GoodsDetail from './pages/shop/goods/GoodsDetail';
 import Header from './pages/common/Header'
+import GoodsForm from './pages/management/goods/GoodsForm';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
               <Route path="/chat" element={<ChatPage user={user}/>} />
               <Route path="/shop/goods" element={<GoodsList/>}/>
               <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
+              <Route path="/management/goods" element={<GoodsForm/>}/>
             </Routes>
         </div>
       </BrowserRouter>
