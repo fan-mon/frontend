@@ -367,6 +367,9 @@ p {
   color: #0090E7;
 }
 
+.header-wrap.side-min {
+  padding-left: 80px;
+}
 .header-wrap.side-min .header {
   left: 80px;
   width: calc(100% - 80px);
