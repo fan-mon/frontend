@@ -87,6 +87,17 @@
     width: 100px;
 }
 
+.cart-list-qty > input{
+    background-color: #00000000;
+    color: #ffffff;
+    border: none;
+    text-align:right;
+}
+
+.cart-list-qty input:focus{
+    outline: none;
+}
+
 .cart-list-delete{
     width: 100px;
 }

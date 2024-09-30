@@ -1,8 +1,22 @@
+import React, { useState } from 'react';
 import "../css/goodsdetail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 
 function GoodsDetail(){
+
+    // 상태 변수 초기화
+    const [quantity, setQuantity] = useState(1);
+    const pricePerItem = 59000; // 개당 가격
+
+    // 입력 값이 변경될 때 호출되는 함수
+    const handleChange = (event) => {
+        setQuantity(event.target.value); // 입력된 값을 상태에 저장
+    };
+
+    // 총 가격 계산
+    const totalPrice = (pricePerItem * quantity).toLocaleString();
+
     return (
         <>
             <div class="container detail-content">
@@ -26,10 +40,12 @@ function GoodsDetail(){
                                 </p>
                                 <div class="detail-item">
                                     <span>
-                                        59,000원
+                                        {totalPrice}원
                                     </span>
                                     <span>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N개
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="number" name="goods-qty" min="1" max="10" value={quantity} onChange={handleChange}/>
+                                        개
                                     </span>
                                 </div>
                                 <button class="welcome-add-cart"  onClick="#">

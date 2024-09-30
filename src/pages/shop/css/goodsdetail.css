@@ -20,10 +20,22 @@
     margin: 20px 0 22px;
 }
 .welcome-detail-txt p{margin: 35px 0 20px;}
-.welcome-detail-txt .detail-item span {
+
+.detail-item span {
     margin: 0;
     padding-top: 5px;
     font-size: 20px;
+}
+
+.detail-item input{
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    text-align:right;
+}
+
+.detail-item input:focus{
+    outline: none;
 }
 
 .welcome-add-cart {
