@@ -3,11 +3,11 @@ import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-route
 import ChatPage from "./pages/chat/ChatPage";
 import GoodsList from './pages/shop/goods/GoodsList';
 import GoodsDetail from './pages/shop/goods/GoodsDetail';
+import GoodsForm from './pages/management/goods/GoodsForm';
 import Header from './pages/common/Header';
 import CartList from './pages/shop/cart/CartList';
 import CartBuying from './pages/shop/cart/CartBuying';
 import CartBought from './pages/shop/cart/CartBought';
-
 
 function App() {
     // 유저 하드코딩
@@ -26,6 +26,7 @@ function App() {
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/cart/buying" element={<CartBuying/>}/>
                 <Route path="/shop/cart/bought" element={<CartBought/>}/>
+                <Route path="/management/goods" element={<GoodsForm/>}/>
               </Routes>
           </div>
         </div>
