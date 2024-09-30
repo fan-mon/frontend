@@ -48,6 +48,18 @@
     font-size: 1.3em;
 }
 
+.cart-content-list > tr:hover{
+    color:#EAB70E;
+}
+
+.cart-content-list > tr:hover a {
+    color: #EAB70E;
+}
+
+.cart-content-list tr:last-child:hover {
+    color: #ffffff;
+}
+
 .cart-list-no{
     width: 50px;
 }
@@ -62,6 +74,11 @@
     margin: auto 0;
 }
 
+.cart-list-name > a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
 .cart-list-price{
     width: 150px;
 }
@@ -72,6 +89,10 @@
 
 .cart-list-delete{
     width: 100px;
+}
+
+.delete-icon:hover{
+    cursor: pointer;
 }
 
 .row > a{

@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import "../css/cartlist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
@@ -16,7 +17,7 @@ function CartList(){
                             <td class="cart-list-name"><a href="/shop/goods/detail">귀여운 요술봉</a></td>
                             <th class="cart-list-qty cart-list-center">2</th>
                             <th class="cart-list-price">59,000원</th>
-                            <td class="cart-list-delete cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
+                            <td class="cart-list-delete cart-list-center"><Icon.XLg class="delete-icon" onClick="#" /></td>
                         </tr>
                         <tr>
                             <td class="cart-list-no cart-list-center">2</td>
@@ -24,7 +25,7 @@ function CartList(){
                             <td class="cart-list-name"><a href="/shop/goods/detail">안귀여운 요술봉</a></td>
                             <th class="cart-list-qty cart-list-center">1</th>
                             <th class="cart-list-price">39,000원</th>
-                            <td class="cart-list-delete cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
+                            <td class="cart-list-delete cart-list-center"><Icon.XLg class="delete-icon" onClick="#" /></td>
                         </tr>
                         <tr>
                             <td class="cart-list-center">총</td>

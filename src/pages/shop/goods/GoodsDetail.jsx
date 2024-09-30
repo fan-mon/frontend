@@ -24,10 +24,13 @@ function GoodsDetail(){
 
                                     버튼을 1.5초간 동시에 누르면 블루투스 모드가 켜집니다.
                                 </p>
-                                <div class="detail-price">
-                                    <p>
+                                <div class="detail-item">
+                                    <span>
                                         59,000원
-                                    </p>
+                                    </span>
+                                    <span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N개
+                                    </span>
                                 </div>
                                 <button class="welcome-add-cart"  onClick="#">
                                     Add to Cart

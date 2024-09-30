@@ -15,12 +15,12 @@
 }
 .welcome-detail-txt h2 {
     font-size: 48px;
-    color: #616060;
+    color: #EAB70E;
     font-weight: 400;
     margin: 20px 0 22px;
 }
 .welcome-detail-txt p{margin: 35px 0 20px;}
-.welcome-detail-txt .detail-price p {
+.welcome-detail-txt .detail-item span {
     margin: 0;
     padding-top: 5px;
     font-size: 20px;
