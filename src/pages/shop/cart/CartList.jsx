@@ -11,28 +11,36 @@ function CartList(){
                     <h2>장바구니</h2>
                     <table class="cart-content-list">
                         <tr>
-                            <td id="cart-list-no" class="cart-list-center">1</td>
-                            <td id="cart-list-file" class="cart-list-center"><a href="#"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
-                            <td id="cart-list-name"><a href="#">귀여운 요술봉</a></td>
-                            <th id="cart-list-price">59,000원</th>
-                            <th id="cart-list-qty" class="cart-list-center">5</th>
-                            <td id="cart-list-delete" class="cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
+                            <td class="cart-list-no cart-list-center">1</td>
+                            <td class="cart-list-file cart-list-center"><a href="#"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
+                            <td class="cart-list-name"><a href="#">귀여운 요술봉</a></td>
+                            <th class="cart-list-qty cart-list-center">2</th>
+                            <th class="cart-list-price">59,000원</th>
+                            <td class="cart-list-delete cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
                         </tr>
                         <tr>
-                            <td id="cart-list-no" class="cart-list-center">2</td>
-                            <td id="cart-list-file" class="cart-list-center"><a href="#"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
-                            <td id="cart-list-name"><a href="#">안귀여운 요술봉</a></td>
-                            <th id="cart-list-price">39,000원</th>
-                            <th id="cart-list-qty" class="cart-list-center">5</th>
-                            <td id="cart-list-delete" class="cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
+                            <td class="cart-list-no cart-list-center">2</td>
+                            <td class="cart-list-file cart-list-center"><a href="#"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
+                            <td class="cart-list-name"><a href="#">안귀여운 요술봉</a></td>
+                            <th class="cart-list-qty cart-list-center">1</th>
+                            <th class="cart-list-price">39,000원</th>
+                            <td class="cart-list-delete cart-list-center"><div onClick="#"><Icon.XLg/></div></td>
+                        </tr>
+                        <tr>
+                            <td class="cart-list-center">총</td>
+                            <td></td>
+                            <td></td>
+                            <th class="cart-list-center">3</th>
+                            <th>157,000원</th>
+                            <td></td>
                         </tr>
                     </table>
                     <div class="total-result">
                         <div>
-                            <span>수량&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span>2</span><span>개</span>
+                            <span>배송비&nbsp;&nbsp;&nbsp;</span><span>2,500</span><span>원</span>
                         </div>
                         <div>
-                            <span>총액&nbsp;&nbsp;&nbsp;</span><span>59,900</span><span>원</span>
+                            <span>결제예정금액&nbsp;&nbsp;&nbsp;</span><span>159,500</span><span>원</span>
                         </div>
                     </div>
                     <a href="/shop/cart/buying">
