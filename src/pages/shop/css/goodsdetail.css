@@ -1,3 +1,7 @@
+.detail-content{
+    padding-top: 165px;
+}
+
 /*welcome-hero-content*/
 .single-detail{
     display: flex;
@@ -33,7 +37,7 @@
     margin-top: 34px;
     border:none;
     background-color: #EAB70E;
-    color: #ffffff;
+    color: #000000;
     -webkit-transition: 0.3s linear; 
     -moz-transition: 0.3s linear; 
     -ms-transition: 0.3s linear; 
