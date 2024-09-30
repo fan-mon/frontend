@@ -26,7 +26,7 @@ const Header = () => {
                         <div className="form-group all-search-wrap">
                             <label className="hidden-label" htmlFor="allSearch">전체검색</label>
                             <input type="text" name="allSearch" id="allSearch" className="form-control in-all-search" placeholder="Search"/>
-                            <button class="btn btn-ico btn-search" onClick={handleSearchToggle}>
+                            <button className="btn btn-ico btn-search" onClick={handleSearchToggle}>
                                 <Search />
                                 <XCircleFill />
                             </button>
