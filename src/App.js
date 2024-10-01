@@ -26,7 +26,7 @@ function App() {
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/cart/buying" element={<CartBuying/>}/>
                 <Route path="/shop/cart/bought" element={<CartBought/>}/>
-                <Route path="/management/goods" element={<GoodsForm/>}/>
+                <Route path="/management/goodsform" element={<GoodsForm/>}/>
               </Routes>
           </div>
         </div>
