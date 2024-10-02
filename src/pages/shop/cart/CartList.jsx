@@ -6,20 +6,20 @@ import * as Icon from 'react-bootstrap-icons';
 
 function CartList(){
 
-    const initialProducts = [
+    const initialCartitem = [
         { id: 1, name: "귀여운 요술봉", price: 59000, quantity: 1 },
         { id: 2, name: "안귀여운 요술봉", price: 39000, quantity: 2 } 
     ];
 
-    const [products, setProducts] = useState(initialProducts);
+    const [cartitem, setCartitem] = useState(initialCartitem);
 
     // 총 수량과 총 가격 계산
-    const totalQuantity = products.reduce((total, product) => total + parseInt(product.quantity), 0);
-    const totalPrice = products.reduce((total, product) => total + (product.price * product.quantity), 0).toLocaleString();
+    const totalQuantity = cartitem.reduce((total, product) => total + parseInt(product.quantity), 0);
+    const totalPrice = cartitem.reduce((total, product) => total + (product.price * product.quantity), 0).toLocaleString();
 
     // 수량 변경 핸들러 함수
     const handleQuantityChange = (id, newQuantity) => {
-        setProducts(products.map(product => 
+        setCartitem(cartitem.map(product => 
             product.id === id ? { ...product, quantity: newQuantity } : product
         ));
     };
@@ -30,7 +30,7 @@ function CartList(){
                 <div class="row">
                     <h2>장바구니</h2>
                     <table class="cart-content-list">
-                        {products.map((product, index) => (
+                        {cartitem.map((product, index) => (
                             <tr key={product.id}>
                                 <td class="cart-list-no cart-list-center">{index + 1}</td>
                                 <td class="cart-list-file cart-list-center"><a href="/shop/goods/detail"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
@@ -40,6 +40,7 @@ function CartList(){
                                         type="number" 
                                         name={`goods-qty-${product.id}`} 
                                         min="1" 
+                                        max="10"
                                         value={product.quantity} 
                                         onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
                                     />
