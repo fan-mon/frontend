@@ -11,6 +11,7 @@ import GoodsForm from './pages/management/goods/GoodsForm';
 import CartList from './pages/shop/cart/CartList';
 import CartBuying from './pages/shop/cart/CartBuying';
 import CartBought from './pages/shop/cart/CartBought';
+import BoardPage from "./pages/board/BoardPage";
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
                 <Route path="/chat/ws" element={<ChatPage user={user}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={artistuuid}/>} />
                 <Route path="/shop/goods" element={<GoodsList/>}/>
+                <Route path="/board" element={<BoardPage artistUuid={artistuuid}/>}/>
                 <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/cart/buying" element={<CartBuying/>}/>
