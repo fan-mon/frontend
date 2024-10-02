@@ -5,7 +5,6 @@ import GoodsList from './pages/shop/goods/GoodsList';
 import GoodsDetail from './pages/shop/goods/GoodsDetail';
 
 import Header from './pages/common/Header'
-import MessageBox from "./pages/chat/MessageBox";
 import ArtistPage from "./pages/Artist/ArtistPage";
 
 import GoodsForm from './pages/management/goods/GoodsForm';
@@ -28,7 +27,6 @@ function App() {
               <Routes>
                 <Route path="/chat/ws" element={<ChatPage user={user}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={artistuuid}/>} />
-                <Route path="/chat/box" element={<MessageBox />} />
                 <Route path="/shop/goods" element={<GoodsList/>}/>
                 <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
