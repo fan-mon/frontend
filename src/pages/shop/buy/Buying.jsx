@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function CartBuying() {
+function Buying() {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ function CartBuying() {
             if (response.success) {
               console.log('결제 성공:', response);
               alert('결제가 성공적으로 완료되었습니다.');
-              navigate('/shop/cart/bought');
+              navigate('/shop/buy/bought');
             } else {
               console.log('결제 실패:', response);
               alert(`결제에 실패했습니다. 사유: ${response.error_msg}`);
@@ -64,4 +64,4 @@ function CartBuying() {
     )
 }
 
-export default CartBuying;
+export default Buying;

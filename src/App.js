@@ -9,8 +9,8 @@ import ArtistPage from "./pages/Artist/ArtistPage";
 
 import GoodsForm from './pages/management/goods/GoodsForm';
 import CartList from './pages/shop/cart/CartList';
-import CartBuying from './pages/shop/cart/CartBuying';
-import CartBought from './pages/shop/cart/CartBought';
+import Buying from './pages/shop/buy/Buying';
+import Bought from './pages/shop/buy/Bought';
 
 
 function App() {
@@ -30,8 +30,8 @@ function App() {
                 <Route path="/shop/goods" element={<GoodsList/>}/>
                 <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
-                <Route path="/shop/cart/buying" element={<CartBuying/>}/>
-                <Route path="/shop/cart/bought" element={<CartBought/>}/>
+                <Route path="/shop/buy/buying" element={<Buying/>}/>
+                <Route path="/shop/buy/bought" element={<Bought/>}/>
                 <Route path="/management/goods" element={<GoodsForm/>}/>
               </Routes>
           </div>

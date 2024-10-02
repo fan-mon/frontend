@@ -1,6 +1,6 @@
-import "../css/cartbought.css";
+import "../css/bought.css";
 
-function CartBought(){
+function Bought(){
     return(
         <>
             <div class="container bought-content">
@@ -14,4 +14,4 @@ function CartBought(){
     )
 }
 
-export default CartBought;
+export default Bought;

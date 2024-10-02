@@ -49,7 +49,7 @@ function CartList(){
                             <span>결제예정금액&nbsp;&nbsp;&nbsp;{totalPrice}원</span>
                         </div>
                     </div>
-                    <a href="/shop/cart/buying">
+                    <a href="/shop/buy/buying">
                         <button class="buying-button">
                             Buying
                         </button>
