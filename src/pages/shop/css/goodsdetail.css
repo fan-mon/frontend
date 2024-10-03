@@ -1,6 +1,6 @@
-.detail-content{
+/* .detail-content{
     padding-top: 165px;
-}
+} */
 
 /*welcome-hero-content*/
 .single-detail{
@@ -15,15 +15,27 @@
 }
 .welcome-detail-txt h2 {
     font-size: 48px;
-    color: #616060;
+    color: #EAB70E;
     font-weight: 400;
     margin: 20px 0 22px;
 }
 .welcome-detail-txt p{margin: 35px 0 20px;}
-.welcome-detail-txt .detail-price p {
+
+.detail-item span {
     margin: 0;
     padding-top: 5px;
     font-size: 20px;
+}
+
+.detail-item input{
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    text-align:right;
+}
+
+.detail-item input:focus{
+    outline: none;
 }
 
 .welcome-add-cart {
