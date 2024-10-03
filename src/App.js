@@ -9,8 +9,10 @@ import ArtistPage from "./pages/Artist/ArtistPage";
 
 import GoodsForm from './pages/management/goods/GoodsForm';
 import CartList from './pages/shop/cart/CartList';
-import CartBuying from './pages/shop/cart/CartBuying';
-import CartBought from './pages/shop/cart/CartBought';
+import Buying from "./pages/shop/buy/Buying";
+import BoardPage from "./pages/board/BoardPage";
+import Bought from "./pages/shop/buy/Bought";
+import SignUp from "./pages/user/SignUp";
 
 
 function App() {

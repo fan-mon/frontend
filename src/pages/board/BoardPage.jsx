@@ -31,14 +31,16 @@ const BoardPage = ({ teamuuid }) => {
 
     return (
         <div style={styles.page}>
-            <div style={styles.board}>
-                <ArtistBoard artistBoard={boardData.artistboards} />
+            <div style={styles.leftColumn}>
+                <ArtistBoard artistBoard={boardData.artistboards}/>
             </div>
-            <div style={styles.notice}>
-                <BoardNotice boardNotice={boardData.boardnotices} />
-            </div>
-            <div style={styles.fanBoard}>
-                <FanBoard fanBoard={boardData.fanboards} />
+            <div style={styles.rightColumn}>
+                <div style={styles.notice}>
+                    <BoardNotice boardNotice={boardData.boardnotices}/>
+                </div>
+                <div style={styles.fanBoard}>
+                    <FanBoard fanBoard={boardData.fanboards}/>
+                </div>
             </div>
         </div>
     );
@@ -47,23 +49,13 @@ const BoardPage = ({ teamuuid }) => {
 const styles = {
     page: {
         display: 'flex',
-        flexDirection: 'column',
         height: '100vh',
-        justifyContent: 'space-between',
-        alignItems: 'center', // Aligning components in center horizontally
-        gap: '20px', // Space between components
-    },
-    board: {
-        width: '80%', // Adjust width to make layout flexible
         padding: '20px',
-        backgroundColor: 'rgba(150, 161, 190, 0.1)',
-        borderRadius: '10px', // Rounded corners
-        border: '1px solid rgba(150, 161, 190, 0.3)',
-        boxSizing: 'border-box',
-        overflowY: 'scroll',
+        gap: '30px'
     },
-    notice: {
-        width: '80%', // Same width and styling as board
+    leftColumn: {
+        flex: 1, // Takes up one part of the available space (left side)
+        marginRight: '20px',
         padding: '20px',
         backgroundColor: 'rgba(150, 161, 190, 0.1)',
         borderRadius: '10px',
@@ -71,8 +63,24 @@ const styles = {
         boxSizing: 'border-box',
         overflowY: 'scroll',
     },
+    rightColumn: {
+        flex: 1, // Takes up one part of the available space (right side)
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
+    notice: {
+        flex: 1,
+        padding: '20px',
+        marginBottom: '20px', // Space between notice and fan board
+        backgroundColor: 'rgba(150, 161, 190, 0.1)',
+        borderRadius: '10px',
+        border: '1px solid rgba(150, 161, 190, 0.3)',
+        boxSizing: 'border-box',
+        overflowY: 'scroll',
+    },
     fanBoard: {
-        width: '80%', // Same width and styling as board
+        flex: 1,
         padding: '20px',
         backgroundColor: 'rgba(150, 161, 190, 0.1)',
         borderRadius: '10px',
