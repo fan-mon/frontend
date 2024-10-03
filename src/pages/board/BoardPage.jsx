@@ -4,7 +4,7 @@ import ArtistBoard from "./ArtistBoard";
 import BoardNotice from './BoardNotice';
 import FanBoard from './FanBoard';
 
-const BoardPage = ({ artistUuid }) => {
+const BoardPage = ({ teamuuid }) => {
     const [boardData, setBoardData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -12,8 +12,10 @@ const BoardPage = ({ artistUuid }) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/board/${artistUuid}`);
+                const response = await axios.get(`http://localhost:8080/board/${teamuuid}`);
+                console.log(`teamuuid = ${teamuuid}`)
                 setBoardData(response.data);
+                console.log(response.data)
             } catch (err) {
                 setError(err);
             } finally {
@@ -22,7 +24,7 @@ const BoardPage = ({ artistUuid }) => {
         };
 
         fetchData();
-    }, [artistUuid]);
+    }, [teamuuid]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error fetching data: {error.message}</div>;
@@ -30,13 +32,13 @@ const BoardPage = ({ artistUuid }) => {
     return (
         <div style={styles.page}>
             <div style={styles.board}>
-                <ArtistBoard artistBoard={boardData.artistBoard} />
+                <ArtistBoard artistBoard={boardData.artistboards} />
             </div>
             <div style={styles.notice}>
-                <BoardNotice boardNotice={boardData.boardNotice} />
+                <BoardNotice boardNotice={boardData.boardnotices} />
             </div>
             <div style={styles.fanBoard}>
-                <FanBoard fanBoard={boardData.fanBoard} />
+                <FanBoard fanBoard={boardData.fanboards} />
             </div>
         </div>
     );
@@ -47,20 +49,35 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         height: '100vh',
+        justifyContent: 'space-between',
+        alignItems: 'center', // Aligning components in center horizontally
+        gap: '20px', // Space between components
     },
     board: {
-        width: '50%',
-        height: '100%',
+        width: '80%', // Adjust width to make layout flexible
+        padding: '20px',
+        backgroundColor: 'rgba(150, 161, 190, 0.1)',
+        borderRadius: '10px', // Rounded corners
+        border: '1px solid rgba(150, 161, 190, 0.3)',
+        boxSizing: 'border-box',
         overflowY: 'scroll',
     },
     notice: {
-        width: '50%',
-        height: '50%',
+        width: '80%', // Same width and styling as board
+        padding: '20px',
+        backgroundColor: 'rgba(150, 161, 190, 0.1)',
+        borderRadius: '10px',
+        border: '1px solid rgba(150, 161, 190, 0.3)',
+        boxSizing: 'border-box',
         overflowY: 'scroll',
     },
     fanBoard: {
-        width: '50%',
-        height: '50%',
+        width: '80%', // Same width and styling as board
+        padding: '20px',
+        backgroundColor: 'rgba(150, 161, 190, 0.1)',
+        borderRadius: '10px',
+        border: '1px solid rgba(150, 161, 190, 0.3)',
+        boxSizing: 'border-box',
         overflowY: 'scroll',
     },
 };
