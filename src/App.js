@@ -16,8 +16,6 @@ import SignUp from "./pages/user/SignUp";
 
 
 function App() {
-    // 유저 하드코딩
-    // 세션 유지 이후 변경 예정
     const useruuid='0cf55a0d-a2a5-443b-af46-835d70874c40'
     const teamuuid='8456584b-809d-11ef-b4db-0a2a78c30fc9'
 
