@@ -11,7 +11,6 @@ import GoodsForm from './pages/management/goods/GoodsForm';
 import CartList from './pages/shop/cart/CartList';
 import CartBuying from './pages/shop/cart/CartBuying';
 import CartBought from './pages/shop/cart/CartBought';
-import BoardPage from "./pages/board/BoardPage";
 
 
 function App() {
@@ -32,9 +31,10 @@ function App() {
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
                 <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
-                <Route path="/shop/cart/buying" element={<CartBuying/>}/>
-                <Route path="/shop/cart/bought" element={<CartBought/>}/>
+                <Route path="/shop/buy/buying" element={<Buying/>}/>
+                <Route path="/shop/buy/bought" element={<Bought/>}/>
                 <Route path="/management/goods" element={<GoodsForm/>}/>
+                <Route path="/user/signup" element={<SignUp/>}/>
               </Routes>
           </div>
         </div>
