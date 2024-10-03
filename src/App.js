@@ -12,6 +12,7 @@ import CartList from './pages/shop/cart/CartList';
 import CartBuying from './pages/shop/cart/CartBuying';
 import CartBought from './pages/shop/cart/CartBought';
 
+import SignUp from './pages/user/SignUp'
 
 function App() {
     // 유저 하드코딩
@@ -33,6 +34,7 @@ function App() {
                 <Route path="/shop/cart/buying" element={<CartBuying/>}/>
                 <Route path="/shop/cart/bought" element={<CartBought/>}/>
                 <Route path="/management/goods" element={<GoodsForm/>}/>
+                <Route path="/user/signup" element={<SignUp/>}/>
               </Routes>
           </div>
         </div>
