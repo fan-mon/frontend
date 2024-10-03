@@ -399,6 +399,9 @@ p {
   .header-wrap {
     padding-left: 0;
   }
+  .header-wrap.side-min {
+    padding-left: 0;
+  }
   .header {
     left: 0;
     width: 100%;
@@ -544,4 +547,4 @@ p {
 }
 .slider-btns-wrap .btn-slider-next {
   right: -10px;
-}/*# sourceMappingURL=style.css.map */
+}/*# sourceMappingURL=header.css.map */
