@@ -22,6 +22,7 @@ function GoodsNav({ teamuuid }){
             });
     }, []);
 
+
     return (
         <>
             <Navbar bg="#000000" data-bs-theme="dark">
