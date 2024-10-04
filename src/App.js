@@ -14,6 +14,7 @@ import BoardPage from "./pages/board/BoardPage";
 import Bought from "./pages/shop/buy/Bought";
 import SignUp from "./pages/user/SignUp";
 import GoodsManage from './pages/management/goods/GoodsManage';
+import GoodsMain from './pages/shop/goods/GoodsMain';
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
               <Routes>
                 <Route path="/chat/ws" element={<ChatPage user={useruuid}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
-                <Route path="/shop/goods" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list" element={<GoodsList/>}/>
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
                 <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/management/goodsform" element={<GoodsForm/>}/>
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
+                <Route path="/shop/goods" element={<GoodsMain/>}/>
               </Routes>
           </div>
         </div>

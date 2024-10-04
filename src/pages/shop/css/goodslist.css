@@ -1,6 +1,14 @@
 /* .goods-frame {padding: 100px;} */
 .goodslist-content{margin: 0 80px;}
-.single-goods{margin-bottom: 50px;text-align: center;}
+.goodslist-title{
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+.single-goods{
+    margin-bottom: 50px;
+    text-align: center;
+    text-decoration: none;
+}
 .single-goods-bg {
     position: relative;
     min-height: 310px;

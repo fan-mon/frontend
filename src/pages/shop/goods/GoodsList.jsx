@@ -6,10 +6,10 @@ import axios from 'axios';
 
 function GoodsList(){
 
-    //goodsview 테이블에서 데이터 가져오기
+    //goods 테이블에서 데이터 가져오기
     let [glist, setGList] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:8080/shop/goods')
+        axios.get('http://localhost:8080/shop/goods/list')
             .then(response => {
                 console.log(response.data);
                 setGList(response.data);
