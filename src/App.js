@@ -13,6 +13,7 @@ import Buying from "./pages/shop/buy/Buying";
 import BoardPage from "./pages/board/BoardPage";
 import Bought from "./pages/shop/buy/Bought";
 import SignUp from "./pages/user/SignUp";
+import GoodsManage from './pages/management/goods/GoodsManage';
 
 
 function App() {
@@ -33,7 +34,8 @@ function App() {
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/buy/buying" element={<Buying/>}/>
                 <Route path="/shop/buy/bought" element={<Bought/>}/>
-                <Route path="/management/goods" element={<GoodsForm/>}/>
+                <Route path="/management/goodsform" element={<GoodsForm/>}/>
+                <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
               </Routes>
           </div>

@@ -59,7 +59,7 @@ const Header = () => {
                             <img src={`${process.env.PUBLIC_URL}/common/upload/output_1061748631.jpeg`} alt=""/>
                         </div>
                         <div className="info">
-                            <div className="username">임꺽정</div>
+                            <div className="username">모래사장</div>
                             <div className="user-role">일반회원</div>
                         </div>
                         <div className="btn btn-ico btn-dropdown">
