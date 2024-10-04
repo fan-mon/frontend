@@ -11,13 +11,15 @@
     overflow:hidden;
 }
 .single-goods-bg img{
-    width:auto;
+    position: absolute; 
+    width: 100%;
     height:auto;
     -webkit-transition: .3s linear;
     -moz-transition: .3s linear;
     -ms-transition: .3s linear;
     -o-transition: .3s linear;
     transition: .3s linear;
+    transform: scale(0.7);
 }
 .single-goods-bg:hover  img{
     -webkit-transform:scale(1.3);

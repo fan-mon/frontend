@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import "../css/goodslist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
+import axios from 'axios';
 
 function GoodsList(){
 
-    const initialProducts = [
-        { id: 1, name: "귀여운 요술봉", price: 59000},
-        { id: 2, name: "안귀여운 요술봉", price: 39000} 
-    ]
-
-    const [products] = useState(initialProducts);
+    //goodsview 테이블에서 데이터 가져오기
+    let [glist, setGList] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:8080/shop/goods')
+            .then(response => {
+                console.log(response.data); // API 응답 데이터 로그
+                setGList(response.data); // 응답 데이터에서 상품 목록을 설정
+            })
+            .catch(error => {
+                console.error('Error fetching goods:', error);
+            });
+    }, []);
 
     return(
         <>
@@ -20,78 +27,23 @@ function GoodsList(){
                         <GoodsNav/>
                         
                             <div className="row">
-                                {products.map((prod)=>(
+                                {glist.map((gprod)=>(
                                     <div className="col-md-3 col-sm-4">
                                     
                                         <div className="single-goods">
                                             <div className="single-goods-bg">
-                                                <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
+                                                <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt="single-goods images"/>
                                                 <div className="single-goods-bg-overlay"></div>
                                             </div>
-                                            <h4>{prod.name}</h4>
-                                            <p className="goods-price">{prod.price}원</p>
+                                            <h4>{gprod.name}</h4>
+                                            <p className="goods-price">{gprod.price.toLocaleString()}원</p>
                                             <button className="add-to-cart" onClick="#">Add to Cart</button>
                                             <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
                                         </div>
                                         
                                     </div>
                                 ))}
-                                <div className="col-md-3 col-sm-4">
-                                    
-                                    <div className="single-goods">
-                                        <div className="single-goods-bg">
-                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
-                                            <div className="single-goods-bg-overlay"></div>
-                                        </div>
-                                        <h4>네임</h4>
-                                        <p className="goods-price">00원</p>
-                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
-                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
-                                    </div>
-                                    
-                                </div>
-                                <div className="col-md-3 col-sm-4">
-                                    
-                                    <div className="single-goods">
-                                        <div className="single-goods-bg">
-                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
-                                            <div className="single-goods-bg-overlay"></div>
-                                        </div>
-                                        <h4>네임</h4>
-                                        <p className="goods-price">00원</p>
-                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
-                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
-                                    </div>
-                                    
-                                </div>
-                                <div className="col-md-3 col-sm-4">
-                                    
-                                    <div className="single-goods">
-                                        <div className="single-goods-bg">
-                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
-                                            <div className="single-goods-bg-overlay"></div>
-                                        </div>
-                                        <h4>네임</h4>
-                                        <p className="goods-price">00원</p>
-                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
-                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
-                                    </div>
-                                    
-                                </div>
-                                <div className="col-md-3 col-sm-4">
-                                    
-                                    <div className="single-goods">
-                                        <div className="single-goods-bg">
-                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
-                                            <div className="single-goods-bg-overlay"></div>
-                                        </div>
-                                        <h4>네임</h4>
-                                        <p className="goods-price">00원</p>
-                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
-                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
-                                    </div>
-                                    
-                                </div>
+                                
                             </div>
                        
                     </div>
