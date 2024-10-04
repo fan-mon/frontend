@@ -15,7 +15,7 @@ function GoodsList(){
     return(
         <>
             <section className="goods-frame">
-                <div className="container">
+                <div className="goodslist-container">
                     <div className="goodslist-content">
                         <GoodsNav/>
                         
@@ -36,6 +36,62 @@ function GoodsList(){
                                         
                                     </div>
                                 ))}
+                                <div className="col-md-3 col-sm-4">
+                                    
+                                    <div className="single-goods">
+                                        <div className="single-goods-bg">
+                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
+                                            <div className="single-goods-bg-overlay"></div>
+                                        </div>
+                                        <h4>네임</h4>
+                                        <p className="goods-price">00원</p>
+                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
+                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
+                                    </div>
+                                    
+                                </div>
+                                <div className="col-md-3 col-sm-4">
+                                    
+                                    <div className="single-goods">
+                                        <div className="single-goods-bg">
+                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
+                                            <div className="single-goods-bg-overlay"></div>
+                                        </div>
+                                        <h4>네임</h4>
+                                        <p className="goods-price">00원</p>
+                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
+                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
+                                    </div>
+                                    
+                                </div>
+                                <div className="col-md-3 col-sm-4">
+                                    
+                                    <div className="single-goods">
+                                        <div className="single-goods-bg">
+                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
+                                            <div className="single-goods-bg-overlay"></div>
+                                        </div>
+                                        <h4>네임</h4>
+                                        <p className="goods-price">00원</p>
+                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
+                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
+                                    </div>
+                                    
+                                </div>
+                                <div className="col-md-3 col-sm-4">
+                                    
+                                    <div className="single-goods">
+                                        <div className="single-goods-bg">
+                                            <img src={`${process.env.PUBLIC_URL}/shop/goods/logo_white.png`} alt="single-goods images"/>
+                                            <div className="single-goods-bg-overlay"></div>
+                                        </div>
+                                        <h4>네임</h4>
+                                        <p className="goods-price">00원</p>
+                                        <button className="add-to-cart" onClick="#">Add to Cart</button>
+                                        <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
+                                    </div>
+                                    
+                                </div>
                             </div>
                        
                     </div>
