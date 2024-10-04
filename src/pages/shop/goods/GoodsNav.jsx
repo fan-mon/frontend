@@ -6,9 +6,11 @@ import * as Icon from 'react-bootstrap-icons';
 import axios from 'axios';
 
 
-function GoodsNav(){
+
+function GoodsNav({ teamuuid }){
 
     let [gcategory, setGCategory] = useState([]);
+
     useEffect(() => {
         axios.get('http://localhost:8080/shop/goods/category')
             .then(response => {
@@ -24,9 +26,9 @@ function GoodsNav(){
         <>
             <Navbar bg="#000000" data-bs-theme="dark">
                 <Nav className="me-auto">
-                    <Nav.Link href="/shop/goods/list" className="hover-color">All</Nav.Link>
-                    {gcategory.map((gprod)=>(
-                        <Nav.Link href="/shop/goods/list" className="hover-color">{gprod}</Nav.Link>
+                    <Nav.Link href={`/shop/goods/list/${teamuuid}/all`} className="hover-color">All</Nav.Link>
+                    {gcategory.map((categoriList)=>(
+                        <Nav.Link href={`/shop/goods/list/${teamuuid}/${categoriList}`} className="hover-color">{categoriList}</Nav.Link>
                     ))}
                 </Nav>
                 <Nav>

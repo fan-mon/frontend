@@ -28,7 +28,8 @@ function App() {
               <Routes>
                 <Route path="/chat/ws" element={<ChatPage user={useruuid}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
-                <Route path="/shop/goods/list/:teamuuid" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
                 <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
