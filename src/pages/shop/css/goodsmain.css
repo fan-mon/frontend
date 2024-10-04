@@ -1,0 +1,30 @@
+/* .goods-frame {padding: 100px;} */
+#goodsmain-content{margin: 0 80px;}
+#goodsmain-title{
+    font-size: 30px;
+    margin-bottom: 50px;
+}
+
+#goodsmain-title{
+    font-size: 48px;
+    color: #EAB70E;
+    font-weight: 400;
+}
+
+#single-glist{
+    margin-bottom: 50px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 30px;
+}
+
+
+#single-glist h4{
+    color:#ffffff;
+    font-size:20px;
+    font-weight:500;
+    margin:26px 0 12px;
+}
+
+#single-glist > h4:hover {color:#EAB70E;}
+

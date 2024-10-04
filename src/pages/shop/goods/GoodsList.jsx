@@ -3,16 +3,20 @@ import "../css/goodslist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function GoodsList(){
 
     //goods 테이블에서 데이터 가져오기
     let [glist, setGList] = useState([]);
+    const { teamuuid } = useParams();
     useEffect(() => {
-        axios.get('http://localhost:8080/shop/goods/list')
+        const uuid = teamuuid || sessionStorage.getItem('teamuuid');
+        axios.get(`http://localhost:8080/shop/goods/list/${teamuuid}`)
             .then(response => {
                 console.log(response.data);
                 setGList(response.data);
+                sessionStorage.setItem('teamuuid', uuid);
             })
             .catch(error => {
                 console.error('Error fetching goods:', error);

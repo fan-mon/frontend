@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "../css/goodslist.css";
+import "../css/goodsmain.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
 
@@ -21,16 +21,15 @@ function GoodsMain(){
     return(
         <>
             <section className="goods-frame">
-                <div className="goodslist-container">
-                    <div className="goodslist-content">
-                        <p className="goodslist-title">아티스트 목록</p>
+                <div id="goodsmain-container">
+                    <div id="goodsmain-content">
+                        <h2 id="goodsmain-title">아티스트 목록</h2>
                         <div className="row">
-                            {gmain.map((gprod)=>(
+                            {gmain.map((glist)=>(
                                 <div className="col-md-3 col-sm-4">
-                                    <a className="single-goods" href="/shop/goods/list">
-                                        <h4>{gprod.name}</h4>
+                                    <a id="single-glist" href={`/shop/goods/list/${glist.teamuuid}`}>
+                                        <h4>{glist.name}</h4>
                                     </a>
-                                    
                                 </div>
                             ))}
                         </div>

@@ -24,6 +24,7 @@ function GoodsNav(){
         <>
             <Navbar bg="#000000" data-bs-theme="dark">
                 <Nav className="me-auto">
+                    <Nav.Link href="/shop/goods/list" className="hover-color">All</Nav.Link>
                     {gcategory.map((gprod)=>(
                         <Nav.Link href="/shop/goods/list" className="hover-color">{gprod}</Nav.Link>
                     ))}
