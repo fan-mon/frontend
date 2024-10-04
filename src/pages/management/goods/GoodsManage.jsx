@@ -1,45 +1,56 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./css/goodsmanage.css";
 import axios from "axios";
 
 const GoodsManage = () => {
-    const [goods, setGoods] = useState([]); //상품 리스트를 저장할 상태값
-    const [loading, setLoading] = useState(true);// 로딩 상태
-    const [error, setError] = useState(null);// 에러 상태
+  const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+  const [goods, setGoods] = useState([]); //상품 리스트를 저장할 상태값
+  const [team, setTeam] = useState([]); //팀 리스트
+  const [loading, setLoading] = useState(true);// 로딩 상태
+  const [error, setError] = useState(null);// 에러 상태
 
-    //api 호출 함수
-    const fetchGoods = async () => {
-      try{
-        const response = await axios.get("http://localhost:8080/management/goods"); //api호출
-        setGoods(response.data); //상품리스트를 상태에 저장
-        console.log(goods);
-        setLoading(false); //로딩 종료
-      }catch(err){
-        setError(err.message);
-        setLoading(false);
-      }
+  //Goods api 호출 함수
+  const fetchGoods = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/management/goods"); //api호출
+      setGoods(response.data); //상품리스트를 상태에 저장
+      setLoading(false); //로딩 종료
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
 
-    };
-
+  };
+  //Team api 호출 함수
+  const fetchTeam = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/management/team/${managementuuid}`);
+      setTeam(response.data); //팀 정보를 상태에 저장
+      console.log(team);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
   const navigate = useNavigate();
 
-    // 아티스트를 클릭하면 해당 아티스트의 ID에 따라 굿즈 등록 페이지로 이동
-  const handleArtistClick = (artistuuid) => {
-    navigate(`/management/goodsform/${artistuuid}`);
+  // 아티스트 팀을 클릭하면 해당 아티스트 팀의 ID에 따라 굿즈 등록 페이지로 이동
+  const handleTeamClick = (teamuuid) => {
+    navigate(`/management/goodsform/${teamuuid}`);
   };
 
-    //컴포넌트가 마운트되면 fetchGoods 실행
-    useEffect(()=>{
-      fetchGoods();
-    },[]);
+  //컴포넌트가 마운트되면 fetchGoods 실행
+  useEffect(() => {
+    fetchGoods();
+    fetchTeam();
+  }, []);
 
-    if(loading){
-      return <div>로딩 중...</div>
-    }
-    if(error){
-      return <div>에러 발생..!</div>
-    }
+  if (loading) {
+    return <div>로딩 중...</div>
+  }
+  if (error) {
+    return <div>에러 발생..!</div>
+  }
 
 
 
@@ -48,29 +59,27 @@ const GoodsManage = () => {
       <h1>굿즈 관리 페이지</h1>
 
       {/* 아티스트 목록 */}
-      <div className="artist-section">
+      <div className="team-section">
         <h2>상품 등록</h2>
-        <div className="artist-list">
-          <div className="artist-item" onClick={() => handleArtistClick("2pm")}>
-            <img src="/images/2pm.png" alt="2PM" className="artist-image" />
-            <p>2PM</p>
-          </div>
-          <div className="artist-item" onClick={() => handleArtistClick("day6")}>
-            <img src="/images/day6.png" alt="DAY6" className="artist-image" />
-            <p>DAY6</p>
-          </div>
+        <div className="team-list">
+          {team.map((team) => (
+            <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team.teamuuid)}>
+              <img src={team.fname} alt={team.name} className="team-image"></img>
+              <p>{team.name}</p>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* 등록한 상품 목록 */}
-      <div className="registered-products-section">
+      <div className="registered-goods-section">
         <h2>등록한 상품</h2>
-        <div className="product-list">
+        <div className="goods-list">
           {/* goods배열을 map으로 돌려서 상품을 표시 */}
-          {goods.map(
-            (item)=>(
-              <div className="product-item" key={item.goodsuuid}>
-                <img src={item.fname} alt={item.name} className="product-image"/>
+          {goods.slice(0, 6).map(
+            (item) => (
+              <div className="goods-item" key={item.goodsuuid}>
+                <img src='http://localhost:8080/resources/goodsimg/day6_goods.jpg' alt={item.name} className="goods-image"/>
                 <p>{item.name}</p>
               </div>
             )

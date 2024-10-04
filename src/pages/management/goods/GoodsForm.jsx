@@ -4,6 +4,8 @@ import "./css/goodsform.css";
 
 const GoodsForm = () => {
 
+    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+    const teamuuid = '8456584b-809d-11ef-b4db-0a2a78c30fc9'; //hard coding
     const [name, setName] = useState('');
     const [qty, setQty] = useState('');
     const [price, setPrice] = useState('');
@@ -16,9 +18,11 @@ const GoodsForm = () => {
         e.preventDefault();
 
         const formData = new FormData();
+        formData.append('managementuuid',managementuuid);
+        formData.append('teamuuid',teamuuid);
         formData.append('name', name);
         formData.append('price', parseFloat(price));
-        formData.append('qyt', qty);
+        formData.append('qty', qty);
         formData.append('description', description);
         formData.append('category', category);
         if (uploadfile) {
