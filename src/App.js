@@ -19,7 +19,6 @@ import GoodsManage from './pages/management/goods/GoodsManage';
 function App() {
     const useruuid='0cf55a0d-a2a5-443b-af46-835d70874c40'
     const teamuuid='8456584b-809d-11ef-b4db-0a2a78c30fc9'
-
   return (
       <BrowserRouter>
         <div className='header-wrap'>
@@ -30,7 +29,7 @@ function App() {
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
                 <Route path="/shop/goods" element={<GoodsList/>}/>
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
-                <Route path="/shop/goods/detail" element={<GoodsDetail/>}/>
+                <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/buy/buying" element={<Buying/>}/>
                 <Route path="/shop/buy/bought" element={<Bought/>}/>

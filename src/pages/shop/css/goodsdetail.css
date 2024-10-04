@@ -2,6 +2,8 @@
     padding-top: 165px;
 } */
 
+.goodsdetail-container{margin: 0 80px;}
+
 /*welcome-hero-content*/
 .single-detail{
     display: flex;
@@ -64,12 +66,15 @@
 /*img*/
 .single-welcome-hero {
     position: relative;
-    height: 100%;
+    height: 250%;
+    width: 100%;
+    overflow:hidden;
 }
 
 .welcome-hero-img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    text-align: center;
+    object-fit: cover;
+    height: 100%;
+    
 }

@@ -11,8 +11,8 @@ function GoodsList(){
     useEffect(() => {
         axios.get('http://localhost:8080/shop/goods')
             .then(response => {
-                console.log(response.data); // API 응답 데이터 로그
-                setGList(response.data); // 응답 데이터에서 상품 목록을 설정
+                console.log(response.data);
+                setGList(response.data);
             })
             .catch(error => {
                 console.error('Error fetching goods:', error);
@@ -38,7 +38,7 @@ function GoodsList(){
                                             <h4>{gprod.name}</h4>
                                             <p className="goods-price">{gprod.price.toLocaleString()}원</p>
                                             <button className="add-to-cart" onClick="#">Add to Cart</button>
-                                            <a href="/shop/goods/detail"><button className="more-info">More Info</button></a>
+                                            <a href={`/shop/goods/detail/${gprod.goodsuuid}`}><button className="more-info">More Info</button></a>
                                         </div>
                                         
                                     </div>
