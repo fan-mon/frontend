@@ -16,6 +16,7 @@ import SignUp from "./pages/user/SignUp";
 import GoodsManage from './pages/management/goods/GoodsManage';
 
 import StayRoom from './pages/meetingroom/StayRoom';
+import MeetingRoom from './pages/meetingroom/MeetingRoom';
 
 
 function App() {
@@ -40,7 +41,7 @@ function App() {
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
-                <Route path="/meetingroom/meetingroom" element={<StayRoom/>}/>
+                <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
               </Routes>
           </div>
         </div>
