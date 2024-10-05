@@ -1,4 +1,7 @@
-import React, {useState} from "react";
+import {useState} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../meetingroom/fonts/bootstrap-icons.min.css'
+import '../meetingroom/css/stayroom.css'
 const ChatRoom = ({ role, messages, sendMessage }) => {
     const [inputMessage, setInputMessage] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
@@ -9,7 +12,7 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
     const toggleChatPlus = () => setIsChatPlusOpen(!isChatPlusOpen);
     const handleSend = () => {
         if (inputMessage.trim()) {
-            sendMessage(inputMessage, role);
+            sendMessage(inputMessage);
             setInputMessage('');
         }
     };
@@ -17,7 +20,8 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
     return (
         <div>
             <h2>{role === 'USER' ? 'Fan Chat' : 'Artist Chat'}</h2>
-            <div className={`col-4 chatroom-area ${isChatOpen ? 'open' : ''}`}>
+            <div className={`col-4 chatroom-area`}
+                 style={chatroomStyle}>
                 <div className="contents-box contents-scroll-box chatroom">
                     <div className="chat-top">
                         <div>아티스트 이름</div>
@@ -109,5 +113,10 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
     );
 };
 
+const chatroomStyle = {
+    display: 'block',
+    width:'auto', // 768px 이하일 때 너비를 100%로 설정
+    // width:'100%'
+};
 
 export default ChatRoom;

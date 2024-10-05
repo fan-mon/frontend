@@ -18,6 +18,7 @@ import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
+import TempLogin from "./pages/chat/TempLogin";
 
 
 
@@ -33,7 +34,8 @@ function App() {
           <Header />
           <div className="content">
               <Routes>
-                <Route path="/chat/ws/:artistUuid" element={<ChatPage userUuid={useruuid} chatUuid={chatuuid}/>} />
+                <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid}/>} />
+                <Route path="/chat/login" element={<TempLogin/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
                 <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>
                 <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
