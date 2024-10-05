@@ -7,6 +7,11 @@ import UserChat from "./UserChat";
 const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState(true); // 로그인 상태
+    const [role, setRole] = useState('USER'); // 초기 역할
+    const toggleRole = () => {
+        setRole(prevRole => (prevRole === 'USER' ? 'ARTIST' : 'USER'));
+    };
 
     useEffect(() => {
         const socket = new SockJS(`http://localhost:8080/chat/ws`); // WebSocket 연결
@@ -73,26 +78,32 @@ const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
         }
     };
 
+    let chatRoom;
+    if (isLoggedIn) {
+        if (role === 'USER') {
+            chatRoom = <UserChat messages={messages} sendMessage={sendMessage}/>;
+        } else if (role === 'ARTIST') {
+            chatRoom = <ArtistChat messages={messages} sendMessage={sendMessage}/>;
+        } else {
+            chatRoom = <div>알 수 없는 역할입니다.</div>;
+        }
+    } else {
+        chatRoom = <div>로그인해 주세요.</div>;
+    }
+
     return (
-        <div style={styles.page}>
+        <div>
             <h1>Chat Page</h1>
             <div style={styles.leftColumn}>
-                <ArtistChat messages={messages} sendMessage={sendMessage} />
+                <button onClick={toggleRole}>Toggle Role</button>
+                {chatRoom}
             </div>
-            <div style={styles.rightColumn}>
-                <UserChat messages={messages} sendMessage={sendMessage}/>
-            </div>
+
         </div>
     );
 
 };
 const styles = {
-    page: {
-        display: 'flex',
-        height: '100vh',
-        padding: '20px',
-        gap: '30px'
-    },
     leftColumn: {
         flex: 1, // Takes up one part of the available space (left side)
         marginRight: '20px',
@@ -102,19 +113,6 @@ const styles = {
         border: '1px solid rgba(150, 161, 190, 0.3)',
         boxSizing: 'border-box',
         overflowY: 'scroll',
-    },
-    rightColumn: {
-        flex: 1, // Takes up one part of the available space (right side)
-        marginRight: '20px',
-        padding: '20px',
-        backgroundColor: 'rgba(150, 161, 190, 0.1)',
-        borderRadius: '10px',
-        border: '1px solid rgba(150, 161, 190, 0.3)',
-        boxSizing: 'border-box',
-        overflowY: 'scroll',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'space-between',
     },};
 
 export default ChatPage;
