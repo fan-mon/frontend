@@ -14,6 +14,7 @@ import BoardPage from "./pages/board/BoardPage";
 import Bought from "./pages/shop/buy/Bought";
 import SignUp from "./pages/user/SignUp";
 import ManagementSignUp from "./pages/management/ManagementSignUp";
+import Login from "./pages/user/Login";
 import GoodsManage from './pages/management/goods/GoodsManage';
 
 import StayRoom from './pages/meetingroom/StayRoom';
@@ -41,6 +42,7 @@ function App() {
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
+                <Route path="/user/login" element={<Login/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
                 <Route path="/meetingroom/meetingroom" element={<StayRoom/>}/>
               </Routes>
