@@ -16,6 +16,7 @@ import ManagementSignUp from "./pages/management/ManagementSignUp";
 import GoodsManage from './pages/management/goods/GoodsManage';
 import ChatPage from "./pages/chat/ChatPage";
 import StayRoom from './pages/meetingroom/StayRoom';
+import MeetingRoom from './pages/meetingroom/MeetingRoom';
 
 
 
@@ -44,7 +45,7 @@ function App() {
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
-                <Route path="/meetingroom/meetingroom" element={<StayRoom/>}/>
+                <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
               </Routes>
           </div>
         </div>
