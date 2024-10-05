@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const ArtistChat= ({ sendMessage, messages }) => {
+    console.log("messages artist received: ", messages);
     const [inputMessage, setInputMessage] = useState('');
 
     const handleSendMessage = () => {

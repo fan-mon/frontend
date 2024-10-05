@@ -1,7 +1,7 @@
 import {useState} from "react";
 
 const UserChat = ({ messages, sendMessage}) => {
-    console.log("Received messages: ", messages);
+    console.log("messages user received: ", messages);
     const [inputMessage, setInputMessage] = useState('');
     const handleSendMessage = () => {
         sendMessage(inputMessage, 'USER');
