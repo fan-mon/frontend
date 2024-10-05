@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./css/goodsmanage.css";
+import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
+import "./css/goodsmanage.css";
 
 const GoodsManage = () => {
   const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
@@ -20,8 +20,8 @@ const GoodsManage = () => {
       setError(err.message);
       setLoading(false);
     }
-
   };
+  
   //Team api 호출 함수
   const fetchTeam = async () => {
     try {
@@ -62,12 +62,16 @@ const GoodsManage = () => {
       <div className="team-section">
         <h2>상품 등록</h2>
         <div className="team-list">
-          {team.map((team) => (
+          {team.slice(0,6).map((team) => (
             <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team.teamuuid)}>
               <img src={team.fname} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
           ))}
+        </div>
+
+        <div className="view-more">
+          <Link to="/management/teamList">더보기</Link>
         </div>
       </div>
 
@@ -87,7 +91,7 @@ const GoodsManage = () => {
         </div>
 
         <div className="view-more">
-          <a href="#">더보기</a>
+          <Link to="/management/goodsList">더보기</Link>
         </div>
       </div>
     </div>
