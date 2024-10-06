@@ -14,6 +14,9 @@ function CartList(){
 
     // 데이터 패칭을 useEffect로 처리
     useEffect(() => {
+
+        console.log(clist);
+
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:8080/shop/cart/list/${useruuid}`);
@@ -33,35 +36,43 @@ function CartList(){
     const deliveryFee = 2500;
     const finalAmount = totalPrice+deliveryFee;
 
-    
     const handleQuantityChange = async (id, newQty) => {
+        // newQty가 유효한지 확인 (1에서 10 사이의 값)
+        if (newQty < 1 || newQty > 10 || isNaN(newQty)) {
+            console.error('Invalid quantity:', newQty);
+            return; // 유효하지 않은 경우 함수 종료
+        }
+        
         // 상태에서 수량 변경
         const updatedCList = clist.map(crecord => 
             crecord.cartsequence === id ? { ...crecord, qty: newQty } : crecord
         );
-        setCList(updatedCList);
     
-        // 변경된 수량의 goodsuuid를 찾기
+        // 변경된 레코드 찾기
         const updatedRecord = updatedCList.find(crecord => crecord.cartsequence === id);
-        const cgoodsuuid = updatedRecord ? updatedRecord.goodsuuid : null;
+        
+        // goodsuuid가 없으면 로그 출력 후 종료
+        if (!updatedRecord || !updatedRecord.goods.goodsuuid) {
+            console.error('Goods UUID not found');
+            console.log('goodsuuid', updatedRecord ? updatedRecord.goods.goodsuuid : '레코드 없음'); 
+            return;
+        }
     
-        // if (!cgoodsuuid) {
-        //     console.error('Goods UUID not found');
-        //     return; // goodsuuid가 없으면 함수를 종료
-        // }
-    
-        // try {
-        //     // 서버에 수량 업데이트 요청
-        //     await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${cartsequence}/${newQty}`);
-        // } catch (error) {
-        //     console.error('Error updating quantity:', error);
-        //     // 수량 변경이 실패하면 원래 상태로 되돌리기
-        //     setCList(clist);
-        // }
-
-
-
+        try {
+            // 서버에 수량 업데이트 요청
+            await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
+            console.log(newQty);
+            // 요청 성공 후 상태 업데이트
+            setCList(updatedCList);
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            // 수량 변경이 실패하면 원래 상태로 되돌리기
+            setCList(clist);
+        }
     };
+    
+    
+    
     
     // 장바구니에 담긴 상품 삭제
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
@@ -84,8 +95,8 @@ function CartList(){
                         {clist.map((crecord, index) => (
                             <tr key={crecord.cartsequence}>
                                 <td className="cart-list-no cart-list-center">{index + 1}</td>
-                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goodsuuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
-                                <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goodsuuid}`}>{crecord.goods.name}</a></td>
+                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
+                                <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}>{crecord.goods.name}</a></td>
                                 <td className="cart-list-qty cart-list-center">
                                     <input 
                                         type="number" 
@@ -93,7 +104,7 @@ function CartList(){
                                         min="1" 
                                         max="10"
                                         defaultValue={crecord.qty}
-                                        onChange={(e) => handleQuantityChange(crecord.cartsequence, parseInt(e.target.value))}
+                                        onChange={(e) => handleQuantityChange(crecord.cartsequence, parseInt(e.target.value), crecord.goodsuuid)}
                                     />
                                 </td>
                                 <td className="cart-list-price">{(crecord.goods.price * crecord.qty).toLocaleString()}원</td>
