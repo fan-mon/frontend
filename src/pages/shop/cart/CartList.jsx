@@ -28,7 +28,9 @@ function CartList(){
 
     // 총 수량과 총 가격 계산
     const totalQuantity = clist.reduce((total, crecord) => total + parseInt(crecord.qty), 0);
-    const totalPrice = clist.reduce((total, crecord) => total + (crecord.goods.price * crecord.qty), 0).toLocaleString();
+    const totalPrice = clist.reduce((total, crecord) => total + (crecord.goods.price * crecord.qty), 0);
+    const deliveryFee = 2500;
+    const finalAmount = totalPrice+deliveryFee;
 
     // 수량 변경 핸들러 함수
     const handleQuantityChange = (id, newQuantity) => {
@@ -73,10 +75,10 @@ function CartList(){
                     </table>
                     <div className="total-result">
                         <div>
-                            <span>배송비&nbsp;&nbsp;&nbsp;2,500원</span>
+                            <span>배송비&nbsp;&nbsp;&nbsp;{deliveryFee.toLocaleString()}원</span>
                         </div>
                         <div>
-                            <span>결제예정금액&nbsp;&nbsp;&nbsp;{totalPrice}원</span>
+                            <span>결제예정금액&nbsp;&nbsp;&nbsp;{finalAmount.toLocaleString()}원</span>
                         </div>
                     </div>
                     <a href="/shop/buy/buying">
