@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import "../css/goodsnav.css";
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -22,14 +23,17 @@ function GoodsNav({ teamuuid }){
             });
     }, []);
 
+    const location = useLocation();
+    const currentPath = location.pathname;
+
 
     return (
         <>
             <Navbar bg="#000000" data-bs-theme="dark">
                 <Nav className="me-auto">
-                    <Nav.Link href={`/shop/goods/list/${teamuuid}/all`} className="hover-color">All</Nav.Link>
+                    <Nav.Link href={`/shop/goods/list/${teamuuid}/all`} className={`hover-color ${currentPath === `/shop/goods/list/${teamuuid}/all` ? 'selected-category' : ''}`}>All</Nav.Link>
                     {gcategory.map((categoriList)=>(
-                        <Nav.Link href={`/shop/goods/list/${teamuuid}/${categoriList}`} className="hover-color">{categoriList}</Nav.Link>
+                        <Nav.Link href={`/shop/goods/list/${teamuuid}/${categoriList}`} className={`hover-color ${currentPath === `/shop/goods/list/${teamuuid}/${categoriList}` ? 'selected-category' : ''}`}>{categoriList}</Nav.Link>
                     ))}
                 </Nav>
                 <Nav>
