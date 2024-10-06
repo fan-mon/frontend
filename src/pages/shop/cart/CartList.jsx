@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import "../css/cartlist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 
 function CartList(){
 
     const [clist, setCList] = useState([]);
-    axios.get(`http://localhost:8080/shop/cart/list`)
-    .then(response => {
-      console.log(response.data);
-      setCList(response.data);
-    })
-    .catch(error => {
-      console.error('Error fetching goods:', error);
-    });
+
+    // 데이터 패칭을 useEffect로 처리
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/shop/cart/list`);
+                setCList(response.data);
+            } catch (error) {
+                console.error('Error fetching goods:', error);
+            }
+        };
+
+        fetchData();
+    }, []); // 빈 배열을 넣어 컴포넌트가 처음 렌더링될 때만 실행
 
     // 총 수량과 총 가격 계산
     const totalQuantity = clist.reduce((total, crecord) => total + parseInt(crecord.qty), 0);
     const totalPrice = clist.reduce((total, crecord) => total + (crecord.goods.price * crecord.qty), 0).toLocaleString();
 
     // 수량 변경 핸들러 함수
-    const handleQuantityChange = (csequence, newQuantity) => {
+    const handleQuantityChange = (id, newQuantity) => {
         setCList(clist.map(crecord => 
-            crecord.cartsequence === csequence ? { ...crecord, qty: newQuantity } : crecord
+            crecord.cartsequence === id ? { ...crecord, qty: newQuantity } : crecord
         ));
     };
 
@@ -45,8 +50,8 @@ function CartList(){
                                         name={`goods-qty-${crecord.cartsequence}`} 
                                         min="1" 
                                         max="10"
-                                        value={crecord.qty} 
-                                        onChange={(e) => handleQuantityChange(crecord.qty, parseInt(e.target.value))}
+                                        defaultValue={crecord.qty}
+                                        onChange={(e) => handleQuantityChange(crecord.cartsequence, parseInt(e.target.value))}
                                     />
                                 </td>
                                 <td className="cart-list-price">{(crecord.goods.price * crecord.qty).toLocaleString()}원</td>
