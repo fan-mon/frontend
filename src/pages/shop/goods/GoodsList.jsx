@@ -55,7 +55,7 @@ function GoodsList() {
       try {
         console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
 
-        await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${gprod.goodsuuid}/1`);
+        await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
         alert('상품이 장바구니에 추가되었습니다.');
 
       } catch (error) {

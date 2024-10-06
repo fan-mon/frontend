@@ -24,6 +24,7 @@ function CartList(){
         };
 
         fetchData();
+        console.log('Current cart list:', clist);
     }, []); // 빈 배열을 넣어 컴포넌트가 처음 렌더링될 때만 실행
 
     // 총 수량과 총 가격 계산
@@ -32,11 +33,46 @@ function CartList(){
     const deliveryFee = 2500;
     const finalAmount = totalPrice+deliveryFee;
 
-    // 수량 변경 핸들러 함수
-    const handleQuantityChange = (id, newQuantity) => {
-        setCList(clist.map(crecord => 
-            crecord.cartsequence === id ? { ...crecord, qty: newQuantity } : crecord
-        ));
+    
+    const handleQuantityChange = async (id, newQty) => {
+        // 상태에서 수량 변경
+        const updatedCList = clist.map(crecord => 
+            crecord.cartsequence === id ? { ...crecord, qty: newQty } : crecord
+        );
+        setCList(updatedCList);
+    
+        // 변경된 수량의 goodsuuid를 찾기
+        const updatedRecord = updatedCList.find(crecord => crecord.cartsequence === id);
+        const cgoodsuuid = updatedRecord ? updatedRecord.goodsuuid : null;
+    
+        // if (!cgoodsuuid) {
+        //     console.error('Goods UUID not found');
+        //     return; // goodsuuid가 없으면 함수를 종료
+        // }
+    
+        // try {
+        //     // 서버에 수량 업데이트 요청
+        //     await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${cartsequence}/${newQty}`);
+        // } catch (error) {
+        //     console.error('Error updating quantity:', error);
+        //     // 수량 변경이 실패하면 원래 상태로 되돌리기
+        //     setCList(clist);
+        // }
+
+
+
+    };
+    
+    // 장바구니에 담긴 상품 삭제
+    // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
+    const deleteCartItem = async (useruuid, cartsequence) => {
+        try {
+            await axios.get(`http://localhost:8080/shop/cart/delete/${useruuid}/${cartsequence}`);
+            // 삭제 후 UI 업데이트
+            setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
     };
 
     return(
@@ -61,7 +97,7 @@ function CartList(){
                                     />
                                 </td>
                                 <td className="cart-list-price">{(crecord.goods.price * crecord.qty).toLocaleString()}원</td>
-                                <td className="cart-list-delete cart-list-center"><Icon.XLg className="delete-icon" onClick="#" /></td>
+                                <td className="cart-list-delete cart-list-center" onClick={() => deleteCartItem(useruuid, crecord.cartsequence)}><Icon.XLg className="delete-icon" /></td>
                             </tr>
                         ))}
                         <tr>
