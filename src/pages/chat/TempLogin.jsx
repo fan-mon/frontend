@@ -1,15 +1,29 @@
 import {useState} from "react";
+import axios from "axios";
 const TempLogin = () => {
     const [user, setUser] = useState('');
     const [uuid, setUuid] = useState('');
+    const [stat, setStat] = useState('');
 
-    const handleLogin = () => {
-        login(user, uuid); // 로그인 함수 호출
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        try{
+            console.log("uuid : "+uuid);
+            const response = await axios.post('http://localhost:8080/chat/login',{
+                uuid
+            })
+            console.log("login response : "+response.data)
+            login(response.data.user, response.data.uuid, response.data.stat); // 로그인 함수 호출
+        }catch (e) {
+            console.log(e);
+        }
     };
     // 로그인 함수
-    const login = (user, uuid) => {
+    const login = (user, uuid, stat ) => {
         localStorage.setItem("user", user);
         localStorage.setItem("uuid",uuid);
+        localStorage.setItem("stat",stat);
+        console.log("login success")
     };
     // 로그아웃 함수
     const logout = () => {
@@ -21,12 +35,6 @@ const TempLogin = () => {
 
     return (
         <div>
-            <input
-                type="text"
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-                placeholder="Username"
-            />
             <input
                 type="text"
                 value={uuid}
