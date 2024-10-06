@@ -10,6 +10,7 @@ function GoodsDetail(){
     //goods 테이블에서 데이터 가져오기
     let [gdetail, setGDetail] = useState(null);
     const { goodsuuid } = useParams();
+
     useEffect(() => {
         const uuid = goodsuuid || sessionStorage.getItem('goodsuuid');
 
@@ -31,7 +32,6 @@ function GoodsDetail(){
         setQuantity(Number(event.target.value));
     };
     const totalPrice = (pricePerItem * quantity).toLocaleString();
-
 
     return (
         <>
@@ -56,7 +56,7 @@ function GoodsDetail(){
                                                         개
                                                     </span>
                                                 </div>
-                                                <button className="welcome-add-cart" onClick="#">
+                                                <button className="welcome-add-cart">
                                                     Add to Cart
                                                 </button>
                                             </div>

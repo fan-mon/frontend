@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 
-function GoodsNav({ teamuuid }){
+function GoodsNav({ teamuuid, glist  }){
 
     let [gcategory, setGCategory] = useState([]);
 
@@ -37,7 +37,7 @@ function GoodsNav({ teamuuid }){
                     ))}
                 </Nav>
                 <Nav>
-                    <Nav.Link href="/shop/cart/list"><Icon.Cart2 className="hover-color icon-cart" /></Nav.Link>
+                    <Nav.Link href="/shop/cart/list/0cf55a0d-a2a5-443b-af46-835d70874c40"><Icon.Cart2 className="hover-color icon-cart" /></Nav.Link>
                 </Nav>
             </Navbar>
         </>
