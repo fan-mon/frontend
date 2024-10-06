@@ -13,6 +13,7 @@ import BoardPage from "./pages/board/BoardPage";
 import Bought from "./pages/shop/buy/Bought";
 import SignUp from "./pages/user/SignUp";
 import ManagementSignUp from "./pages/management/ManagementSignUp";
+import Login from "./pages/user/Login";
 import GoodsManage from './pages/management/goods/GoodsManage';
 import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
+                <Route path="/user/login" element={<Login/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
                 <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
               </Routes>
