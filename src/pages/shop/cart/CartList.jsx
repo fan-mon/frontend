@@ -3,16 +3,20 @@ import "../css/cartlist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function CartList(){
 
+    const { useruuid } = useParams();
+
     const [clist, setCList] = useState([]);
+
 
     // 데이터 패칭을 useEffect로 처리
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/shop/cart/list`);
+                const response = await axios.get(`http://localhost:8080/shop/cart/list/${useruuid}`);
                 setCList(response.data);
             } catch (error) {
                 console.error('Error fetching goods:', error);

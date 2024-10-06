@@ -49,12 +49,12 @@ function GoodsList() {
 
   return (
     <>
-        <section className="goods-frame">
-            <div className="goodslist-container">
-                <div className="goodslist-content">
-                <GoodsNav teamuuid={teamuuid} />
-                <div className="row">
-                    {glist.map((gprod) => (
+      <section className="goods-frame">
+          <div className="goodslist-container">
+              <div className="goodslist-content">
+              <GoodsNav teamuuid={teamuuid} />
+              <div className="row">
+                  {glist.map((gprod) => (
                     <div className="col-md-3 col-sm-4" key={gprod.goodsuuid}>
                         <div className="single-goods">
                         <div className="single-goods-bg">
@@ -69,13 +69,13 @@ function GoodsList() {
                         </a>
                         </div>
                     </div>
-                    ))}
-                </div>
-                </div>
-            </div>
-        </section>
-        </>
-        );
+                  ))}
+              </div>
+              </div>
+          </div>
+      </section>
+    </>
+  );
 }
 
 export default GoodsList;

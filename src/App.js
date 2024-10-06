@@ -35,13 +35,13 @@ function App() {
               <Routes>
                 <Route path="/chat/ws" element={<ChatPage artistUuid={artistuuid} userUuid={useruuid} chatUuid={chatuuid}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
-                <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>
-                <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list/:teamuuid/all/:useruuid" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list/:teamuuid/:category/:useruuid" element={<GoodsList/>}/>
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
-                <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
-                <Route path="/shop/cart/list" element={<CartList/>}/>
-                <Route path="/shop/buy/buying" element={<Buying/>}/>
-                <Route path="/shop/buy/bought" element={<Bought/>}/>
+                <Route path="/shop/goods/detail/:goodsuuid/:useruuid" element={<GoodsDetail/>}/>
+                <Route path="/shop/cart/list/:useruuid" element={<CartList/>}/>
+                <Route path="/shop/buy/buying/:useruuid" element={<Buying/>}/>
+                <Route path="/shop/buy/bought/:useruuid" element={<Bought/>}/>
                 <Route path="/management/goodsform" element={<GoodsForm/>}/>
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>

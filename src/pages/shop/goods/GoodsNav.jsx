@@ -37,7 +37,7 @@ function GoodsNav({ teamuuid }){
                     ))}
                 </Nav>
                 <Nav>
-                    <Nav.Link href="/shop/cart"><Icon.Cart2 className="hover-color icon-cart" /></Nav.Link>
+                    <Nav.Link href="/shop/cart/list"><Icon.Cart2 className="hover-color icon-cart" /></Nav.Link>
                 </Nav>
             </Navbar>
         </>
