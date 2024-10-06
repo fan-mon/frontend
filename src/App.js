@@ -39,7 +39,7 @@ function App() {
                 <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
                 <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
                 <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
-                <Route path="/shop/cart" element={<CartList/>}/>
+                <Route path="/shop/cart/list" element={<CartList/>}/>
                 <Route path="/shop/buy/buying" element={<Buying/>}/>
                 <Route path="/shop/buy/bought" element={<Bought/>}/>
                 <Route path="/management/goodsform" element={<GoodsForm/>}/>
