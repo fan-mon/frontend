@@ -1,34 +1,37 @@
 import { useEffect, useState } from 'react';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
-import ArtistChat from "./ArtistChat";
-import UserChat from "./UserChat";
+import {useParams} from "react-router-dom";
+import ChatRoom from "./ChatRoom";
 
-const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
+const ChatPage = ({ chatUuid }) => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
+    const role=localStorage.getItem("user");
+    const useruuid=localStorage.getItem("uuid");
+    const { artistUuid } = useParams();
 
     useEffect(() => {
         const socket = new SockJS(`http://localhost:8080/chat/ws`); // WebSocket 연결
         const client = Stomp.over(()=>socket); // Stomp 클라이언트 생성
-        client.reconnect_delay = 5000;  // 재연결 시도 간격
 
         client.connect({}, (frame) => {
             console.log('Connected: ' + frame);
 
-            // 아티스트 메시지 구독
-            client.subscribe(`/sub/${artistUuid}`, (message) => {
-                console.log(`Received message from artist: ${message.body}`);
+            // 유저와 아티스트의 구독 처리
+            // 팬의 메세지는 아티스트와 발행한 팬만 구독
+            client.subscribe(`/sub/${artistUuid}/fromFans`, (message) => {
+                const parsedMsg=JSON.parse(message.body);
+                if (role==='ARTIST'||parsedMsg.user.useruuid===localStorage.getItem("uuid")){
+                    setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
+                }
+            });
+            // 아티스트가 보낸 메세지는 아티스트와 유저 둘 다 구독
+            client.subscribe(`/sub/${artistUuid}/toFans`, (message) => {
                 setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
             });
 
             setStompClient(client);
-            // 팬 메시지 구독 (아티스트용)
-            client.subscribe(`/sub/${artistUuid}/${userUuid}`, (message) => {
-                console.log(`Received message from fan: ${message.body}`);
-                setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
-            });
-
         }, (error) => {
             console.error('STOMP error: ' + error);
         });
@@ -38,6 +41,7 @@ const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
             console.error('Broker reported error: ' + frame.headers['message']);
             console.error('Additional details: ' + frame.body);
         };
+        client.activate();
 
 
         return () => {
@@ -45,9 +49,10 @@ const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
                 client.disconnect();
             }
         };
-    }, [artistUuid, userUuid]); // 의존성 배열에 artistUuid와 userUuid 추가
+    }, [artistUuid, useruuid, role]); // 의존성 배열에 artistUuid와 useruuid 추가
 
-    const sendMessage = (message, sender) => {
+    // 메세지 전송 함수
+    const sendMessage = (message) => {
         if (stompClient && stompClient.connected) {
             const messageData = {
                 messagetext: message,
@@ -56,65 +61,29 @@ const ChatPage = ({ artistUuid, userUuid, chatUuid }) => {
                     artistuuid: artistUuid,  // 아티스트 UUID
                 },
                 user: {
-                    useruuid: userUuid,  // 유저 UUID
+                    useruuid: useruuid,  // 유저 UUID
                 },
-                messageFrom: sender,
+                messageFrom: role,
                 chat: {
                     chatuuid: chatUuid,  // 채팅 UUID
                 },
             };
-
-            console.log(`Sending message: `, messageData);
-            // 팬이 메시지를 보낼 때는 아티스트에게 보내는 경로
-            const destination = sender === 'Artist' ? `/pub/${artistUuid}` : `/pub/${artistUuid}/${userUuid}`;
+            const destination = role === 'USER' ? `/pub/${artistUuid}/${useruuid}/toArtist` : `/pub/${artistUuid}/toFans`;
             stompClient.send(destination, {}, JSON.stringify(messageData));
         } else {
             console.error("STOMP client is not connected");
         }
     };
-
     return (
-        <div style={styles.page}>
-            <h1>Chat Page</h1>
-            <div style={styles.leftColumn}>
-                <ArtistChat messages={messages} sendMessage={sendMessage} />
-            </div>
-            <div style={styles.rightColumn}>
-                <UserChat messages={messages} sendMessage={sendMessage}/>
-            </div>
+        <div>
+            <h1>{role} Chat Page</h1>
+            <ChatRoom role={role}
+                      messages={messages}
+                      sendMessage={sendMessage}
+            />
         </div>
     );
 
 };
-const styles = {
-    page: {
-        display: 'flex',
-        height: '100vh',
-        padding: '20px',
-        gap: '30px'
-    },
-    leftColumn: {
-        flex: 1, // Takes up one part of the available space (left side)
-        marginRight: '20px',
-        padding: '20px',
-        backgroundColor: 'rgba(150, 161, 190, 0.1)',
-        borderRadius: '10px',
-        border: '1px solid rgba(150, 161, 190, 0.3)',
-        boxSizing: 'border-box',
-        overflowY: 'scroll',
-    },
-    rightColumn: {
-        flex: 1, // Takes up one part of the available space (right side)
-        marginRight: '20px',
-        padding: '20px',
-        backgroundColor: 'rgba(150, 161, 190, 0.1)',
-        borderRadius: '10px',
-        border: '1px solid rgba(150, 161, 190, 0.3)',
-        boxSizing: 'border-box',
-        overflowY: 'scroll',
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'space-between',
-    },};
 
 export default ChatPage;
