@@ -1,6 +1,8 @@
+import React, { useContext } from 'react';
 import "../css/bought.css";
 
 function Bought(){
+
     return(
         <>
             <div className="container bought-content">
