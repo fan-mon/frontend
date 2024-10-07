@@ -1,52 +1,114 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
 import "../css/cartlist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
-
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function CartList(){
 
-    const initialCartitem = [
-        { id: 1, name: "귀여운 요술봉", price: 59000, quantity: 1 },
-        { id: 2, name: "안귀여운 요술봉", price: 39000, quantity: 2 } 
-    ];
+    const { useruuid } = useParams();
 
-    const [cartitem, setCartitem] = useState(initialCartitem);
+    const [clist, setCList] = useState([]);
+
+
+    // 데이터 패칭을 useEffect로 처리
+    useEffect(() => {
+
+        console.log(clist);
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/shop/cart/list/${useruuid}`);
+                setCList(response.data);
+            } catch (error) {
+                console.error('Error fetching goods:', error);
+            }
+        };
+
+        fetchData();
+        console.log('Current cart list:', clist);
+    }, []); // 빈 배열을 넣어 컴포넌트가 처음 렌더링될 때만 실행
 
     // 총 수량과 총 가격 계산
-    const totalQuantity = cartitem.reduce((total, product) => total + parseInt(product.quantity), 0);
-    const totalPrice = cartitem.reduce((total, product) => total + (product.price * product.quantity), 0).toLocaleString();
+    const totalQuantity = clist.reduce((total, crecord) => total + parseInt(crecord.qty), 0);
+    const totalPrice = clist.reduce((total, crecord) => total + (crecord.goods.price * crecord.qty), 0);
+    const deliveryFee = 2500;
+    const finalAmount = totalPrice+deliveryFee;
 
-    // 수량 변경 핸들러 함수
-    const handleQuantityChange = (id, newQuantity) => {
-        setCartitem(cartitem.map(product => 
-            product.id === id ? { ...product, quantity: newQuantity } : product
-        ));
+    const handleQuantityChange = async (id, newQty) => {
+        // newQty가 유효한지 확인 (1에서 10 사이의 값)
+        if (newQty < 1 || newQty > 10 || isNaN(newQty)) {
+            console.error('Invalid quantity:', newQty);
+            return; // 유효하지 않은 경우 함수 종료
+        }
+        
+        // 상태에서 수량 변경
+        const updatedCList = clist.map(crecord => 
+            crecord.cartsequence === id ? { ...crecord, qty: newQty } : crecord
+        );
+    
+        // 변경된 레코드 찾기
+        const updatedRecord = updatedCList.find(crecord => crecord.cartsequence === id);
+        
+        // goodsuuid가 없으면 로그 출력 후 종료
+        if (!updatedRecord || !updatedRecord.goods.goodsuuid) {
+            console.error('Goods UUID not found');
+            console.log('goodsuuid', updatedRecord ? updatedRecord.goods.goodsuuid : '레코드 없음'); 
+            return;
+        }
+    
+        try {
+            // 서버에 수량 업데이트 요청
+            await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
+            console.log(newQty);
+            // 요청 성공 후 상태 업데이트
+            setCList(updatedCList);
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+            // 수량 변경이 실패하면 원래 상태로 되돌리기
+            setCList(clist);
+        }
+    };
+    
+    
+    
+    
+    // 장바구니에 담긴 상품 삭제
+    // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
+    const deleteCartItem = async (useruuid, cartsequence) => {
+        try {
+            await axios.get(`http://localhost:8080/shop/cart/delete/${useruuid}/${cartsequence}`);
+            // 삭제 후 UI 업데이트
+            setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
+        } catch (error) {
+            console.error('Error deleting item:', error);
+        }
     };
 
     return(
         <>
-            <div className="container cart-content">
+            <div className=" cart-content">
                 <div className="row">
                     <h2>장바구니</h2>
                     <table className="cart-content-list">
-                        {cartitem.map((product, index) => (
-                            <tr key={product.id}>
+                        {clist.map((crecord, index) => (
+                            <tr key={crecord.cartsequence}>
                                 <td className="cart-list-no cart-list-center">{index + 1}</td>
-                                <td className="cart-list-file cart-list-center"><a href="/shop/goods/detail"><img src={`${process.env.PUBLIC_URL}/shop/common/monster1.png`} alt="cart list image"/></a></td>
-                                <td className="cart-list-name"><a href="/shop/goods/detail">{product.name}</a></td>
+                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
+                                <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}>{crecord.goods.name}</a></td>
                                 <td className="cart-list-qty cart-list-center">
                                     <input 
                                         type="number" 
-                                        name={`goods-qty-${product.id}`} 
+                                        name={`goods-qty-${crecord.cartsequence}`} 
                                         min="1" 
                                         max="10"
-                                        value={product.quantity} 
-                                        onChange={(e) => handleQuantityChange(product.id, parseInt(e.target.value))}
+                                        defaultValue={crecord.qty}
+                                        onChange={(e) => handleQuantityChange(crecord.cartsequence, parseInt(e.target.value), crecord.goodsuuid)}
                                     />
                                 </td>
-                                <td className="cart-list-price">{(product.price * product.quantity).toLocaleString()}원</td>
-                                <td className="cart-list-delete cart-list-center"><Icon.XLg className="delete-icon" onClick="#" /></td>
+                                <td className="cart-list-price">{(crecord.goods.price * crecord.qty).toLocaleString()}원</td>
+                                <td className="cart-list-delete cart-list-center" onClick={() => deleteCartItem(useruuid, crecord.cartsequence)}><Icon.XLg className="delete-icon" /></td>
                             </tr>
                         ))}
                         <tr>
@@ -60,10 +122,10 @@ function CartList(){
                     </table>
                     <div className="total-result">
                         <div>
-                            <span>배송비&nbsp;&nbsp;&nbsp;2,500원</span>
+                            <span>배송비&nbsp;&nbsp;&nbsp;{deliveryFee.toLocaleString()}원</span>
                         </div>
                         <div>
-                            <span>결제예정금액&nbsp;&nbsp;&nbsp;{totalPrice}원</span>
+                            <span>결제예정금액&nbsp;&nbsp;&nbsp;{finalAmount.toLocaleString()}원</span>
                         </div>
                     </div>
                     <a href="/shop/buy/buying">
