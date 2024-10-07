@@ -20,12 +20,18 @@ import ChatPage from "./pages/chat/ChatPage";
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
 
+import TempLogin from "./pages/chat/TempLogin";
+
+import TeamList from './pages/management/team/TeamList';
+import ManageGoodsList from './pages/management/goods/ManageGoodsList';
+
+
 
 
 function App() {
     const useruuid='0cf55a0d-a2a5-443b-af46-835d70874c40'
     const teamuuid='8456584b-809d-11ef-b4db-0a2a78c30fc9'       //데이식스
-    const artistuuid = 'ca5a5a75-809c-11ef-b4db-0a2a78c30fc9'   //영케이
+    const artistUuid = 'ca5a5a75-809c-11ef-b4db-0a2a78c30fc9'   //영케이
     const chatuuid = '8bb74c71-809e-11ef-b4db-0a2a78c30fc9'
     
   return (
@@ -34,7 +40,8 @@ function App() {
           <Header />
           <div className="content">
               <Routes>
-                <Route path="/chat/ws" element={<ChatPage artistUuid={artistuuid} userUuid={useruuid} chatUuid={chatuuid}/>} />
+                <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid}/>} />
+                <Route path="/chat/login" element={<TempLogin/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
                 <Route path="/shop/goods/list/:teamuuid/all/:useruuid" element={<GoodsList/>}/>
                 <Route path="/shop/goods/list/:teamuuid/:category/:useruuid" element={<GoodsList/>}/>
@@ -43,8 +50,10 @@ function App() {
                 <Route path="/shop/cart/list/:useruuid" element={<CartList/>}/>
                 <Route path="/shop/buy/buying/:useruuid" element={<Buying/>}/>
                 <Route path="/shop/buy/bought/:useruuid" element={<Bought/>}/>
-                <Route path="/management/goodsform" element={<GoodsForm/>}/>
+                <Route path="/management/goodsform/:teamuuid" element={<GoodsForm />} />
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
+                <Route path="/management/manageGoodsList" element={<ManageGoodsList />} /> {/* 더보기 경로 추가 */}
+                <Route path="/management/teamList" element={<TeamList/>} />
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>

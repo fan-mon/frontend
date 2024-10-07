@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 import "./css/goodsform.css";
+import { useParams } from "react-router-dom";
 
 const GoodsForm = () => {
 
     const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
     const teamuuid = '8456584b-809d-11ef-b4db-0a2a78c30fc9'; //hard coding
+    // const teamuuid = useParams();
     const [name, setName] = useState('');
     const [qty, setQty] = useState('');
     const [price, setPrice] = useState('');
