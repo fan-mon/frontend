@@ -1,23 +1,47 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "./managementsignup.css";
 
 const ManagementSignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [birthdate, setBirthdate] = useState('');
-  const [phone, setPhone] = useState('');
+  const [businessno, setBusinessno] = useState('');
   const [address, setAddress] = useState('');
   const [emailVerified, setEmailVerified] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit =  async(e) => {
     e.preventDefault();
     if (!emailVerified) {
       alert('이메일 인증을 완료해주세요.');
       return;
+    };
+
+  try {
+    const response = await axios.post('http://localhost:8080/management/signup', {
+      email,
+      password,
+      name,
+      businessno,
+      address
+    });
+
+    alert('회원가입이 완료되었습니다!');
+    navigate('/user/login'); 
+    console.log(response.data);
+  } catch (error) {
+    if (error.response) {
+      alert(`회원가입 실패: ${error.response.data.message}`);
+    } else {
+      alert('회원가입 중 오류가 발생했습니다.');
     }
-    console.log({ email, password, name, birthdate, phone, address });
-  };
+  }
+};
+
+
 
   const handleEmailVerification = () => {
     // 여기에 이메일 인증 로직 추가 (API 호출 등)
@@ -66,8 +90,8 @@ const ManagementSignUp = () => {
           className="input"
           type="tel"
           placeholder="사업자 번호 ('-'빼고 숫자만 입력)"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          value={businessno}
+          onChange={(e) => setBusinessno(e.target.value)}
           required
         />
         <input

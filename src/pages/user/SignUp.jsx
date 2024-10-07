@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import "./signup.css";
 
 const SignUp = () => {
@@ -9,15 +11,39 @@ const SignUp = () => {
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
   const [emailVerified, setEmailVerified] = useState(false);
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!emailVerified) {
       alert('이메일 인증을 완료해주세요.');
       return;
     }
-    console.log({ email, password, name, birthdate, phone, address });
-  };
+
+
+  try {
+    const response = await axios.post('http://localhost:8080/users/signup', {
+      email,
+      password,
+      name,
+      birth: birthdate,
+      phone,
+      address
+    });
+
+    alert('회원가입이 완료되었습니다!');
+    navigate('/user/login'); 
+    console.log(response.data);
+  } catch (error) {
+    if (error.response) {
+      alert(`회원가입 실패: ${error.response.data.message}`);
+    } else {
+      alert('회원가입 중 오류가 발생했습니다.');
+    }
+  }
+};
+
+
 
   const handleEmailVerification = () => {
     // 여기에 이메일 인증 로직 추가 (API 호출 등)
@@ -64,7 +90,7 @@ const SignUp = () => {
         <input
           className="input"
           type="text"
-          placeholder="생년월일 (YYYYMMDD)"
+          placeholder="생년월일 (YYYY-MM-DD)"
           value={birthdate}
           onChange={(e) => setBirthdate(e.target.value)}
           required
@@ -72,7 +98,7 @@ const SignUp = () => {
         <input
           className="input"
           type="tel"
-          placeholder="휴대폰 ('-'빼고 숫자만 입력)"
+          placeholder="휴대폰 (010-1234-1234)"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           required
@@ -92,5 +118,6 @@ const SignUp = () => {
     </div>
   );
 };
+
 
 export default SignUp;
