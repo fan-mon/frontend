@@ -3,12 +3,12 @@ import "../css/cartlist.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function CartList(){
 
     const { useruuid } = useParams();
-
+    const navigate = useNavigate();
     const [clist, setCList] = useState([]);
 
 
@@ -71,9 +71,6 @@ function CartList(){
         }
     };
     
-    
-    
-    
     // 장바구니에 담긴 상품 삭제
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
     const deleteCartItem = async (useruuid, cartsequence) => {
@@ -85,6 +82,50 @@ function CartList(){
             console.error('Error deleting item:', error);
         }
     };
+
+    //결제버튼클릭 > 새 창 열 때 데이터 전송
+    const handlePaymentClick = () => {
+        const paymentData = {
+            orders: {
+                useruuid: useruuid,  // 로그인된 사용자의 UUID
+                totalcost: finalAmount,  // 결제 예정 금액 (배송비가 포함된 총액)
+                qty: totalQuantity  // 장바구니에 담긴 총 상품 수량
+            },
+
+            ordersDetailList: clist.map(crecord => ({
+                qty: crecord.qty,  // 각 상품의 수량
+                totalcost: crecord.goods.price * crecord.qty,  // 각 상품의 총 금액
+                goodsuuid: crecord.goods.goodsuuid,  // 각 상품의 UUID
+                useruuid: useruuid  // 로그인된 사용자의 UUID (FK 용도)
+            }))
+        };
+
+        fetch('http://localhost:8080/shop/buy/buying', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(paymentData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                console.error('Response not OK:', response);
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('성공:', data);
+            navigate('/shop/buy/buying/0cf55a0d-a2a5-443b-af46-835d70874c40');
+        })
+        .catch(error => {
+            console.log('전송할 데이터:', paymentData);
+            console.error('오류 발생:', error);
+        });
+    
+    
+};
+
 
     return(
         <>
@@ -128,11 +169,9 @@ function CartList(){
                             <span>결제예정금액&nbsp;&nbsp;&nbsp;{finalAmount.toLocaleString()}원</span>
                         </div>
                     </div>
-                    <a href="/shop/buy/buying">
-                        <button className="buying-button">
-                            Buying
-                        </button>
-                    </a>
+                    <button className="buying-button" onClick={handlePaymentClick}>
+                        Buying
+                    </button>
                 </div>
             </div>
         </>
