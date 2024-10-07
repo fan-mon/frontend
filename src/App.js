@@ -19,6 +19,9 @@ import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
+import TeamList from './pages/management/team/TeamList';
+import ManageGoodsList from './pages/management/goods/ManageGoodsList';
+
 
 
 
@@ -43,8 +46,10 @@ function App() {
                 <Route path="/shop/cart" element={<CartList/>}/>
                 <Route path="/shop/buy/buying" element={<Buying/>}/>
                 <Route path="/shop/buy/bought" element={<Bought/>}/>
-                <Route path="/management/goodsform" element={<GoodsForm/>}/>
+                <Route path="/management/goodsform/:teamuuid" element={<GoodsForm />} />
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
+                <Route path="/management/manageGoodsList" element={<ManageGoodsList />} /> {/* 더보기 경로 추가 */}
+                <Route path="/management/teamList" element={<TeamList/>} />
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
