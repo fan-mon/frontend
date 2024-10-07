@@ -14,7 +14,6 @@ function CartList(){
 
     // 데이터 패칭을 useEffect로 처리
     useEffect(() => {
-
         console.log(clist);
 
         const fetchData = async () => {
