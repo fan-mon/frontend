@@ -52,7 +52,11 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
                                         <div className="same-time">
                                             <div className="bubble-wrap">
                                                 <div className="bubble">
-                                                    {msg.messagetext}
+                                                    {msg.messagetext.startsWith('http') ? (
+                                                        <img src={msg.messagetext} alt="Sent image" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                                    ) : (
+                                                        msg.messagetext
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="bubble-time">

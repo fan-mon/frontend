@@ -85,7 +85,8 @@ const ChatPage = ({ chatUuid }) => {
             },
         })
             .then(response => {
-                console.log('Image sent successfully:', response.data);
+                const imageUrl = response.data; // 서버에서 받은 이미지 URL
+                sendMessage(imageUrl); // 이미지 URL로 채팅 메시지 전송
             })
             .catch(error => {
                 console.error('Error sending image:', error);
