@@ -27,7 +27,7 @@ h1 {
 
 .team-item {
     text-align: center;
-    width: calc(16.66% - 20px);
+    width: calc(19.66% - 20px);
     /* 6개씩 배치하기 위한 너비 계산 */
     cursor: pointer;
     /* 클릭 가능 표시 */

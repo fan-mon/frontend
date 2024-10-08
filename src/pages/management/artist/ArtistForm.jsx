@@ -5,7 +5,8 @@ import { useParams } from "react-router-dom";
 
 const ArtistForm = () => {
     const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    // const {managementuuid} = useParams();
+    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
+    // const managementuuid = urlmanagementuuid || sessionStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
     const [name, setName] = useState('');
     const [debut,setDebut] = useState('');
     const [email, setEmail] = useState('');

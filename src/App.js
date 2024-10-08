@@ -28,6 +28,8 @@ import GoodsUpdate from './pages/management/goods/GoodsUpdate';
 import ArtistList from './pages/management/artist/ArtistList';
 import ArtistForm from './pages/management/artist/ArtistForm';
 import ArtistDetail from './pages/management/artist/ArtistDetail';
+import TeamForm from './pages/management/team/TeamForm';
+import TeamDetail from './pages/management/team/TeamDetail';
 
 function App() {
     const useruuid='0cf55a0d-a2a5-443b-af46-835d70874c40'
@@ -60,6 +62,8 @@ function App() {
                 <Route path='/management/artistDetail/:artistuuid' element={<ArtistDetail/>}/>
                 <Route path="/management/manageGoodsDetail/:goodsuuid" element={<ManageGoodsDetail />}/>
                 <Route path="/management/goodsUpdate/:goodsuuid" element={<GoodsUpdate/>}/>
+                <Route path="/management/teamForm/:managementuuid" element={<TeamForm/>}/>
+                <Route path='/management/teamDetail/:teamuuid' element={<TeamDetail/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
