@@ -1,11 +1,14 @@
-import React, { useEffect, useState, useRef  } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 function Buying() {
 
+    // URL 경로에 포함된 useruuid 불러오기 : 로그인 기능 구현 후 수정 필요!
+    const { useruuid } = useParams();
+
     // CartList.jsx에서 세션에 저장한 데이터를 한 번만!! 불러오기
     let [ordersData, setOrdersData] = useState(null);
-    let [userData, setUserData] = useState(null);
     let [detailData, setDetailData] = useState(null);
 
     useEffect(()=>{
@@ -15,10 +18,6 @@ function Buying() {
         const storedOrdersData = sessionStorage.getItem('ordersData');
         if (storedOrdersData) setOrdersData(JSON.parse(storedOrdersData));
 
-        // userData 불러오기
-        const storedUserData = sessionStorage.getItem('userData');
-        if (storedUserData) setUserData(JSON.parse(storedUserData));
-
         // detailData 불러오기
         const storedDetailData = sessionStorage.getItem('DetailData');
         if (storedDetailData) setDetailData(JSON.parse(storedDetailData));
@@ -26,30 +25,36 @@ function Buying() {
         console.log('세션을 다 받아왔어요');
     }, []);
 
-    // cardinfo 테이블에 들어갈 데이터를 세션에 준비
-    // let [cardinfo, setCardInfo] = useState({
-    //     carduuid: null,
-    //     approval: null,
-    //     brand: null,
-    //     currency: 'KRW',
-    //     number: null,
-    //     provider: 'kcp',
-    //     type: 'payment',
-    //     totalcost: ordersData.totalcost,
-    //     ordersuuid: null,
-    //     useruuid: userData ? userData.useruuid : null,
-    // });
+
+    //DB에서 데이터를 가져오기 위한 변수
+    let [userData, setUserData] = useState(null);
+    let [cardInfo, setCardInfo] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`http://localhost:8080/shop/buy/buying/${useruuid}`);
+            setUserData(response.data.user);
+            setCardInfo(response.data.cardInfo);
+            console.log('userData'+userData);
+            console.log('cardInfo'+cardInfo);
+          } catch (err) {
+            setError(err.message);
+          }
+        };
+        fetchData();
+    }, []);
+
 
     // 결제 준비 useEffect가 한 번만 실행되도록 플래그 생성
     const hasExecuted = useRef(false);
 
     // 결제 준비
     const navigate = useNavigate();
-    const location = useLocation();
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if(ordersData && userData && detailData && !hasExecuted.current) {
+        if(ordersData && detailData && !hasExecuted.current) {
             // iamport.js 스크립트 로드
             const script = document.createElement('script');
             script.src = 'https://cdn.iamport.kr/v1/iamport.js';
@@ -71,12 +76,24 @@ function Buying() {
                 document.body.removeChild(script);
             };
         }
-    }, [ordersData, userData, detailData]);
+    }, [ordersData, detailData]);
 
     const handlePayment = () => {
         if (window.IMP) {
             console.log('IMP 객체가 정상적으로 로드되었습니다.');
             
+            // 세션에서 데이터 가져오기
+            const totalQuantity = ordersData.qty;
+            const name = null;
+            if(totalQuantity > 1){
+                name = detailData.name[0] + ' 외 ' + (totalQuantity-1) + '개';
+            }else{
+                name = detailData.name[0];
+            }
+
+            //DB에서 데이터 가져오기
+            
+
             const amount = ordersData.totalcost;
 
             // 결제 요청 실행
@@ -84,11 +101,10 @@ function Buying() {
             window.IMP.request_pay(
                 {
                     // pg: cardinfo.provider,
-                    pg: 'kcp',
+                    pg: 'kcp', // PG사 구분 코드
                     pay_method: 'card', // 결제 방법
-                    // merchant_uid: `payment-${crypto.randomUUID()}`, // 디폴트
-                    merchant_uid: 'null로하고싶어라', // UUID
-                    name: '상품명', //상품명
+                    merchant_uid: `payment-${crypto.randomUUID()}`, // 고객사 주문번호
+                    name: name, //상품명
                     amount: amount, //결제 예정 금액
                     buyer_email: '이메일', //이메일
                     buyer_name: '구매자이름', //구매자 이름
@@ -96,23 +112,46 @@ function Buying() {
                     buyer_addr: '구매자주소', //구매자 주소
                     // buyer_postcode: '구매자우편번호'
                 },
-                function (response) {
-                    if (response.success) {
-                        console.log('결제 성공:', response);
-                        alert('결제가 성공적으로 완료되었습니다.');
+                async (response) => {
 
-                        // orders, ordersdetail 테이블에 데이터 삽입
-                        
-
-
-                        // 구매 완료 페이지로 네비게이트 
-                        navigate('/shop/buy/bought');
-                    } else {
+                    // 결제 실패 처리
+                    if (response.error_code != null) {
                         console.log('결제 실패:', response);
                         alert(`결제에 실패했습니다. 사유: ${response.error_msg}`);
 
                         // 장바구니 페이지로 네비게이트
                         navigate('/shop/cart/list/0cf55a0d-a2a5-443b-af46-835d70874c40');
+                        return;
+                    }
+                    
+                    // 결제 성공 처리
+                    try{
+                        const notified = await fetch (``, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            // imp_uid와 merchant_uid, 주문 정보를 서버에 전달합니다
+                            body: JSON.stringify({
+                                imp_uid: response.imp_uid,
+                                merchant_uid: response.merchant_uid,
+                                // 주문 정보...
+                            }),
+                        });
+
+                        // orders, ordersdetail, cardinfo 테이블에 데이터 삽입
+    
+                        //세션 삭제
+                        sessionStorage.removeItem('ordersData');
+                        sessionStorage.removeItem('userData');
+                        sessionStorage.removeItem('DetailData');
+                        
+                        console.log('결제 성공:', response);
+                        alert('결제가 성공적으로 완료되었습니다.');
+    
+                        // 구매 완료 페이지로 네비게이트 
+                        navigate('/shop/buy/bought');
+                    } catch (error){
+                        console.error('서버 통신 중 오류 발생:', error);
+                        alert('결제 정보를 처리하는 중 오류가 발생했습니다.');
                     }
                 }
             );

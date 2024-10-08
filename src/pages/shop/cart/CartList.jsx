@@ -40,17 +40,7 @@ function CartList(){
         };
         sessionStorage.setItem('ordersData', JSON.stringify(orders));
         console.log("orders",orders);
-    
-        let user = {
-            useruuid: useruuid, //유저 UUID
-            address: '', //유저 주소
-            email: '',   //유저 이메일
-            name: '', //유저 이름
-            phone: ''    //유저 연락처
-            // ,postcode: userpostcode //우편번호. 테이블 구조 고쳐지면 추가할게요
-        };
-        sessionStorage.setItem('userData', JSON.stringify(user));
-        console.log("user",user);
+
     }, [clist, useruuid]) // clist 또는 useruuid가 변경될 때 실행
 
     // ordersDetail 테이블에 들어갈 데이터 준비
