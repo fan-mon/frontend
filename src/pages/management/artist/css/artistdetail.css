@@ -1,0 +1,23 @@
+.update-form-btn {
+    background-color: #EAB70E;
+    color: white;
+    text-align: center;
+    font-size:12px;
+    height: 50px;
+    width: 100px;
+    margin: 20px 10px;
+    border: none;
+    font-weight: bold;
+}
+
+.update-btn{
+    background-color: #EAB70E;
+    color: white;
+    text-align: center;
+    font-size:12px;
+    height: 50px;
+    width: 100px;
+    margin: 20px 10px;
+    border: none;
+    font-weight: bold;
+}
