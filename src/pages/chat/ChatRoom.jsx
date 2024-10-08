@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../meetingroom/fonts/bootstrap-icons.min.css'
 import './css/ChatRoom.css'
 import axios from "axios";
-const ChatRoom = ({ role, messages, sendMessage, sendImage  }) => {
+const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
     const [inputMessage, setInputMessage] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
@@ -36,18 +36,11 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage  }) => {
         }
     };
 
-    const blockuser= async ({msg})=>{
-        try {
-            await axios.post('http://localhost:8080/chat/block',msg)
-            alert('해당 메세지를 보낸 유저가 차단되었습니다.');
-        }catch (e){
-            console.log(e)
-        }
-    }
+
     const handleMessage=(msg)=> {
-        console.log("block user 실행 : " + JSON.stringify(msg))
-        const usermessageuuid=msg.usermessageuuid;
-        blockuser(usermessageuuid);
+        let uuid=msg.user.useruuid;
+        console.log("block user 실행 : " + uuid)
+        blockuser(uuid.toString());
     }
 
     return (
@@ -61,7 +54,7 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage  }) => {
                     <div className="chat-contents">
                         <div className="date-wrap">2024년 09월 19일</div>
                         {messages.map((msg, index) => (
-                            <div key={index} className="chat-wrap">
+                            <div key={index} className="chat-wrap" onClick={role === 'ARTIST' ? () => handleMessage(msg) : null}>
                                 <div className={msg.type === role ? "mine" : "yours"}>
                                     <div className="profile"></div>
                                     <div className="content-wrap">

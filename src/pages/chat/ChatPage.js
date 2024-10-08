@@ -16,10 +16,12 @@ const ChatPage = ({ chatUuid }) => {
     const role=localStorage.getItem("user");
     let useruuid = "";
     let destination="";
+    let status = "";
     if (role==='ARTIST'){
         useruuid=null;
         destination=`/pub/${artistUuid}/toFans`
     }else if(role==='USER'){
+        status = localStorage.getItem("stat");
         useruuid=localStorage.getItem("uuid");
         destination=`/pub/${artistUuid}/${useruuid}/toArtist`
     }
@@ -54,9 +56,7 @@ const ChatPage = ({ chatUuid }) => {
                 console.log("receive message : "+message.body)
                 setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
             });
-
             setStompClient(client);
-
         }, (error) => {
             console.error('STOMP error: ' + error);
         });
@@ -95,11 +95,28 @@ const ChatPage = ({ chatUuid }) => {
         }
     };
 
-    
+    // 유저 밴 함수
+    const blockuser= async (useruuid)=>{
+        try {
+            const response=await axios.post(`http://localhost:8080/chat/block`, null, {
+                params: {uuid: useruuid},
+            });
+            const banneduuid=response.data;
+            if (banneduuid===useruuid){
+                alert("해당 유저를 차단했습니다.")
+            }
+        }catch (e){
+            console.log(e)
+        }
+    }
 
     // 메세지 전송 함수
     const sendMessage = (message) => {
         if (stompClient && stompClient.connected) {
+            if (status==='BANNED'){
+                alert("차단 당한 유저입니다.")
+                return;
+            }
             let messageData;
             if (role==='USER'){
                 messageData = {
@@ -144,6 +161,7 @@ const ChatPage = ({ chatUuid }) => {
                       messages={messages}
                       sendMessage={sendMessage}
                       sendImage={sendImage}
+                      blockuser={blockuser}
             />
         </div>
     );
