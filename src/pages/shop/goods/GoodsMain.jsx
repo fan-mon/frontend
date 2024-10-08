@@ -8,7 +8,7 @@ function GoodsMain(){
         //goods 테이블에서 데이터 가져오기
         let [gmain, setGMain] = useState([]);
         useEffect(() => {
-            axios.get('http://localhost:8080/shop/goods')
+            axios.get('http://localhost:8080/shop/goods/main')
                 .then(response => {
                     console.log(response.data);
                     setGMain(response.data);
