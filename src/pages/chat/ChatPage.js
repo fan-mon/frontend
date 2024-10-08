@@ -75,24 +75,21 @@ const ChatPage = ({ chatUuid }) => {
     }, [artistUuid, useruuid, role]); // 의존성 배열에 artistUuid와 useruuid 추가
 
     // 이미지 전송 함수
-    const sendImage = (image, filename) => {
-        if (stompClient && stompClient.connected) {
-            const imageData = {
-                artistmessageuuid:null,
-                messagetext: filename+"/"+image, // Base64 이미지 데이터
-                timestamp:null,
-                artist: {
-                    artistuuid: artistUuid,
-                },
-                chat: {
-                    chatuuid: chatUuid,
-                },
-            };
-            console.log(imageData);
-            stompClient.send("/pub/sendImage", {}, JSON.stringify(imageData));
-        } else {
-            console.error("STOMP client is not connected");
-        }
+    const sendImage = (image) => {
+        const formData = new FormData();
+        formData.append("image", image);
+
+        axios.post('http://localhost:8080/chat/sendImage', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data', // 멀티파트 폼 데이터로 전송
+            },
+        })
+            .then(response => {
+                console.log('Image sent successfully:', response.data);
+            })
+            .catch(error => {
+                console.error('Error sending image:', error);
+            });
     };
 
     // 유저 밴 함수

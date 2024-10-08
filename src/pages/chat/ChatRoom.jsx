@@ -18,21 +18,11 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
             setInputMessage('');
         }
     };
-    const handleImageSend = () => {
-        // 예시: Base64 인코딩된 이미지 데이터 생성 (여기서는 임의의 데이터 사용)
-        const imageData = "data:image/png;base64,..."; // 실제 Base64 이미지 데이터로 변경 필요
-        sendImage(imageData);
-    };
 
     const handleImageSelect = (event) => {
         const file = event.target.files[0]; // 선택한 파일 가져오기
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                console.log(reader.result)
-                sendImage(reader.result, file.name); // Base64 데이터로 변환하여 sendImage 호출
-            };
-            reader.readAsDataURL(file); // 파일을 읽어 Base64로 변환
+            sendImage(file); // 파일을 전송하는 함수 호출
         }
     };
 
