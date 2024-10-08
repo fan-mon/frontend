@@ -1,49 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import React, { useEffect, useState, useCallback } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import "./css/goodsmanage.css";
 
 const GoodsManage = () => {
   const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-  const [goods, setGoods] = useState([]); //상품 리스트를 저장할 상태값
   const [team, setTeam] = useState([]); //팀 리스트
   const [loading, setLoading] = useState(true);// 로딩 상태
   const [error, setError] = useState(null);// 에러 상태
+  const [selectedTeamUuid, setSelectedTeamUuid] = useState(null); //선택된 팀의 uuid
+  const [selectedTeamGoods, setSelectedTeamGoods] = useState([]); //선택된 팀의 굿즈
+  const [message, setMessage] = useState('');
 
-  //Goods api 호출 함수
-  const fetchGoods = async () => {
+  //Team api 호출 함수
+  const fetchTeam = useCallback(async () => { // useCallback으로 감싸기
     try {
-      const response = await axios.get("http://localhost:8080/management/goods"); //api호출
-      setGoods(response.data); //상품리스트를 상태에 저장
+      const response = await axios.get(`http://localhost:8080/management/team/${managementuuid}`);
+      setTeam(response.data); //팀 정보를 상태에 저장
+      setLoading(false); //로딩 종료
+      console.log(response.data); // team을 console에 찍기
+      setMessage('아티스트 팀을 선택해 주세요!');
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
+  }, [managementuuid]); // 의존성 배열에 managementuuid 추가
+
+  //팀의 굿즈를 가져오는 함수
+  const fetchTeamGoods = async (teamuuid) => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`);
+      console.log("선택된 팀 : "+teamuuid);
+      setSelectedTeamGoods(response.data);
       setLoading(false); //로딩 종료
     } catch (err) {
       setError(err.message);
       setLoading(false);
     }
-  };
-  
-  //Team api 호출 함수
-  const fetchTeam = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/management/team/${managementuuid}`);
-      setTeam(response.data); //팀 정보를 상태에 저장
-      console.log(team);
-    } catch (err) {
-      setError(err.message);
-    }
-  };
+  }
+
   const navigate = useNavigate();
 
-  // 아티스트 팀을 클릭하면 해당 아티스트 팀의 ID에 따라 굿즈 등록 페이지로 이동
+  // 아티스트 팀을 클릭하면 해당 아티스트 팀의 굿즈가 출력
   const handleTeamClick = (teamuuid) => {
-    navigate(`/management/goodsform/${teamuuid}`);
+    setSelectedTeamUuid(teamuuid);
+    fetchTeamGoods(teamuuid);
+    setMessage('');
+  };
+
+  // 굿즈를 클릭하면 해당 굿즈의 detail 페이지로 이동
+  const handleGoodsClick = (goodsuuid) => {
+    navigate(`/management/manageGoodsDetail/${goodsuuid}`);
   };
 
   //컴포넌트가 마운트되면 fetchGoods 실행
   useEffect(() => {
-    fetchGoods();
     fetchTeam();
-  }, []);
+  }, [fetchTeam]); 
 
   if (loading) {
     return <div>로딩 중...</div>
@@ -60,30 +74,33 @@ const GoodsManage = () => {
 
       {/* 아티스트 목록 */}
       <div className="team-section">
-        <h2>상품 등록</h2>
+        <h2>아티스트(팀)</h2>
         <div className="team-list">
-          {team.slice(0,6).map((team) => (
+          {team.map((team) => (
             <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team.teamuuid)}>
-              <img src={team.fname} alt={team.name} className="team-image"></img>
+              <img src={`http://localhost:8080/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
           ))}
         </div>
 
-        <div className="view-more">
+        {/* <div className="view-more">
           <Link to="/management/teamList">더보기</Link>
-        </div>
+        </div> */}
       </div>
 
       {/* 등록한 상품 목록 */}
       <div className="registered-goods-section">
         <h2>등록한 상품</h2>
+      
+        {message && <p className="message">{message}</p>}
+
         <div className="goods-list">
           {/* goods배열을 map으로 돌려서 상품을 표시 */}
-          {goods.slice(0, 6).map(
+          {selectedTeamGoods.slice(0, 6).map(
             (item) => (
-              <div className="goods-item" key={item.goodsuuid}>
-                <img src='http://localhost:8080/resources/goodsimg/day6_goods.jpg' alt={item.name} className="goods-image"/>
+              <div className="goods-item" key={item.goodsuuid} onClick={()=>{handleGoodsClick(item.goodsuuid)}}>
+                <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
                 <p>{item.name}</p>
               </div>
             )
@@ -91,7 +108,12 @@ const GoodsManage = () => {
         </div>
 
         <div className="view-more">
-          <Link to="/management/goodsList">더보기</Link>
+          {selectedTeamUuid && (<Link to={`/management/manageGoodsList/${selectedTeamUuid}`}>더보기</Link>)}
+        </div>
+        <div className="goods-form">
+          {selectedTeamUuid && (
+            <button className="goods-form-btn" onClick={()=>{navigate(`/management/goodsform/${selectedTeamUuid}`)}}>굿즈 등록</button>
+          )}
         </div>
       </div>
     </div>
