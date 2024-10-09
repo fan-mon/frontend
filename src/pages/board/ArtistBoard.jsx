@@ -11,16 +11,16 @@ const ArtistBoard = ({ artistBoard }) => {
                 <textarea className="writing-box" name="" id="" cols="30" maxLength="150" rows="10"
                           placeholder="150자 이내 작성">
                 </textarea>
-                <div className="send-post">
+                <button className="send-post" >
                     post
-                </div>
+                </button>
             </div>
             {artistBoard && artistBoard.length > 0 ? (
                 artistBoard.map((board) => (
                     <div className="artistboard-content-wrap">
                         <div className="writer-button">
-                            <div>수정</div>
-                            <div>삭제</div>
+                            <button className="edit-button">수정</button>
+                            <button className="delete-button">삭제</button>
                         </div>
                         <div key={board.artistboarduuid} className="board-content">
                             <div className="content-left">

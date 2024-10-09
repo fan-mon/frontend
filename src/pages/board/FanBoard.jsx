@@ -30,8 +30,8 @@ const FanBoard = ({ fanBoard }) => {
                                     {post.content}
                                 </div>
                                 <div className="writer-button">
-                                    <div>수정</div>
-                                    <div>삭제</div>
+                                    <button className="edit-button">수정</button>
+                                    <button className="delete-button">삭제</button>
                                 </div>
                             </div>
                         )
