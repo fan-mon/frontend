@@ -1,3 +1,5 @@
+import {href} from "sockjs-client/lib/location";
+
 const ArtistBoard = ({ artistBoard }) => {
     return (
         <div className="artist-board-wrap">
@@ -17,7 +19,7 @@ const ArtistBoard = ({ artistBoard }) => {
                         </div>
                         <div className="content-right">
                             <div className="content-right-top">
-                            <div className="wrtier">
+                                <div className="wrtier">
                                     {board.artist.name}
                                 </div>
                                 <div className="date">
@@ -35,9 +37,11 @@ const ArtistBoard = ({ artistBoard }) => {
                                     <img src="" alt="content-image"/>
                                 </div>
                             </div>
+                            <hr/>
                         </div>
                     </div>
                 ))
+
             ) : (
                 <p>No artist boards available.</p>
             )}
