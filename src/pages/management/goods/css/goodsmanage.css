@@ -50,19 +50,45 @@
     object-fit: cover;
   }
   
-  .view-more {
+  .goods-form {
     text-align: right;
     margin-top: 10px;
   }
   
-  .view-more a {
+  .goods-form a {
     color: #999;
     text-decoration: none;
     font-size: 14px;
   }
   
-  .view-more a:hover {
+  .goods-form a:hover {
     color: white;
     text-decoration: underline;
   }
+
+  .message {
+    text-align: center;
+  }
   
+  .goods-form-btn{
+    width: 170px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 34px;
+    border:none;
+    background-color: #EAB70E;
+    color: #000000;
+    -webkit-transition: 0.3s linear; 
+    -moz-transition: 0.3s linear; 
+    -ms-transition: 0.3s linear; 
+    -o-transition: 0.3s linear; 
+    transition: 0.3s linear;
+    position:  relative;
+    top: 0px;
+    font-size: 16px;
+    margin-right: 5px;
+  }

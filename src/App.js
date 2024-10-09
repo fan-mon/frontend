@@ -7,7 +7,6 @@ import Header from './pages/common/Header'
 import ManagementHeader from './pages/common/ManagementHeader';
 import ArtistPage from "./pages/Artist/ArtistPage";
 
-import GoodsForm from './pages/management/goods/GoodsForm';
 import CartList from './pages/shop/cart/CartList';
 import Buying from "./pages/shop/buy/Buying";
 import BoardPage from "./pages/board/BoardPage";
@@ -15,22 +14,31 @@ import Bought from "./pages/shop/buy/Bought";
 import SignUp from "./pages/user/SignUp";
 import ManagementSignUp from "./pages/management/ManagementSignUp";
 import Login from "./pages/user/Login";
+
 import MyPage from "./pages/user/MyPage";
 import GoodsManage from './pages/management/goods/GoodsManage';
+
 import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
-
 import TempLogin from "./pages/chat/TempLogin";
-
+//Management
 import TeamList from './pages/management/team/TeamList';
 import ManageGoodsList from './pages/management/goods/ManageGoodsList';
+
 import ManagementMyPage from './pages/management/ManagementMyPage';
 
 import Main from './pages/user/Main';
 import DashBoard from './pages/management/DashBoard';
 
+import GoodsManage from './pages/management/goods/GoodsManage';
+import GoodsForm from './pages/management/goods/GoodsForm';
+import ManageGoodsDetail from './pages/management/goods/ManageGoodsDetail';
+import GoodsUpdate from './pages/management/goods/GoodsUpdate';
+import ArtistList from './pages/management/artist/ArtistList';
+import ArtistForm from './pages/management/artist/ArtistForm';
+import ArtistDetail from './pages/management/artist/ArtistDetail';
 
 
 function App() {
@@ -67,8 +75,13 @@ function App() {
                 <Route path="/shop/buy/bought/:useruuid" element={<Bought/>}/>
                 <Route path="/management/goodsform/:teamuuid" element={<GoodsForm />} />
                 <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
-                <Route path="/management/manageGoodsList" element={<ManageGoodsList />} /> {/* 더보기 경로 추가 */}
+                <Route path="/management/manageGoodsList/:teamuuid" element={<ManageGoodsList />} /> {/* 더보기 경로 추가 */}
                 <Route path="/management/teamList" element={<TeamList/>} />
+                <Route path="/management/artistList" element={<ArtistList/>} />
+                <Route path='/management/artistForm/:managementuuid' element={<ArtistForm/>}/>
+                <Route path='/management/artistDetail/:artistuuid' element={<ArtistDetail/>}/>
+                <Route path="/management/manageGoodsDetail/:goodsuuid" element={<ManageGoodsDetail />}/>
+                <Route path="/management/goodsUpdate/:goodsuuid" element={<GoodsUpdate/>}/>
                 <Route path="/user/signup" element={<SignUp/>}/>
                 <Route path="/user/mypage" element={<MyPage/>}/>
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>

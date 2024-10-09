@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import "./css/managegoodslist.css";
 
 const ManageGoodsList = () => {
+    const { teamuuid } = useParams(); //URL파라미터에서 teamuuid 가져오기
     const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
     const [goods, setGoods] = useState([]);
     const [loading, setLoading] = useState(true);// 로딩 상태
@@ -12,7 +13,7 @@ const ManageGoodsList = () => {
     //Goods api 호출 함수
     const fetchGoods = async () => {
         try {
-            const response = await axios.get("http://localhost:8080/management/goods"); //api호출
+            const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`); //api호출
             setGoods(response.data); //상품리스트를 상태에 저장
             setLoading(false); //로딩 종료
         } catch (err) {
@@ -25,7 +26,7 @@ const ManageGoodsList = () => {
 
     // 굿즈를 클릭하면 해당 굿즈의 detail 페이지로 이동
     const handleGoodsClick = (goodsuuid) => {
-        navigate(`/management/goodsdetail/${goodsuuid}`);
+        navigate(`/management/manageGoodsDetail/${goodsuuid}`);
     };
 
     //컴포넌트가 마운트되면 fetchGoods 실행
@@ -43,6 +44,9 @@ const ManageGoodsList = () => {
     return (
         <div className="goods-list-container">
             <h1>굿즈 목록</h1>
+            <div className="goods-form">
+                <button className="goods-form-btn" onClick={() => { navigate(`/management/goodsform/${teamuuid}`) }}>굿즈 등록</button>
+            </div>
             {/* 등록한 상품 목록 */}
             <div className="registered-goods-section">
                 <h2>등록한 상품</h2>
@@ -50,8 +54,8 @@ const ManageGoodsList = () => {
                     {/* goods배열을 map으로 돌려서 상품을 표시 */}
                     {goods.map(
                         (item) => (
-                            <div className="goods-item" key={item.goodsuuid}>
-                                <img src='http://localhost:8080/resources/goodsimg/day6_goods.jpg' alt={item.name} className="goods-image" />
+                            <div className="goods-item" key={item.goodsuuid} onClick={() => handleGoodsClick(item.goodsuuid)}>
+                                <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
                                 <p>{item.name}</p>
                             </div>
                         )
@@ -59,6 +63,6 @@ const ManageGoodsList = () => {
                 </div>
             </div>
         </div>
-            )
+    )
 }
 export default ManageGoodsList;

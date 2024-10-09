@@ -1,11 +1,13 @@
-import {useState} from "react";
+import React, {useState,useRef} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../meetingroom/fonts/bootstrap-icons.min.css'
-import '../meetingroom/css/stayroom.css'
-const ChatRoom = ({ role, messages, sendMessage }) => {
+import './css/ChatRoom.css'
+import axios from "axios";
+const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
     const [inputMessage, setInputMessage] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
+    const fileInputRef = useRef(null);
 
     const openChatRoom = () => setIsChatOpen(true);
     const closeChatRoom = () => setIsChatOpen(false);
@@ -17,27 +19,44 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
         }
     };
 
+    const handleImageSelect = (event) => {
+        const file = event.target.files[0]; // 선택한 파일 가져오기
+        if (file) {
+            sendImage(file); // 파일을 전송하는 함수 호출
+        }
+    };
+
+
+    const handleMessage=(msg)=> {
+        let uuid=msg.user.useruuid;
+        console.log("block user 실행 : " + uuid)
+        blockuser(uuid.toString());
+    }
+
     return (
-        <div>
+        <div className="artist-chat">
             <h2>{role === 'USER' ? 'Fan Chat' : 'Artist Chat'}</h2>
-            <div className={`col-4 chatroom-area`}
-                 style={chatroomStyle}>
+            <div className={`col-4 chatroom-area`}>
                 <div className="contents-box contents-scroll-box chatroom">
                     <div className="chat-top">
                         <div>아티스트 이름</div>
                     </div>
                     <div className="chat-contents">
                         <div className="date-wrap">2024년 09월 19일</div>
-                        <div className="message-list">
-                            {messages.map((msg, index) => (
-                                <div key={index}>
+                        {messages.map((msg, index) => (
+                            <div key={index} className="chat-wrap" onClick={role === 'ARTIST' ? () => handleMessage(msg) : null}>
+                                <div className={msg.type === role ? "mine" : "yours"}>
                                     <div className="profile"></div>
                                     <div className="content-wrap">
+                                        <p className="name">{msg.type}</p>
                                         <div className="same-time">
                                             <div className="bubble-wrap">
-                                                <p className="name">{msg.messageFrom}</p>
                                                 <div className="bubble">
-                                                    {msg.messagetext}
+                                                    {msg.messagetext.startsWith('http') ? (
+                                                        <img src={msg.messagetext} alt="Sent image" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                                    ) : (
+                                                        msg.messagetext
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="bubble-time">
@@ -47,8 +66,8 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                     <div className="chat-bottom">
                         <div className="input-area">
@@ -85,8 +104,16 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
                                     </button>
                                 </div>
                                 <div className="col">
-                                    <button className="btn btn-chat-add">
-                                <span className="ico-circle-wrap">
+                                    <button className="btn btn-chat-add" onClick={() => fileInputRef.current.click()}>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            style={{display: 'none'}} // input 요소 숨기기
+                                            ref={fileInputRef}
+                                            onChange={handleImageSelect} // 파일 선택 시 처리
+                                        />
+
+                                        <span className="ico-circle-wrap">
                                     <i className="bi bi-image-fill"></i>
                                 </span>
                                         <span className="label">사진</span>
@@ -113,10 +140,5 @@ const ChatRoom = ({ role, messages, sendMessage }) => {
     );
 };
 
-const chatroomStyle = {
-    display: 'block',
-    width:'auto', // 768px 이하일 때 너비를 100%로 설정
-    // width:'100%'
-};
 
 export default ChatRoom;
