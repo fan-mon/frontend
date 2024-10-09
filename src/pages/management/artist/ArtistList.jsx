@@ -12,7 +12,7 @@ const ArtistList = () => {
     const [error, setError] = useState(null);// 에러 상태
     const navigate = useNavigate();
 
-    //Team api 호출 함수
+    //Artist api 호출 함수
     const fetchArtist = async () => {
         try {
             const response = await axios.get(`http://localhost:8080/management/artist/list/${managementuuid}`);

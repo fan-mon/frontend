@@ -29,16 +29,20 @@ function ManageGoodsDetail(){
         navigate(`/management/goodsUpdate/${goodsuuid}`);
       };
     
-    const handleDeleteClick = (goodsuuid) => {
-        axios.delete(`http://localhost:8080/management/goods/${goodsuuid}`)
-            .then(response => {
+    const handleDeleteClick = async() => {
+        const confirmed = window.confirm('정말로 삭제하시겠습니까?');
+
+        if (confirmed) {
+            try {
+                await axios.delete(`http://localhost:8080/management/goods/${goodsuuid}`);
                 alert('상품이 성공적으로 삭제되었습니다.');
                 navigate(`/management/manageGoodsList/${gdetail.team.teamuuid}`);
-            })
-            .catch(error=>{
-                console.error('Error deleting goods:', error);
-                alert('상품 삭제에 실패했습니다.');
-            })
+            } catch (error) {
+                console.error('삭제 중 오류 발생:', error);
+                alert('삭제에 실패하였습니다. 다시 시도해 주세요.');
+            }
+        }
+
     }
 
     return (
@@ -81,7 +85,10 @@ function ManageGoodsDetail(){
                         <button className='update-goods-btn' onClick={()=>{handleUpdateClick(goodsuuid)}}>수정하기</button>
                     </div>
                     <div className='delete-goods'>
-                        <button className='update-goods-btn' onClick={()=>{handleDeleteClick(goodsuuid)}}>삭제하기</button>
+                        <button className='delete-goods-btn' onClick={()=>{handleDeleteClick(goodsuuid)}}>삭제하기</button>
+                    </div>
+                    <div className='list-goods'>
+                        <button className='list-goods-btn' onClick={()=>{navigate(`/management/manageGoodsList/${gdetail.team.teamuuid}`)}}>목록으로</button>
                     </div>
                 </div>
             </div>
