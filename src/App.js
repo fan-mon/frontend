@@ -32,7 +32,6 @@ import ManagementMyPage from './pages/management/ManagementMyPage';
 import Main from './pages/user/Main';
 import DashBoard from './pages/management/DashBoard';
 
-import GoodsManage from './pages/management/goods/GoodsManage';
 import GoodsForm from './pages/management/goods/GoodsForm';
 import ManageGoodsDetail from './pages/management/goods/ManageGoodsDetail';
 import GoodsUpdate from './pages/management/goods/GoodsUpdate';
