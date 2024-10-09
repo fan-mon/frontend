@@ -6,26 +6,30 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 function GoodsUpdate() {
     const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding(세션유지)
-    const { goodsuuid: urlGoodsuuid} = useParams(); //url에서 goodsuuid 가져오기
+    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
+    // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
+    const { goodsuuid: urlGoodsuuid } = useParams(); //url에서 goodsuuid 가져오기
     const goodsuuid = urlGoodsuuid || sessionStorage.getItem('goodsuuid'); //세션 저장소에서 가져오기
 
-    const navigate = useNavigate();
-    const [gdetail, setGDetail] = useState([]);
+    const [gdetail, setGDetail] = useState([]); //원래 굿즈 detail정보 담을것
     const [file, setFile] = useState(null); //파일 업로드 위해서
 
-    useEffect(() => {
-        if(goodsuuid){
-            sessionStorage.setItem('goodsuuid',goodsuuid);
-            axios.get(`http://localhost:8080/management/goods/${goodsuuid}`)
-                .then(response => {
-                    setGDetail(response.data);
-                    console.log(gdetail.data);
-                })
-                .catch(error => {
-                    console.error('Error fetching goods:', error);
-                });
-        }
+    const navigate = useNavigate();
 
+    //원래 굿즈 detail 정보 가져오기 api 호출
+    const fetchGoodsDetail = async () => {
+        try {
+            // sessionStorage.setItem('goodsuuid',goodsuuid); //세션에 goodsuuid저장
+            const response = await axios.get(`http://localhost:8080/management/goods/${goodsuuid}`);
+            setGDetail(response.data);
+            console.log(gdetail);
+        } catch (err) {
+            console.error('Error fetching goods detail');
+        }
+    };
+
+    useEffect(() => {
+        fetchGoodsDetail();
     }, [goodsuuid]);
 
     const handleChange = (e) => {
@@ -34,6 +38,8 @@ function GoodsUpdate() {
             ...prevDetail, // 기존 상태를 펼쳐서 새로운 객체를 만듦
             [name]: value // 변경된 필드의 이름에 해당하는 값을 업데이트
         }));
+
+        console.log(gdetail);
     };
 
     const handleFileChange = (e) => {
@@ -44,22 +50,28 @@ function GoodsUpdate() {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('managementuuid',gdetail.managementuuid);
-        formData.append('teamuuid',gdetail.teamuuid);
+        formData.append('goodsuuid', gdetail.goodsuuid);
+        formData.append('managementuuid', managementuuid);
+        formData.append('teamuuid', gdetail.team.teamuuid);
         formData.append('name', gdetail.name);
-        formData.append('description',gdetail.description);
-        formData.append('price',gdetail.price);
-        formData.append('qty',gdetail.qty);
-        if(file){
-            formData.append('file',file);
+        formData.append('description', gdetail.description);
+        formData.append('price', gdetail.price);
+        formData.append('qty', gdetail.qty);
+        if (file) {
+            formData.append('uploadfile', file);
         }
-
+        // FormData의 모든 필드를 확인하는 방법
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         axios.put(`http://localhost:8080/management/goods/${goodsuuid}`, formData)
             .then(response => {
                 alert('상품 수정이 완료되었습니다.');
+
                 navigate(`/management/manageGoodsDetail/${goodsuuid}`); // 수정 후 상세 페이지로 이동
             })
             .catch(error => {
+                alert('상품 수정에 실패하였습니다.');
                 console.error('Error updating goods:', error);
             });
     };
@@ -133,7 +145,8 @@ function GoodsUpdate() {
                     <label>이미지 파일</label>
                     <input
                         type="file"
-                        value={gdetail.fname}
+                        id="uploadfile"
+                        accept='image/*'
                         onChange={handleFileChange}
                         className="form-control"
                     />
