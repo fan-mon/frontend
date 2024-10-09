@@ -16,8 +16,9 @@ function ArtistDetail() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [birth, setBirth] = useState('');
+    const [fname, setFname] = useState('');
     const [uploadfile, setUploadfile] = useState(null);
-    
+
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);// 로딩 상태
     const [error, setError] = useState(null);// 에러 상태
@@ -32,6 +33,7 @@ function ArtistDetail() {
             setDebut(response.data.debut);
             setEmail(response.data.email);
             setBirth(response.data.birth);
+            setFname(response.data.fname);
             setLoading(false); //로딩 종료
 
         } catch (err) {
@@ -46,7 +48,7 @@ function ArtistDetail() {
     const handleEditClick = () => {
         setIsEditing(true);
     };
-    
+
     const handleFileChange = (e) => {
         setUploadfile(e.target.files[0]);
     };
@@ -69,15 +71,15 @@ function ArtistDetail() {
     const handleUpdateClick = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('managementuuid',managementuuid);
-        formData.append('artistuuid',artistuuid);
-        formData.append('name',name);
-        formData.append('debut',debut);
-        formData.append('email',email);
-        formData.append('password',password);
-        formData.append('birth',birth);
-        if(uploadfile){
-            formData.append('uploadfile',uploadfile);
+        formData.append('managementuuid', managementuuid);
+        formData.append('artistuuid', artistuuid);
+        formData.append('name', name);
+        formData.append('debut', debut);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('birth', birth);
+        if (uploadfile) {
+            formData.append('uploadfile', uploadfile);
         }
         // FormData의 모든 필드를 확인하는 방법
         for (let [key, value] of formData.entries()) {
@@ -94,7 +96,7 @@ function ArtistDetail() {
         }
     };
 
-    
+
 
     return (
         <div className="artist-detail-container">
@@ -146,6 +148,11 @@ function ArtistDetail() {
                     ) : (
                         adetail.birth
                     )}</p>
+                    {!isEditing && fname ? (
+                        <img className='artist-img' src={`http://localhost:8080/resources/artistimg/${fname}`} />
+                    ) : (
+                        <span>등록된 이미지가 없습니다.</span>
+                    )}
                     {isEditing && (
                         <div>
                             <label>이미지 파일:</label>
@@ -164,8 +171,8 @@ function ArtistDetail() {
                         <button className="update-btn" onClick={handleEditClick}>수정하기</button>
                     )}
                     <div className='btns'>
-                    <button className='delete-btn' onClick={handleDeleteClick}>삭제하기</button>
-                    <button className='list--btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
+                        <button className='delete-btn' onClick={handleDeleteClick}>삭제하기</button>
+                        <button className='list--btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
                     </div>
                 </div>
             ) : (
