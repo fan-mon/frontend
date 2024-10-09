@@ -1,31 +1,29 @@
 
 .whole-page{
     display: flex;
-    flex-direction: column; /* 세로로 배치 */
-    height: 100vh; /* 전체 높이를 사용 */
+    flex-direction: column;
+    height: 100vh;
     padding: 30px;
     gap: 30px;
 }
 .page {
     display: flex;
-    height: calc(100vh - 100px); /* 네비게이션 바의 높이를 제외한 나머지 공간 */
-    flex: 1; /* 남은 공간을 모두 차지 */
+    height: calc(100vh - 100px);
+    flex: 1;
     gap: 30px;
-    flex-direction: row; /* 기본적으로 가로 배치 */
+    flex-direction: row;
 }
-
-@media (max-width: 1400px) { /* 화면이 좁아질 때 세로로 배치 */
+@media (max-width: 1400px) {
     .page {
         flex-direction: column;
-        height: 100vh; /* 전체 높이로 설정 */
+        height: 100vh;
     }
     .left-column,
     .right-column {
-        width: 100%; /* 각 컬럼이 전체 너비 차지 */
-        height: auto; /* 높이 자동 조정 */
+        width: 100%;
+        height: auto;
     }
 }
-
  .team-profile {
      padding: 20px 40px;
      display: flex;
@@ -38,27 +36,34 @@
      font-size: 20px;
      margin-bottom: 15px;
  }
+ .team-profile .member-wrap{
+     display: flex;
 
+ }
  .team-profile .member-info{
      margin-left: 40px;
      flex-direction: column;
  }
-
  .team-profile .member-info .member-photo {
      height: 100px;
      width: 100px;
      border-radius: 100px;
      background-color: wheat;
-     text-align: center; /* 텍스트를 수평 가운데 정렬 */
-     display: flex; /* flexbox 활성화 */
-     align-items: center; /* 수직 가운데 정렬 */
-     justify-content: center; /* 수평 가운데 정렬 */
+     text-align: center;
+     display: flex;
+     align-items: center;
+     justify-content: center;
  }
-
  .team-profile .member-info .member-name {
      margin-top: 15px;
+     text-align: center;
  }
-
+ .writer-button{
+     justify-content: end;
+     display: flex;
+     gap: 20px;
+     flex-direction: row;
+ }
 .left-column {
     flex: 1;
     padding: 20px 40px;
@@ -74,9 +79,12 @@
 .left-column .artist-board-wrap{
     display: flex;
     flex-direction: column;
-
 }
-
+.left-column .artistboard-content-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 .left-column .artist-board-wrap .board-title, .boardnotice-title, .fanboard-title{
     font-size: 20px;
     margin-bottom: 30px;
@@ -110,18 +118,16 @@
     width: 80px;
     border-radius: 100px;
     background-color: wheat;
-    text-align: center; /* 텍스트를 수평 가운데 정렬 */
-    display: flex; /* flexbox 활성화 */
-    align-items: center; /* 수직 가운데 정렬 */
-    justify-content: center; /* 수평 가운데 정렬 */
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
 .left-column .artist-board-wrap .board-content .content-right {
     display: flex;
     gap: 10px;
     flex-direction: column;
 }
-
 .left-column .artist-board-wrap .board-content .content-right .content-right-top {
     display: flex;
     justify-content: space-between
@@ -132,12 +138,11 @@
     gap: 20px;
 }
 .left-column .artist-board-wrap .board-content .content-right .content-right-bottom .content-img {
-    width: auto;
+    width: 300px;
     height: 300px;
     background-color: black;
     text-align: center;
 }
-
 .right-column {
     width: 500px;
     flex: 1;
@@ -145,7 +150,6 @@
     justify-content: space-between;
     height: 100%; /* 부모의 높이에 맞춤 */
 }
-
 .notice, .fan-board {
     flex: 1;
     padding: 20px 40px;
@@ -154,7 +158,6 @@
     overflow-y: auto; /* 세로 스크롤 가능 */
     scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
 }
-
 .notice .notice-content-list {
     display: flex;
     justify-content: space-between
@@ -179,8 +182,6 @@
     border: 1px solid rgba(255, 199, 0, 1);
     flex: 1;
     color: white;
-    /*align-items: center; !* 수직 가운데 정렬 *!*/
-    /*justify-content: center; !* 수평 가운데 정렬 *!*/
 }
 .fan-board .new-post-wrap .send-post {
     display: flex;

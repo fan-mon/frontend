@@ -34,7 +34,7 @@ const BoardPage = ({ teamuuid }) => {
     return (
         <div className="whole-page">
             <div className="team-profile">
-                <TeamProfile/>
+                <TeamProfile teamuuid={teamuuid}/>
             </div>
             <div className="page">
                     <div className="left-column">

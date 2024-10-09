@@ -17,7 +17,11 @@ const ArtistBoard = ({ artistBoard }) => {
             </div>
             {artistBoard && artistBoard.length > 0 ? (
                 artistBoard.map((board) => (
-                    <div>
+                    <div className="artistboard-content-wrap">
+                        <div className="writer-button">
+                            <div>수정</div>
+                            <div>삭제</div>
+                        </div>
                         <div key={board.artistboarduuid} className="board-content">
                             <div className="content-left">
                                 <div className="writer-photo">
@@ -41,7 +45,7 @@ const ArtistBoard = ({ artistBoard }) => {
                                 </div>
                                 <div className="content-right-bottom">
                                     <div className="content">
-                                        <p>Content: {board.content}</p>
+                                        <p>{board.content}</p>
                                     </div>
                                     <div className="content-img">
                                         <img src="" alt="content-image"/>
