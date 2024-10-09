@@ -110,7 +110,7 @@ function Buying() {
                     buyer_name: '구매자이름', //구매자 이름
                     buyer_tel: '구매자연락처', //구매자 연락처
                     buyer_addr: '구매자주소', //구매자 주소
-                    // buyer_postcode: '구매자우편번호'
+                    // buyer_postcode: '구매자우편번호' //구매자 우편번호
                 },
                 async (response) => {
 
