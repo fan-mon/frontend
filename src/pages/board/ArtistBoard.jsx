@@ -1,16 +1,41 @@
 const ArtistBoard = ({ artistBoard }) => {
     return (
-        <div style={styles.container}>
-            <h1>Artist Board</h1>
+        <div className="artist-board-wrap">
+            <div className="board-title">
+                Artist Board
+            </div>
             {artistBoard && artistBoard.length > 0 ? (
                 artistBoard.map((board) => (
-                    <div key={board.artistboarduuid} style={styles.boardItem}>
-                        <h2>{board.artist.name}</h2>
-                        <p>Content: {board.content}</p>
-                        <p>Like Count: {board.likecount}</p>
-                        <p>Team: {board.team.name}</p>
-                        <p>Debut: {board.team.debut}</p>
-                        <p>Description: {board.team.description}</p>
+                    <div key={board.artistboarduuid} className="board-content">
+                        <div className="content-left">
+                            <div className="writer-photo">
+                                <img src="" alt="wrtier-photo"/>
+                            </div>
+                            <div className="like">
+                                <p>💕 {board.likecount}</p>
+                            </div>
+                        </div>
+                        <div className="content-right">
+                            <div className="content-right-top">
+                            <div className="wrtier">
+                                    {board.artist.name}
+                                </div>
+                                <div className="date">
+                                    {new Date(board.createdat).toLocaleDateString('ko-KR')} {new Date(board.createdat).toLocaleTimeString('ko-KR', {
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}
+                                </div>
+                            </div>
+                            <div className="content-right-bottom">
+                                <div className="content">
+                                    <p>Content: {board.content}</p>
+                                </div>
+                                <div className="content-img">
+                                    <img src="" alt="content-image"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 ))
             ) : (
@@ -18,13 +43,6 @@ const ArtistBoard = ({ artistBoard }) => {
             )}
         </div>
     );
-};
-
-const styles = {
-    container: {
-        padding: '20px',
-        boxSizing: 'border-box',
-    },
 };
 
 export default ArtistBoard;
