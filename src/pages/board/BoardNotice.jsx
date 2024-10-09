@@ -1,8 +1,10 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import NoticeModal from "./NoticeModal";
 
 const BoardNotice = ({ teamUuid }) => {
     const [boardNotices, setBoardNotices] = useState([]);
+
     useEffect(() => {
         getList();
     }, [teamUuid]);
@@ -14,8 +16,20 @@ const BoardNotice = ({ teamUuid }) => {
             console.log(`artist board data : ${boardNotices}`)
         }catch (e) {
             console.log(e);
+        }finally {
         }
     }
+
+
+    // 모달 테스트
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="notice-wrap">
             <div className="boardnotice-title">
@@ -24,7 +38,13 @@ const BoardNotice = ({ teamUuid }) => {
             {boardNotices && boardNotices.length > 0 ? (
                 boardNotices.map((board,index) => (
                     <div key={index} className="notice-content-list">
-                        <div className="notice-title"> {board.title}</div>
+                        <div onClick={openModal}
+                            className="notice-title"> {board.title}</div>
+                        <NoticeModal
+                            isOpne={isModalOpen}
+                            onClose={closeModal}
+                            title={board.title}
+                            content={board.content}/>
                         <div className="date">
                             {new Date(board.createdat).toLocaleDateString('ko-KR')} {new Date(board.createdat).toLocaleTimeString('ko-KR', {
                             hour: '2-digit',

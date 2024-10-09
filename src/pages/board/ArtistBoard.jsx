@@ -1,9 +1,10 @@
 import {useState,useEffect} from "react";
 import axios, {get} from "axios";
 
-const ArtistBoard = ({ teamUuid }) => {
+const ArtistBoard = ({ teamUuid}) => {
     const [artistBoards, setArtistBoards] = useState([]);
     const [content, setContent] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getList();
@@ -16,6 +17,7 @@ const ArtistBoard = ({ teamUuid }) => {
             console.log(`artist board data : ${artistBoards}`)
         }catch (e) {
             console.log(e);
+        }finally {
         }
     }
     const posting= async (e)=>{
