@@ -73,7 +73,7 @@ const FanBoard = ({ teamUuid }) => {
                         </div>
                     </div> : null}
                 {fanBoards && fanBoards.length > 0 ? (
-                    fanBoards.map((post, index) => (
+                    fanBoards.slice().reverse().map((post, index) => (
                             <div key={index} className="fanboard-content-wrap">
                                 <div className="content-top">
                                     <div className="user-profile">
