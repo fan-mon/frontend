@@ -9,7 +9,7 @@ const TeamProfile = ({teamuuid}) => {
     useEffect(() => {
         const fetchGroupData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/board/team/${teamuuid}`); // API 엔드포인트에 맞게 수정하세요
+                const response = await axios.get(`http://localhost:8080/board/members/${teamuuid}`);
                 setGroup(response.data);
                 console.log(response.data);
             } catch (err) {
