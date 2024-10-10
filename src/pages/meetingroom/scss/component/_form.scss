@@ -17,14 +17,18 @@
         background-image: none;    
     }
 
-    &::after{
-        content:"\f26e";
-        position:absolute;
-        left:0;
-        top:3px;
-        font-family: bootstrap-icons!important;
-        color:$G-black;
+    .form-check-input:checked[type=checkbox] ~ label{
+        &::after{
+            content:"\f26e";
+            position:absolute;
+            left:0;
+            top:3px;
+            font-family: bootstrap-icons!important;
+            color:$G-black;
+        }
     }
+
+    
 }
 .form-control{
     &.w-80{

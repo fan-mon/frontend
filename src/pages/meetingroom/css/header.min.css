@@ -144,11 +144,12 @@ p {
 }
 
 .btns-wrap.btns-wrap-r {
-  text-align: right;
+  justify-content: flex-end;
 }
 
 .btns-wrap {
-  text-align: center;
+  display: flex;
+  justify-content: center;
 }
 .btns-wrap .btn {
   min-height: 48px;
@@ -176,7 +177,7 @@ p {
 .custom-chk .form-check-input:checked[type=checkbox] {
   background-image: none;
 }
-.custom-chk::after {
+.custom-chk .form-check-input:checked[type=checkbox] ~ label::after {
   content: "\f26e";
   position: absolute;
   left: 0;

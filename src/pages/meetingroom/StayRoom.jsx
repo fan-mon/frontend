@@ -15,6 +15,7 @@ const StayRoom = () => {
   
     return (
         <>
+        <a href="/meetingroom/meetingroom" style={{position:'fixed', bottom: '100px', left: '500px'}}>테스트 링크</a>
         <div className="container-fluid">
           <div className="row">
             <div className="col">

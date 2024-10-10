@@ -92,6 +92,8 @@ function App() {
                 <Route path="/user/login" element={<Login/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
                 <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
+                <Route path="/meetingroom/stayroomlist" element={<StayRoomList/>}/>
+                <Route path="/meetingroom/createroom" element={<CreateRoom/>}/>
                 <Route path="/user/main" element={<Main/>}/>
                 <Route path="/management/dashboard" element={<DashBoard/>}/>
                 <Route path="/management/managementmypage" element={<ManagementMyPage/>}/>

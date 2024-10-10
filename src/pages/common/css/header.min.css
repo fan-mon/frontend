@@ -98,6 +98,19 @@ p {
 }
 
 /* component */
+button {
+  margin: 0;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
+
 .btn-ico {
   display: flex;
   align-items: center;
