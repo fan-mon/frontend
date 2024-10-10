@@ -1,11 +1,33 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import api from '../../../apiClient';
 
 function Buying() {
+    
+    
+    // user 데이터 불러오기
+    let [useruuid, setUseruuid] = useState(null);
+    let [userData, setUserData] = useState(null);
+    
 
-    // URL 경로에 포함된 useruuid 불러오기 : 로그인 기능 구현 후 수정 필요!
-    const { useruuid } = useParams();
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await api.get('/users/myprofile');
+                setUseruuid(response.data.useruuid);
+                setUserData(response.data);
+    
+                console.log("Fetched useruuid: " + response.data.useruuid);
+                console.log("Fetched userData: ", response.data);
+    
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
+        };
+        fetchUserInfo();
+    }, []);
+    
 
     // CartList.jsx에서 세션에 저장한 데이터를 한 번만!! 불러오기
     let [ordersData, setOrdersData] = useState(null);
@@ -17,32 +39,14 @@ function Buying() {
         // ordersData 불러오기
         const storedOrdersData = sessionStorage.getItem('ordersData');
         if (storedOrdersData) setOrdersData(JSON.parse(storedOrdersData));
+        console.log(ordersData);
 
         // detailData 불러오기
         const storedDetailData = sessionStorage.getItem('DetailData');
         if (storedDetailData) setDetailData(JSON.parse(storedDetailData));
+        console.log(detailData);
 
         console.log('세션을 다 받아왔어요');
-    }, []);
-
-
-    //DB에서 데이터를 가져오기 위한 변수
-    let [userData, setUserData] = useState(null);
-    let [cardInfo, setCardInfo] = useState(null);
-
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://localhost:8080/shop/buy/buying`);
-            setUserData(response.data.user);
-            setCardInfo(response.data.cardInfo);
-            console.log('userData'+userData);
-            console.log('cardInfo'+cardInfo);
-          } catch (err) {
-            setError(err.message);
-          }
-        };
-        fetchData();
     }, []);
 
 
@@ -54,7 +58,7 @@ function Buying() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        if(ordersData && detailData && !hasExecuted.current) {
+        if(userData && ordersData && detailData && !hasExecuted.current) {
             // iamport.js 스크립트 로드
             const script = document.createElement('script');
             script.src = 'https://cdn.iamport.kr/v1/iamport.js';
@@ -76,19 +80,23 @@ function Buying() {
                 document.body.removeChild(script);
             };
         }
-    }, [ordersData, detailData]);
+    }, [useruuid, userData]);
 
     const handlePayment = () => {
+
         if (window.IMP) {
+            
             console.log('IMP 객체가 정상적으로 로드되었습니다.');
             
             // 세션에서 데이터 가져오기
-            const totalQuantity = ordersData.qty;
-            const name = null;
-            if(totalQuantity > 1){
-                name = detailData.name[0] + ' 외 ' + (totalQuantity-1) + '개';
-            }else{
-                name = detailData.name[0];
+            const totalQuantity = ordersData ? ordersData.qty : 0; // ordersData가 null일 경우를 대비
+
+            // detailData가 유효한지 확인
+            let name = null;
+            if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
+                name = totalQuantity > 1 
+                    ? detailData[0].name + ' 외 ' + (totalQuantity - 1) + '개' 
+                    : detailData[0].name;
             }
 
             //DB에서 데이터 가져오기
@@ -106,11 +114,11 @@ function Buying() {
                     merchant_uid: `payment-${crypto.randomUUID()}`, // 고객사 주문번호
                     name: name, //상품명
                     amount: amount, //결제 예정 금액
-                    buyer_email: '이메일', //이메일
-                    buyer_name: '구매자이름', //구매자 이름
-                    buyer_tel: '구매자연락처', //구매자 연락처
-                    buyer_addr: '구매자주소', //구매자 주소
-                    // buyer_postcode: '구매자우편번호' //구매자 우편번호
+                    buyer_email: userData.email, //이메일
+                    buyer_name: userData.name, //구매자 이름
+                    buyer_tel: userData.phone, //구매자 연락처
+                    buyer_addr: userData.address, //구매자 주소
+                    buyer_postcode: userData.postcode //구매자 우편번호
                 },
                 async (response) => {
 
@@ -120,28 +128,31 @@ function Buying() {
                         alert(`결제에 실패했습니다. 사유: ${response.error_msg}`);
 
                         // 장바구니 페이지로 네비게이트
-                        navigate('/shop/cart/list/0cf55a0d-a2a5-443b-af46-835d70874c40');
+                        navigate(`/shop/cart/list`);
                         return;
                     }
                     
                     // 결제 성공 처리
                     try{
-                        const notified = await fetch (``, {
+                        const notified = await fetch (`http://localhost:8080/shop/buy/bought/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             // imp_uid와 merchant_uid, 주문 정보를 서버에 전달합니다
                             body: JSON.stringify({
-                                imp_uid: response.imp_uid,
-                                merchant_uid: response.merchant_uid,
-                                // 주문 정보...
+                                imp_uid: response.imp_uid,  // 포트원 결제번호
+                                merchant_uid: response.merchant_uid,    //주문번호
+                                paid_amount: response.paid_amount,  //결제금액
+                                buyer_addr: response.buyer_addr,    //주문자 주소
+                                paid_at: response.paid_at,  // 결제 승인 시각
+                                apply_num: response.apply_num  //신용카드 승인 번호
                             }),
                         });
 
-                        // orders, ordersdetail, cardinfo 테이블에 데이터 삽입
+                        // orders, ordersdetail 테이블에 데이터 삽입
+
     
                         //세션 삭제
                         sessionStorage.removeItem('ordersData');
-                        sessionStorage.removeItem('userData');
                         sessionStorage.removeItem('DetailData');
                         
                         console.log('결제 성공:', response);
