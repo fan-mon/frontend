@@ -1,15 +1,18 @@
-import {useState,useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import axios, {get} from "axios";
 
 const ArtistBoard = ({ teamUuid}) => {
     const [artistBoards, setArtistBoards] = useState([]);
     const [content, setContent] = useState("");
-    const [loading, setLoading] = useState(true);
+    const fileInputRef = useRef(null);
+    const [index, setIndex] = useState(null);
+    const [image, setImage] = useState(null);
 
     useEffect(() => {
         getList();
     }, [teamUuid]);
 
+    // read
     const getList=async ()=>{
         try{
             const response=await axios.get(`http://localhost:8080/board/artistboard/${teamUuid}`)
@@ -20,10 +23,21 @@ const ArtistBoard = ({ teamUuid}) => {
         }finally {
         }
     }
-    const posting= async (e)=>{
+    //image
+    const handleImageSelect = (event) => {
+        const file = event.target.files[0]; // 선택한 파일 가져오기
+        if (file) {
+            console.log(`선택한 파일: ${file.name}`); // 파일 이름 출력
+            setImage(file);
+        } else {
+            console.log('파일이 선택되지 않았습니다.');
+        }
+    };
+    //create
+    const posting = async (e)=>{
+        const formData = new FormData();
         e.preventDefault();
         console.log(`콘텐츠 내용 : ${content}`)
-        // artistuuid,content,createdat,likecount,teamuuid,artistboarduuid
         const postData = {
             artist: {
                 artistuuid: localStorage.getItem("uuid"),
@@ -36,38 +50,64 @@ const ArtistBoard = ({ teamUuid}) => {
             },
             artistboarduuid: null,
         }
-        console.log(postData);
+        console.log(JSON.stringify(postData));
+        console.log(`폼 데이터 : ${formData}`)
+        formData.append('image', image);
+        formData.append('post',JSON.stringify(postData));
+        setImage(null);
+        setContent("");
+        // log formData 내용
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
         try{
-            const response = await axios.post("http://localhost:8080/board/artistboard", postData,{
-                headers : {
-                    'Content-Type' : 'application/json'
-                }
-            });
-        console.log(response.data);
-        await getList(); // getList가 비동기 함수이므로 처리가 완료될때까지 await으로 기다린다.
+            const response = await axios.post("http://localhost:8080/board/artistboard", formData);
+            console.log(response.data);
         }catch (e){
             console.log(e);
         }
+        await getList(); // getList가 비동기 함수이므로 처리가 완료될때까지 await으로 기다린다.
+    }
+    
+    //update
+    const update = async (post) =>{
+        try {
+            
+        }catch (e) {
+            
+        }
+        
     }
     return (
         <div className="artist-board-wrap">
             <div className="board-title">
                 ARTIST BOARD
             </div>
-            {/*{ localStorage.getItem("user")==='ARTIST'?*/}
+            {localStorage.getItem("user") === 'ARTIST' ?
                 <div className="new-post-wrap">
-                <textarea className="writing-box" name="content"
-                          id="content" cols="30" maxLength="150" rows="10"
-                          placeholder="150자 이내 작성" value={content}
-                          onChange={(e) => setContent(e.target.value)}>
-                </textarea>
-                <button className="send-post" onClick={posting}>POST</button>
-            </div>
-                {/*// : null }*/}
+                    <div className="content">
+                        <textarea className="writing-box" name="content"
+                                  id="content" cols="30" maxLength="150" rows="10"
+                                  placeholder="150자 이내 작성" value={content}
+                                  onChange={(e) => setContent(e.target.value)}>
+                        </textarea>
+                        <button className="send-post" onClick={posting}>POST</button>
+                    </div>
+                    <div className="add-photo">
+                        <button className="photo-button"
+                                onClick={() => fileInputRef.current.click()}>사진 첨부하기</button>
+                        <input type="file"
+                               accept="image/*"
+                               style={{display: 'none'}} // input 요소 숨기기
+                               ref={fileInputRef}
+                               onChange={handleImageSelect} />
+                    </div>
+                </div>
+                : null}
             {artistBoards && artistBoards.length > 0 ? (
-                artistBoards.map((board, index) => (
+                artistBoards.slice().reverse().map((board, index) => (
                     <div key={index} className="artistboard-content-wrap">
-                        {localStorage.getItem("uuid") === board.artistuuid ?
+                        {localStorage.getItem("uuid") === board.artist.artistuuid ?
                             <div className="writer-button">
                                 <button className="edit-button">수정</button>
                                 <button className="delete-button">삭제</button>
@@ -101,7 +141,7 @@ const ArtistBoard = ({ teamUuid}) => {
                                         <p>{board.content}</p>
                                     </div>
                                     <div className="content-img">
-                                        <img src="" alt="content-image"/>
+                                        <img src={board.fname} alt="content-image" style={{width:"300px",height:"300px"}}/>
                                     </div>
                                 </div>
                             </div>
