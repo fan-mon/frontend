@@ -165,7 +165,9 @@ window.addEventListener("load", function(){
         });
         myPeerConnection.addEventListener("icecandidate", handleIce);
         myPeerConnection.addEventListener("addstream", handleAddStream);
-        myStream.getTracks().forEach(track=> myPeerConnection.addTrack(track, myStream));
+        if(myStream != null){
+            myStream.getTracks().forEach(track=> myPeerConnection.addTrack(track, myStream));
+        }   
     }
 
     function handleIce(data){

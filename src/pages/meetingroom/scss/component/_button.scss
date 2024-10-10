@@ -1,0 +1,63 @@
+.btn-ico{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    width:48px;
+    height:48px;
+    border-radius: 100px;
+    color:#6C7289;
+    
+
+    &:hover{
+        background: $G-lighten-black;
+        color:#FFFFFF;
+        transition: all 0.3s;
+    }
+
+    .pin-circle-red{
+        position:absolute;
+        right:8px;
+        top:10px;
+        width:7px;
+        height:7px;
+        border-radius: 100px;
+        background: #F43535;
+    }
+}
+
+.btn-danger{
+    background: #C02424;
+}
+
+.btn-primary{
+    border: 1px solid $G-main-color;
+    background: $G-main-color;
+    color: $G-black;
+
+    &:hover{
+        border: 1px solid $G-main-color;
+        background: $G-main-color;
+        color: $G-black;
+    }
+
+    &:active, &:hover:active{
+        border: 1px solid #f89b00;
+        background: #f89b00;
+        color: $G-black;
+    }
+    
+}
+
+.btns-wrap.btns-wrap-r{
+    text-align: right;
+}
+.btns-wrap{
+    text-align: center;
+    .btn{
+        min-height:48px;
+    }
+    .btn-primary{
+        min-width:200px;
+    }
+}
