@@ -58,14 +58,14 @@ const TeamForm = () => {
                 }
             });
             const teamuuid = teamResponse.data.teamuuid; // 생성된 팀의 UUID
-
+            
             // 선택한 아티스트와 팀의 UUID를 함께 전송
             const artistTeamPromises = selectedArtists.map(artistuuid => {
                 console.log(selectedArtists);
-                return axios.post('http://localhost:8080/management/artistTeam', {
-                    artistuuid,
-                    teamuuid
-                });
+                const relatedData = new FormData();
+                relatedData.append('artistuuid',artistuuid);
+                relatedData.append('teamuuid',teamuuid);
+                return axios.post('http://localhost:8080/management/artistTeam',relatedData);
             });
 
             // 모든 아티스트 팀 관계 저장 요청
