@@ -568,10 +568,10 @@ p {
   color: #6C7293;
   font-size: 14px;
 }
-.chatroom .chat-wrap .mine .profile {
+.chatroom .chat-wrap.mine .profile {
   display: none;
 }
-.chatroom .chat-wrap .mine .name {
+.chatroom .chat-wrap.mine .name {
   display: none;
 }
 .chatroom .chat-wrap.mine .same-time {
@@ -1340,4 +1340,4 @@ p {
   .createroom .btns-wrap .btn-primary {
     flex: 1 1 auto;
   }
-}/*# sourceMappingURL=stayroom.css.map */
+}/*# sourceMappingURL=stayroom.min.css.map */
