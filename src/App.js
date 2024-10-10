@@ -50,7 +50,6 @@ function App() {
 
     return (
       <BrowserRouter>
-
           <Content useruuid={useruuid} teamuuid={teamuuid} artistUuid={artistUuid} chatuuid={chatuuid} />
       </BrowserRouter>
   );
