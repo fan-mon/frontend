@@ -20,13 +20,13 @@ import GoodsManage from './pages/management/goods/GoodsManage';
 
 import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
+import StayRoomList from './pages/meetingroom/StayRoomList';
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
+import CreateRoom from './pages/meetingroom/CreateRoom';
 import TempLogin from "./pages/chat/TempLogin";
-//Management
 import TeamList from './pages/management/team/TeamList';
 import ManageGoodsList from './pages/management/goods/ManageGoodsList';
-
 import ManagementMyPage from './pages/management/ManagementMyPage';
 
 import Main from './pages/user/Main';
@@ -50,7 +50,34 @@ function App() {
 
     return (
       <BrowserRouter>
+        <div className='header-wrap'>
+          <Header />
+          <div className="content">
+              <Routes>
+                <Route path="/chat/ws" element={<ChatPage artistUuid={artistuuid} userUuid={useruuid} chatUuid={chatuuid}/>} />
+                <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
+                <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>
+                <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
+                <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
+                <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
+                <Route path="/shop/cart" element={<CartList/>}/>
+                <Route path="/shop/buy/buying" element={<Buying/>}/>
+                <Route path="/shop/buy/bought" element={<Bought/>}/>
+                <Route path="/management/goodsform" element={<GoodsForm/>}/>
+                <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
+                <Route path="/user/signup" element={<SignUp/>}/>
+                <Route path="/shop/goods/main" element={<GoodsMain/>}/>
+                <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
+                <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
+                <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
+                <Route path="/meetingroom/stayroomlist" element={<StayRoomList/>}/>
+                <Route path="/meetingroom/createroom" element={<CreateRoom/>}/>
+              </Routes>
+          </div>
+        </div>
+
           <Content useruuid={useruuid} teamuuid={teamuuid} artistUuid={artistUuid} chatuuid={chatuuid} />
+
       </BrowserRouter>
   );
 }
