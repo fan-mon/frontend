@@ -4,12 +4,26 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as Icon from 'react-bootstrap-icons';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import api from '../../../apiClient';
 
 
 function CartList(){
 
-    // URL 경로에 포함된 useruuid 불러오기 : 로그인 기능 구현 후 수정 필요!
-    const { useruuid } = useParams();
+    // 유저 정보 불러오기
+    let [useruuid, setUseruuid] = useState(null);
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = api.get('/users/myprofile');
+                setUseruuid(response.data.useruuid);
+                console.log("useruuid:"+useruuid);
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
+        };
+        fetchUserInfo();
+    }, []);
+    
 
     // 장바구니 리스트 불러오기
     const [clist, setCList] = useState([]);
@@ -23,7 +37,7 @@ function CartList(){
             }
         };
         fetchData();
-        console.log('Current cart list:', clist);
+        useruuid.log('Current cart list:', clist);
     },[useruuid]);
 
     // orders 테이블에 들어갈 데이터 준비
@@ -95,7 +109,7 @@ function CartList(){
     
         try {
             // 서버에 수량 업데이트 요청
-            await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
+            await axios.post(`http://localhost:8080/shop/cart/update/${updatedRecord.goods.goodsuuid}/${newQty}`);
             console.log(newQty);
             // 요청 성공 후 상태 업데이트
             setCList(updatedCList);
@@ -110,7 +124,7 @@ function CartList(){
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
     const deleteCartItem = async (useruuid, cartsequence) => {
         try {
-            await axios.get(`http://localhost:8080/shop/cart/delete/${useruuid}/${cartsequence}`);
+            await axios.get(`http://localhost:8080/shop/cart/delete/${cartsequence}`);
             // 삭제 후 UI 업데이트
             setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
         } catch (error) {
@@ -136,8 +150,8 @@ function CartList(){
                         {clist.map((crecord, index) => (
                             <tr key={crecord.cartsequence}>
                                 <td className="cart-list-no cart-list-center">{index + 1}</td>
-                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}/${useruuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
-                                <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}/${useruuid}`}>{crecord.goods.name}</a></td>
+                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
+                                <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}>{crecord.goods.name}</a></td>
                                 <td className="cart-list-qty cart-list-center">
                                     <input 
                                         type="number" 

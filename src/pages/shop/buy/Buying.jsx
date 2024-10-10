@@ -33,7 +33,7 @@ function Buying() {
     useEffect(() => {
         const fetchData = async () => {
           try {
-            const response = await axios.get(`http://localhost:8080/shop/buy/buying/${useruuid}`);
+            const response = await axios.get(`http://localhost:8080/shop/buy/buying`);
             setUserData(response.data.user);
             setCardInfo(response.data.cardInfo);
             console.log('userData'+userData);
