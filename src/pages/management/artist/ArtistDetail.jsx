@@ -78,6 +78,7 @@ function ArtistDetail() {
         formData.append('email', email);
         formData.append('password', password);
         formData.append('birth', birth);
+        formData.append('fname',fname);
         if (uploadfile) {
             formData.append('uploadfile', uploadfile);
         }
@@ -136,9 +137,7 @@ function ArtistDetail() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                    ) : (
-                        adetail.email
-                    )}</p>
+                    ) : null}</p>
                     <p>생일: {isEditing ? (
                         <input
                             type="date"
