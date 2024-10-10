@@ -38,6 +38,7 @@ import GoodsUpdate from './pages/management/goods/GoodsUpdate';
 import ArtistList from './pages/management/artist/ArtistList';
 import ArtistForm from './pages/management/artist/ArtistForm';
 import ArtistDetail from './pages/management/artist/ArtistDetail';
+import ArtistLogin from './pages/management/artist/ArtistLogin';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
 
@@ -81,6 +82,7 @@ function App() {
                 <Route path="/management/artistList" element={<ArtistList/>} />
                 <Route path='/management/artistForm/:managementuuid' element={<ArtistForm/>}/>
                 <Route path='/management/artistDetail/:artistuuid' element={<ArtistDetail/>}/>
+                <Route path='/management/artist/artistlogin' element={<ArtistLogin/>}/>
                 <Route path="/management/manageGoodsDetail/:goodsuuid" element={<ManageGoodsDetail />}/>
                 <Route path="/management/goodsUpdate/:goodsuuid" element={<GoodsUpdate/>}/>
                 <Route path="/management/teamForm/:managementuuid" element={<TeamForm/>}/>
