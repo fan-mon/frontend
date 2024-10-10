@@ -78,6 +78,16 @@ const ArtistBoard = ({ teamUuid}) => {
         }
         
     }
+
+    //delete
+    const deleteBoard=async (artistboarduuid)=>{
+        try{
+            await axios.delete(`http://localhost:8080/board/artistboard/${artistboarduuid}`, artistboarduuid);
+            console.log("삭제완료")
+        }catch (e) {
+        }
+        await getList();
+    }
     return (
         <div className="artist-board-wrap">
             <div className="board-title">
@@ -110,7 +120,9 @@ const ArtistBoard = ({ teamUuid}) => {
                         {localStorage.getItem("uuid") === board.artist.artistuuid ?
                             <div className="writer-button">
                                 <button className="edit-button">수정</button>
-                                <button className="delete-button">삭제</button>
+                                <button className="delete-button"
+                                        onClick={()=>deleteBoard(board.artistboarduuid)}>삭제
+                                </button>
                             </div>
                             :
                             null
