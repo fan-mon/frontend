@@ -10,13 +10,14 @@ const SignUp = () => {
   const [birthdate, setBirthdate] = useState('');
   const [phone, setPhone] = useState('');
   const [address, setAddress] = useState('');
-  const [emailVerified, setEmailVerified] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false);
+  const [postcode, setPostcode] = useState('');
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!emailVerified) {
-      alert('이메일 인증을 완료해주세요.');
+    if (!emailChecked) {
+      alert('이메일 중복 확인을 완료해주세요');
       return;
     }
 
@@ -28,6 +29,7 @@ const SignUp = () => {
       name,
       birth: birthdate,
       phone,
+      postcode,
       address
     });
 
@@ -45,11 +47,24 @@ const SignUp = () => {
 
 
 
-  const handleEmailVerification = () => {
-    // 여기에 이메일 인증 로직 추가 (API 호출 등)
-    alert("이메일 인증 요청이 완료되었습니다.");
-    setEmailVerified(true); // 이메일 인증 완료로 설정
-  };
+const handleEmailCheck = async () => {
+  try {
+    const response =  await axios.get('http://localhost:8080/users/check-email', {
+      params: {email}  
+    });
+    if (response.status === 200) {
+      alert("사용 가능한 이메일입니다.");
+      setEmailChecked(true);
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      alert("이미 사용 중인 이메일입니다.");
+      setEmailChecked(false);
+    } else {
+      alert('이메일 중복 확인 중 오류가 발생했습니다.');
+    }
+  }
+};
 
   return (
     <div className="container">
@@ -61,14 +76,17 @@ const SignUp = () => {
             type="email"
             placeholder="이메일"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailChecked(false); // 이메일이 변경되면 중복 확인 다시 필요
+            }}
             required
           />
           <button 
             type="button" 
             className="verify-button" 
-            onClick={handleEmailVerification}>
-            인증 요청
+            onClick={handleEmailCheck}>
+            중복 확인
           </button>
         </div>
         <input
@@ -101,6 +119,14 @@ const SignUp = () => {
           placeholder="휴대폰 (010-1234-1234)"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
+          required
+        />
+          <input
+          className="input"
+          type="text"
+          placeholder="우편번호 (5자리 숫자)"
+          value={postcode}
+          onChange={(e) => setPostcode(e.target.value)}
           required
         />
         <input

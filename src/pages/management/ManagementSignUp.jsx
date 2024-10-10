@@ -9,16 +9,16 @@ const ManagementSignUp = () => {
   const [name, setName] = useState('');
   const [businessno, setBusinessno] = useState('');
   const [address, setAddress] = useState('');
-  const [emailVerified, setEmailVerified] = useState(false);
+  const [emailChecked, setEmailChecked] = useState(false);
   const navigate = useNavigate();
 
 
-  const handleSubmit =  async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!emailVerified) {
-      alert('이메일 인증을 완료해주세요.');
+    if (!emailChecked) {
+      alert('이메일 중복 확인을 완료해주세요');
       return;
-    };
+    }
 
   try {
     const response = await axios.post('http://localhost:8080/management/signup', {
@@ -42,31 +42,46 @@ const ManagementSignUp = () => {
 };
 
 
-
-  const handleEmailVerification = () => {
-    // 여기에 이메일 인증 로직 추가 (API 호출 등)
-    alert("이메일 인증 요청이 완료되었습니다.");
-    setEmailVerified(true); // 이메일 인증 완료로 설정
-  };
+const handleEmailCheck = async () => {
+  try {
+    const response =  await axios.get('http://localhost:8080/management/check-email', {
+      params: {email}  
+    });
+    if (response.status === 200) {
+      alert("사용 가능한 이메일입니다.");
+      setEmailChecked(true);
+    }
+  } catch (error) {
+    if (error.response && error.response.status === 409) {
+      alert("이미 사용 중인 이메일입니다.");
+      setEmailChecked(false);
+    } else {
+      alert('이메일 중복 확인 중 오류가 발생했습니다.');
+    }
+  }
+};
 
   return (
     <div className="container">
       <h1 className="title">기업회원가입</h1>
       <form className="form" onSubmit={handleSubmit}>
-        <div className="email-container">
+      <div className="email-container">
           <input
             className="input email-input"
             type="email"
             placeholder="이메일"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              setEmailChecked(false); // 이메일이 변경되면 중복 확인 다시 필요
+            }}
             required
           />
           <button 
             type="button" 
             className="verify-button" 
-            onClick={handleEmailVerification}>
-            인증 요청
+            onClick={handleEmailCheck}>
+            중복 확인
           </button>
         </div>
         <input
@@ -89,7 +104,7 @@ const ManagementSignUp = () => {
         <input
           className="input"
           type="tel"
-          placeholder="사업자 번호 ('-'빼고 숫자만 입력)"
+          placeholder="사업자 번호 (10자리 숫자)"
           value={businessno}
           onChange={(e) => setBusinessno(e.target.value)}
           required
