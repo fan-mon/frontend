@@ -1,4 +1,4 @@
-import React, {useState,useRef} from "react";
+import React, {useState,useRef,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../meetingroom/fonts/bootstrap-icons.min.css'
 import './css/ChatRoom.css'
@@ -8,6 +8,13 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
     const fileInputRef = useRef(null);
+    const messagesEndRef = useRef(null);
+    // 스크롤 맨 아래로
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }, [messages]);
 
     const openChatRoom = () => setIsChatOpen(true);
     const closeChatRoom = () => setIsChatOpen(false);
@@ -36,16 +43,16 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
     return (
         <div className="artist-chat">
             <h2>{role === 'USER' ? 'Fan Chat' : 'Artist Chat'}</h2>
-            <div className={`col-4 chatroom-area`}>
-                <div className="contents-box contents-scroll-box chatroom">
+            <div className={`col-4 chatroom-area d-block`}>
+                <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
                         <div>아티스트 이름</div>
                     </div>
                     <div className="chat-contents">
                         <div className="date-wrap">2024년 09월 19일</div>
                         {messages.map((msg, index) => (
-                            <div key={index} className="chat-wrap" onClick={role === 'ARTIST' ? () => handleMessage(msg) : null}>
-                                <div className={msg.type === role ? "mine" : "yours"}>
+                            <div key={index} className="chat-wrap" >
+                                <div className={msg.type === role ? "mine" : "yours"} onClick={role === 'ARTIST'&& msg.type === 'USER' ? () => handleMessage(msg) : null}>
                                     <div className="profile"></div>
                                     <div className="content-wrap">
                                         <p className="name">{msg.type}</p>

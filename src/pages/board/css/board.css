@@ -1,0 +1,275 @@
+
+.whole-page{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 30px;
+    margin-top: 30px;
+    gap: 30px;
+}
+.page {
+    display: flex;
+    height: calc(100vh - 100px);
+    flex: 1;
+    gap: 30px;
+    flex-direction: row;
+}
+@media (max-width: 1400px) {
+    .page {
+        flex-direction: column;
+        height: 100vh;
+    }
+    .left-column,
+    .right-column {
+        width: 100%;
+        height: auto;
+    }
+}
+ .team-profile {
+     padding: 20px 40px;
+     display: flex;
+     width: 100%;
+     background-color: rgba(25, 28, 36, 1);
+     border-radius: 7px;
+ }
+ .team-profile .team-name {
+     flex: 1;
+     font-size: 20px;
+     margin-bottom: 15px;
+ }
+ .team-profile .member-wrap{
+     display: flex;
+
+ }
+ .team-profile .member-info{
+     margin-left: 40px;
+     flex-direction: column;
+ }
+ .team-profile .member-info .member-photo {
+     height: 100px;
+     width: 100px;
+     border-radius: 100px;
+     background-color: wheat;
+     text-align: center;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
+ .team-profile .member-info .member-name {
+     margin-top: 15px;
+     text-align: center;
+ }
+ .writer-button{
+     justify-content: end;
+     display: flex;
+     gap: 20px;
+     flex-direction: row;
+ }
+.edit-button, .delete-button{
+    color: grey;
+}
+.left-column {
+    flex: 1;
+    padding: 20px 40px;
+    background-color: rgba(25, 28, 36, 1);
+    /*box-sizing: border-box;*/
+    border-radius: 7px;
+    height: 100%; /* 부모의 높이에 맞춤 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+.left-column::-webkit-scrollbar {
+    display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+.left-column .artist-board-wrap{
+    display: flex;
+    flex-direction: column;
+}
+.left-column .artistboard-content-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 0 30px;
+}
+.left-column .artist-board-wrap .board-title, .boardnotice-title, .fanboard-title{
+    font-size: 20px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+.left-column .artist-board-wrap .new-post-wrap {
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 25px 50px 25px;
+    height: 150px;
+}
+.left-column .artist-board-wrap .new-post-wrap .writing-box {
+    display: flex;
+    border-radius: 7px;
+    flex: 1;
+    padding: 15px;
+}
+.left-column .artist-board-wrap .new-post-wrap .send-post{
+    width: 70px;
+}
+.left-column .artist-board-wrap .board-content {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: flex-start;
+}
+.left-column .artist-board-wrap .board-content .content-left{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.left-column .artist-board-wrap .board-content .content-left .writer-photo{
+    height: 80px;
+    width: 80px;
+    border-radius: 100px;
+    background-color: wheat;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.left-column .artist-board-wrap .board-content .content-right {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+    flex-direction: column;
+}
+.left-column .artist-board-wrap .board-content .content-right .content-right-top {
+    display: flex;
+    justify-content: space-between
+}
+.left-column .board-content .content-right-top .wrtier {
+    font-size: 20px;
+}
+.left-column .artist-board-wrap .board-content .content-right .content-right-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.left-column .artist-board-wrap .board-content .content-right .content-right-bottom .content-img {
+    width: 300px;
+    height: 300px;
+    background-color: black;
+    text-align: center;
+}
+.right-column {
+    width: 500px;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; /* 부모의 높이에 맞춤 */
+}
+.notice, .fan-board {
+    flex: 1;
+    padding: 20px 40px;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* 세로 스크롤 가능 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
+}
+.notice .notice-content-list {
+    display: flex;
+    justify-content: space-between
+}
+.notice::-webkit-scrollbar,
+.fanBoard::-webkit-scrollbar {
+    display: none; /* Chrome, Safari에서 스크롤바 숨기기 */
+}
+.fan-board .fanboard-body {
+    display: grid;
+    gap: 30px;
+}
+.fan-board .new-post-wrap {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    height: 100px;
+}
+.fan-board .new-post-wrap .writing-box {
+    display: flex;
+    background-color: black;
+    border: 1px solid rgba(255, 199, 0, 1);
+    border-radius: 7px;
+    flex: 1;
+    color: white;
+    padding: 15px;
+}
+.fan-board .new-post-wrap .send-post {
+    display: flex;
+    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center; /* 수평 가운데 정렬 */
+    width: 60px;
+}
+.fan-board .fanboard-content-wrap {
+    background-color: rgba(255, 199, 0, 1);
+    color: black;
+    padding: 15px;
+    border-radius: 7px;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+.fan-board .fanboard-content-wrap .content-top {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.fan-board .user-profile{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.fan-board .fanmon-img {
+    background-color: whitesmoke;
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+}
+.fan-board .fanboard-content-wrap .content-top .fanname {
+    font-size: 20px;
+}
+.fan-board .fanboard-content-wrap .fanboard-content{
+    padding: 10px 20px;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-wrap {
+    background-color: rgba(25, 28, 36, 0.8);
+    padding: 40px;
+    border-radius: 7px;
+    height: 700px;
+    width: 500px;
+    display: flex;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    justify-content: space-between;
+}
+.modal-wrap .modal-top {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: flex-start;
+}
+.modal-wrap .modal-title{
+    font-size: 25px;
+}
