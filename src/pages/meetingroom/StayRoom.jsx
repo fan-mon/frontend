@@ -84,27 +84,27 @@ const StayRoom = () => {
                 </div>
                 <div className="chat-contents">
                   <div className="date-wrap">2024년 09월 19일</div>
-                  <div class="chat-wrap">
-                        <div class="profile"></div>
-                        <div class="content-wrap">
-                            <p class="name">윤동주</p>
-                            <div class="same-time">
-                                <div class="bubble-wrap">
-                                    <div class="bubble">
+                  <div className="chat-wrap">
+                        <div className="profile"></div>
+                        <div className="content-wrap">
+                            <p className="name">윤동주</p>
+                            <div className="same-time">
+                                <div className="bubble-wrap">
+                                    <div className="bubble">
                                         기대된다.
                                     </div>
-                                    <div class="bubble">
+                                    <div className="bubble">
                                         근데 이거 최대 몇 초까지 기다려 주는거야?
                                     </div>
                                 </div>
-                                <div class="bubble-time">12:00</div>
+                                <div className="bubble-time">12:00</div>
                             </div>
-                            <div class="same-time">
-                                <div class="bubble-wrap">
-                                    <div class="bubble">흠
+                            <div className="same-time">
+                                <div className="bubble-wrap">
+                                    <div className="bubble">흠
                                     </div>
                                 </div>
-                                <div class="bubble-time">12:01</div>
+                                <div className="bubble-time">12:01</div>
                             </div>
                         </div>
                     </div>
@@ -121,44 +121,44 @@ const StayRoom = () => {
                   </div>
                 </div>
                 <div className={`chat-etc-add ${isChatPlusOpen ? 'open' : ''}`}>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-chat-add">
-                                <span class="ico-circle-wrap">
-                                    <i class="bi bi-camera-fill"></i>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col">
+                            <button className="btn btn-chat-add">
+                                <span className="ico-circle-wrap">
+                                    <i className="bi bi-camera-fill"></i>
                                 </span>
-                                <span class="label">카메라</span>
+                                <span className="label">카메라</span>
                             </button>
                         </div>
-                        <div class="col">
-                            <button class="btn btn-chat-add">
-                                <span class="ico-circle-wrap">
-                                    <i class="bi bi-file-earmark-fill"></i>
+                        <div className="col">
+                            <button className="btn btn-chat-add">
+                                <span className="ico-circle-wrap">
+                                    <i className="bi bi-file-earmark-fill"></i>
                                 </span>
-                                <span class="label">파일</span>
+                                <span className="label">파일</span>
                             </button>
                         </div>
-                        <div class="col">
-                            <button class="btn btn-chat-add">
-                                <span class="ico-circle-wrap">
-                                    <i class="bi bi-image-fill"></i>
+                        <div className="col">
+                            <button className="btn btn-chat-add">
+                                <span className="ico-circle-wrap">
+                                    <i className="bi bi-image-fill"></i>
                                 </span>
-                                <span class="label">사진</span>
+                                <span className="label">사진</span>
                             </button>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <button class="btn btn-chat-add">
-                                <span class="ico-circle-wrap">
-                                    <i class="bi bi-voicemail"></i>
+                    <div className="row">
+                        <div className="col">
+                            <button className="btn btn-chat-add">
+                                <span className="ico-circle-wrap">
+                                    <i className="bi bi-voicemail"></i>
                                 </span>
-                                <span class="label">음성메세지</span>
+                                <span className="label">음성메세지</span>
                             </button>
                         </div>
-                        <div class="col"></div>
-                        <div class="col"></div>
+                        <div className="col"></div>
+                        <div className="col"></div>
                     </div>
                 </div>
                 </div>

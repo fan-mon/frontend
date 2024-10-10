@@ -16,8 +16,10 @@ import ManagementSignUp from "./pages/management/ManagementSignUp";
 import GoodsManage from './pages/management/goods/GoodsManage';
 import GoodsMain from './pages/shop/goods/GoodsMain';
 import ChatPage from "./pages/chat/ChatPage";
+import StayRoomList from './pages/meetingroom/StayRoomList';
 import StayRoom from './pages/meetingroom/StayRoom';
 import MeetingRoom from './pages/meetingroom/MeetingRoom';
+import CreateRoom from './pages/meetingroom/CreateRoom';
 
 
 
@@ -49,6 +51,8 @@ function App() {
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
                 <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
                 <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
+                <Route path="/meetingroom/stayroomlist" element={<StayRoomList/>}/>
+                <Route path="/meetingroom/createroom" element={<CreateRoom/>}/>
               </Routes>
           </div>
         </div>
