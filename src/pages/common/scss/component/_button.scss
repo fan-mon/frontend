@@ -1,0 +1,40 @@
+.btn-ico{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    position:relative;
+    width:48px;
+    height:48px;
+    border-radius: 100px;
+    color:#6C7289;
+    
+
+    &:hover{
+        background: $G-lighten-black;
+        color:#FFFFFF;
+        transition: all 0.3s;
+    }
+
+    .pin-circle-red{
+        position:absolute;
+        right:8px;
+        top:10px;
+        width:7px;
+        height:7px;
+        border-radius: 100px;
+        background: #F43535;
+    }
+}
+
+.btn-danger{
+    background: #C02424;
+}
+
+.btn-default{
+    background:$G-lighten-black;
+    color: #FFF;
+
+    &:active{
+        background: rgba(#000, 0.15);
+    }
+}

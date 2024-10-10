@@ -1,0 +1,45 @@
+//공통 레이아웃 스타일
+.content{
+    margin:0;
+}
+.container-fluid{
+    height:100%;
+    padding-left: $G-container-padding;
+    padding-right: $G-container-padding;
+}
+.row{
+    margin-left: $G-container-padding / 2 * -1;
+    margin-right: $G-container-padding / 2 * -1;
+    
+    [class^="col"]{
+        padding-left:$G-container-padding / 2;
+        padding-right:$G-container-padding / 2;
+    }
+}
+
+.container-fluid.little-gatter{
+    $container-padding:5px;
+    padding-left:$G-container-padding;
+    padding-right:$G-container-padding;
+    
+    .row{
+        margin-left: $container-padding*-1;
+        margin-right: $container-padding*-1;
+        
+        &.row-v-center{
+            [class^="col"]{
+                height:100%;
+                align-content: center;
+            }
+        }
+        [class^="col"]{
+            padding-left:$container-padding;
+            padding-right:$container-padding;
+        }
+
+        &.full-row{
+            margin-left: $G-container-padding*-1;
+            margin-right: $G-container-padding*-1;
+        }
+    }
+}

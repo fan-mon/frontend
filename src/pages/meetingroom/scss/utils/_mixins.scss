@@ -1,0 +1,9 @@
+@mixin multi-ellipsis($line){
+    /*여러 줄 말줄임표*/
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+}
