@@ -53,6 +53,7 @@ function App() {
         <div className='header-wrap'>
           <Header />
           <div className="content">
+
               <Routes>
                 <Route path="/chat/ws" element={<ChatPage artistUuid={artistUuid} userUuid={useruuid} chatUuid={chatuuid}/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
@@ -123,6 +124,7 @@ function App() {
                 <Route path="/management/dashboard" element={<DashBoard/>}/>
                 <Route path="/management/managementmypage" element={<ManagementMyPage/>}/>
               </Routes>
+
           </div>
         </div>
   );
