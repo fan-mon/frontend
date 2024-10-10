@@ -14,9 +14,9 @@ function CartList(){
     useEffect(() => {
         const fetchUserInfo = async () => {
             try {
-                const response = api.get('/users/myprofile');
+                const response = await api.get('/users/myprofile');
                 setUseruuid(response.data.useruuid);
-                console.log("useruuid:"+useruuid);
+                console.log("useruuid: " + response.data.useruuid);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
             }
@@ -37,7 +37,7 @@ function CartList(){
             }
         };
         fetchData();
-        useruuid.log('Current cart list:', clist);
+        console.log('Current cart list:', clist);
     },[useruuid]);
 
     // orders 테이블에 들어갈 데이터 준비
@@ -109,7 +109,7 @@ function CartList(){
     
         try {
             // 서버에 수량 업데이트 요청
-            await axios.post(`http://localhost:8080/shop/cart/update/${updatedRecord.goods.goodsuuid}/${newQty}`);
+            await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
             console.log(newQty);
             // 요청 성공 후 상태 업데이트
             setCList(updatedCList);
@@ -124,7 +124,7 @@ function CartList(){
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
     const deleteCartItem = async (useruuid, cartsequence) => {
         try {
-            await axios.get(`http://localhost:8080/shop/cart/delete/${cartsequence}`);
+            await axios.get(`http://localhost:8080/shop/cart/${useruuid}/delete/${cartsequence}`);
             // 삭제 후 UI 업데이트
             setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
         } catch (error) {
@@ -136,11 +136,10 @@ function CartList(){
     const navigate = useNavigate();
     const handlePaymentClick = () => {
         setTimeout(()=>{
-            navigate('/shop/buy/buying/0cf55a0d-a2a5-443b-af46-835d70874c40');
+            navigate(`/shop/buy/buying/${useruuid}`);
         }, 100);
     };
     
-
     return(
         <>
             <div className=" cart-content">

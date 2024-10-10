@@ -82,7 +82,7 @@ function GoodsList() {
                         <h4>{gprod.name}</h4>
                         <p className="goods-price">{gprod.price.toLocaleString()}원</p>
                         <button className="add-to-cart" onClick={() => handleAddToCart(gprod)}>Add to Cart</button>
-                        <a href={`/shop/goods/detail/${gprod.goodsuuid}/${useruuid}`}>
+                        <a href={`/shop/goods/detail/${gprod.goodsuuid}`}>
                             <button className="more-info">More Info</button>
                         </a>
                         </div>

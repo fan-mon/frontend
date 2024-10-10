@@ -27,7 +27,7 @@ function GoodsMain(){
                         <div className="row">
                             {gmain.map((glist)=>(
                                 <div className="col-md-3 col-sm-4">
-                                    <a id="single-glist" href={`/shop/goods/list/${glist.teamuuid}/all/0cf55a0d-a2a5-443b-af46-835d70874c40`}>
+                                    <a id="single-glist" href={`/shop/goods/list/${glist.teamuuid}/all`}>
                                         <h4>{glist.name}</h4>
                                     </a>
                                 </div>
