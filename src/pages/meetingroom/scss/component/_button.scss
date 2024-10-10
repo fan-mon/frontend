@@ -50,10 +50,11 @@
 }
 
 .btns-wrap.btns-wrap-r{
-    text-align: right;
+    justify-content:flex-end;
 }
 .btns-wrap{
-    text-align: center;
+    display:flex;
+    justify-content: center;
     .btn{
         min-height:48px;
     }
