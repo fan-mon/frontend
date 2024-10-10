@@ -25,7 +25,6 @@ const FanBoard = ({ teamUuid }) => {
         try{
             const response=await axios.get(`http://localhost:8080/board/fanboard/${teamUuid}`)
             setFanBoards(response.data);
-            console.log(`artist board data : ${fanBoards}`)
         }catch (e) {
             console.log(e);
         }finally {

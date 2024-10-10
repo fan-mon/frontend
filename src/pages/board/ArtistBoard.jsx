@@ -17,7 +17,6 @@ const ArtistBoard = ({ teamUuid}) => {
         try{
             const response=await axios.get(`http://localhost:8080/board/artistboard/${teamUuid}`)
             setArtistBoards(response.data);
-            console.log(`artist board data : ${artistBoards}`)
         }catch (e) {
             console.log(e);
         }finally {
