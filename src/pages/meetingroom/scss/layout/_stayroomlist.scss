@@ -1,0 +1,210 @@
+.my-meeting-recent{
+    min-height:100px;
+    padding:0;
+    margin-bottom:12px;
+    overflow: hidden;
+
+    .my-meeting-content{
+        position:relative;
+        display:flex;
+        width:100%;
+        height:100%;
+        padding-left: 200px;
+        background:$G-main-color;
+        text-decoration: none;
+        color:#000;
+    }
+    .img-area{
+        flex: 0 0 auto;
+        position:absolute;
+        left:0;
+        margin-right:20px;
+
+        .img-wrap{
+            display:block;
+            position:relative;
+            top:0;
+            left:-64px;
+            width:200px;
+            height:200px;
+            background: #000;
+            transform: skew(-30deg);
+            overflow: hidden;
+            text-align: center;
+        }
+        .img-wrap img{
+            position:relative;
+            width:200%;
+            height:100%;
+            object-fit: cover;
+            transform: skew(30deg);
+            z-index: 1;
+        }
+        &::before{
+            content:'';
+            position: absolute;
+            display:block;
+            background:#000;
+            width:147px;
+            height:200px;
+            transform: skew(-39deg);
+        }
+    }
+    
+    .content-wrap{
+        flex: 1 1 auto;
+        display:flex;
+        flex-wrap: wrap;
+        padding:20px;
+
+        .title-wrap{
+            flex: 1 1 auto;
+            margin:0;
+        }
+        .sub-title{
+            color:rgba(#000, 0.6);
+        }
+
+        .start-time{
+            display:flex;
+            align-items: center;
+            line-height:1;
+            font-size:$G-font-size-md;
+            color: rgba(#000, 0.4);
+        }
+        .time{
+            margin-left: 8px;
+            color:#000;
+            font-size: 24px;
+            font-family: $G-font-M;
+        }
+    }
+
+    
+}
+
+.room-list-box{
+    margin-top:0;
+
+    .control-area{
+        display:flex;
+        flex-wrap: wrap;
+        padding-bottom:16px;
+
+        .toggles-area{
+            flex: 1 1 auto;
+            display:flex;
+            flex-wrap: wrap;
+            padding: 6px 0;
+        }
+    }
+}
+
+.search-area{
+    display:flex;
+    flex-wrap: wrap;
+    padding:6px 0;
+
+    .line-input-group{
+        margin: 4px 8px 4px 0;
+    }
+}
+
+.room-item-wrap{
+    padding-bottom:40px;
+}
+.room-item{
+    text-decoration: none;
+    color:#fff;
+
+    .room-img-wrap{
+        width:100%;
+        height:200px;
+        border-radius: $G-border-radius;
+        overflow: hidden;
+
+        img{
+            width:100%;
+            height:100%;
+            object-fit: cover;
+            transition: all 0.5s;
+            transform-origin: center center;
+        }
+    }
+
+    &:hover{
+        .room-img-wrap img{
+            transform: scale(110%);
+        }
+    }
+
+    .room-name{
+        padding-left:4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
+
+.label-wrap{
+    margin-top: 16px;
+    margin-bottom: 12px;
+}
+.label-room-status{
+    display:inline-flex;
+    min-width: 64px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: $G-border-radius;
+    padding: 3px 12px;
+    background: rgba(#969696, 0.15);
+    color:rgba(#ffffff, 0.7);
+    text-align: center;
+    line-height: 1;
+    white-space: nowrap;
+    font-size: $G-font-size-md;
+    font-family: $G-font-B;
+}
+.label-room-progress{
+    background: rgba(#FFC700, 0.1);
+    color:#FFC700;
+}
+.label-room-waiting{
+    background: rgba(#00E5BF, 0.1);
+    color: #00E5BF;
+}
+.label-room-ended{
+    background: rgba(#969696, 0.15);
+    color: rgba(#FFFFFF, 0.7);
+}
+.label-room-interrupt{
+    background: rgba(#E60000, 0.15);
+    color: #FF4343;
+}
+.label-room-stop{
+    background: rgba(#FF6600, 0.15);
+    color: #F98900;
+}
+
+@media (max-width: 500px) {
+    .my-meeting-recent .my-meeting-content{
+        padding-left:0;
+    }
+    .my-meeting-recent .img-area{
+        display:none;
+    }
+    .search-area{
+        width:100%;
+    }
+    .line-input-group{
+        width:100%;
+    }
+    .btn-create-room{
+        width:100%;
+        margin-top:16px;
+        min-height:48px;
+    }
+}
