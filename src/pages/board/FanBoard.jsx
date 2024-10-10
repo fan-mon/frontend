@@ -20,6 +20,7 @@ const FanBoard = ({ teamUuid }) => {
         return () => clearInterval(interval);
     }, [teamUuid]);
 
+    // Read
     const getList=async ()=>{
         try{
             const response=await axios.get(`http://localhost:8080/board/fanboard/${teamUuid}`)
@@ -32,6 +33,7 @@ const FanBoard = ({ teamUuid }) => {
         }
     }
 
+    // Create
     const posting = async (e)=>{
         const contentData = {
             fanboarduuid : null,
@@ -58,8 +60,43 @@ const FanBoard = ({ teamUuid }) => {
         }finally {
 
         }
-        // setFanBoards((prevItems) => [...prevItems, contentData]);
-        // setContent("");
+    }
+
+    // Update
+    const update = async (post) => {
+        const contentData = {
+            fanboarduuid : post.fanboarduuid,
+            content : editcontent,
+            createdat : post.createdat,
+            likecount: post.likecount,
+            team : {
+                teamuuid: teamUuid,
+            },
+            user : {
+                useruuid: localStorage.getItem("uuid"),
+            }
+        }
+        console.log(`edit contetn data : ${JSON.stringify(contentData)}`)
+        const res=axios.post(`http://localhost:8080/board/fanboard`, contentData,{
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        })
+           .then(() => getList());
+        console.log(res.data)
+        setEditIndex(null); // 수정 완료 후 인덱스 초기화
+    };
+
+    // delete
+    const deleteMsg = async (uuid)=>{
+        try{
+            const res=await axios.delete(`http://localhost:8080/board/fanboard/${uuid}`)
+            console.log(res.data)
+        }catch (e) {
+
+        }
+        console.log(`uuid = ${uuid}`)
+        await getList();
     }
 
     return (
@@ -101,8 +138,12 @@ const FanBoard = ({ teamUuid }) => {
                                     (<div>
                                         <textarea className="edit-field"
                                             value={editcontent}
-                                            onChange={(e) => setContent(e.target.value)}/>
-                                        <button >저장</button>
+                                            onChange={(e) => {
+                                                setEditcontent(e.target.value)
+                                            }}/>
+                                        <button onClick={()=>{
+                                            update(post)
+                                        }}>저장</button>
                                         <button onClick={(e)=> setEditIndex(null)}>취소</button>
                                     </div>)
                                     : (<div className="fanboard-content">
@@ -115,7 +156,7 @@ const FanBoard = ({ teamUuid }) => {
                                         setEditIndex(index);
                                         setEditcontent(post.content);
                                     }}>수정</button>
-                                    <button className="delete-button">삭제</button>
+                                    <button className="delete-button" onClick={()=>deleteMsg(post.fanboarduuid)}>삭제</button>
                                 </div>
                                 : null
                                 }
