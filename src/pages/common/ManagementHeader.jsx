@@ -5,14 +5,14 @@ import { ListUl, ArrowBarLeft, BellFill, HeartFill, ThreeDotsVertical, HouseDoor
 import React, { useEffect, useState } from 'react';
 import api from '../../apiClient';
 
-const Header = () => {
+const ManagementHeader = () => {
     const [userName, setUserName] = useState('이름 없음');
     const [showLogout, setShowLogout] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     const fetchUserInfo = async () => {
         try {
-            const response = await api.get('/users/myprofile');
+            const response = await api.get('/management/myprofile');
             setUserName(response.data.name);
             setIsLoggedIn(true); 
         } catch (error) {
@@ -39,7 +39,7 @@ const Header = () => {
         localStorage.removeItem('accessToken');
         setUserName('로그인 안됨');
         setIsLoggedIn(false); 
-        window.location.href = '/user/main';
+        window.location.href = '/management/dashboard';
     };
 
     const toggleLogoutMenu = () => {
@@ -85,7 +85,7 @@ const Header = () => {
             <div className="sidemenu">
                 <div className="sidemenu-content">
                     <h1 className="logo">
-                        <a href="/user/main">
+                        <a href="/management/dashboard">
                             <span className="full-logo">
                                 <img src={`${process.env.PUBLIC_URL}/common/logo.svg`} alt="" />
                             </span>
@@ -104,11 +104,11 @@ const Header = () => {
                                   if (!isLoggedIn) {
                                       window.location.href = "/user/login"; // 로그인 페이지로 이동
                                    } else {
-                                   window.location.href = "/user/mypage"; // 마이페이지로 이동
+                                   window.location.href = "/management/managementmypage"; // 마이페이지로 이동
                                   }
                                 }}
                          >{userName}</span>
-                            <div className="user-role">일반회원</div>
+                            <div className="user-role">기업회원</div>
                         </div>
                         <div className="btn btn-ico btn-dropdown" onClick={toggleLogoutMenu}>
                             <ThreeDotsVertical />
@@ -134,25 +134,25 @@ const Header = () => {
                             <li className="sidemenu-item sidemenu-commu">
                                 <Link to="/chat">
                                     <span className="ico"><ChatHeartFill /></span>
-                                    <span className="txt">커뮤니티</span>
+                                    <span className="txt">메뉴1</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-goods">
                                 <Link to="/">
                                     <span className="ico"><CartFill /></span>
-                                    <span className="txt">굿즈샵</span>
+                                    <span className="txt">메뉴2</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-meeting">
                                 <Link to="/">
                                     <span className="ico"><PersonSquare /></span>
-                                    <span className="txt">팬미팅</span>
+                                    <span className="txt">메뉴3</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-qna">
                                 <Link to="/">
                                     <span className="ico"><QuestionCircleFill /></span>
-                                    <span className="txt">고객센터</span>
+                                    <span className="txt">메뉴4</span>
                                 </Link>
                             </li>
                         </ul>
@@ -163,4 +163,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default ManagementHeader;

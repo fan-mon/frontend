@@ -1,18 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
 import "./css/goodsform.css";
+import { useParams } from "react-router-dom";
 
 const GoodsForm = () => {
 
     const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    const teamuuid = '8456584b-809d-11ef-b4db-0a2a78c30fc9'; //hard coding
+    // const {managementuuid} = useParams();
+    const {teamuuid} = useParams();
     const [name, setName] = useState('');
     const [qty, setQty] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [uploadfile, setUploadfile] = useState(null);
-    const [message, setMessage] = useState('');
+    const [message,setMessage] = useState('');
+    
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,12 +38,8 @@ const GoodsForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/management/goods', formData, {
-                // headers : {
-                //     'Content-Type': 'multipart/form-data', //파일 업로드를 위한 헤더 설정
-                // },
-            });
-            setMessage('상품이 성공적으로 등록되었습니다 : ${response.data.name}');
+            const response = await axios.post('http://localhost:8080/management/goods', formData);
+            setMessage(`상품이 성공적으로 등록되었습니다 : ${response.data.name}`);
             //폼 초기화
             setName('');
             setPrice('');

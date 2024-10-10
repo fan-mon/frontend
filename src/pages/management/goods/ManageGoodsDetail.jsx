@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import "../css/goodsdetail.css";
+import "./css/managegoodsdetail.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import GoodsNav from "./GoodsNav";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Button } from 'bootstrap';
 
-function GoodsDetail(){
+function ManageGoodsDetail(){
 
     //goods 테이블에서 데이터 가져오기
     let [gdetail, setGDetail] = useState(null);
     const { goodsuuid } = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const uuid = goodsuuid || sessionStorage.getItem('goodsuuid');
 
-        axios.get(`http://localhost:8080/shop/goods/detail/${goodsuuid}`)
+        axios.get(`http://localhost:8080/management/goods/${goodsuuid}`)
             .then(response => {
                 console.log(response.data);
                 setGDetail(response.data);
@@ -24,19 +25,29 @@ function GoodsDetail(){
                 console.error('Error fetching goods:', error);
             });
     }, [goodsuuid]);
+    const handleUpdateClick = (goodsuuid) => {
+        navigate(`/management/goodsUpdate/${goodsuuid}`);
+      };
+    
+    const handleDeleteClick = async() => {
+        const confirmed = window.confirm('정말로 삭제하시겠습니까?');
 
-    //수량, 가격 변경
-    const [quantity, setQuantity] = useState(1);
-    const pricePerItem = gdetail ? gdetail.price : 0;
-    const handleChange = (event) => {
-        setQuantity(Number(event.target.value));
-    };
-    const totalPrice = (pricePerItem * quantity).toLocaleString();
+        if (confirmed) {
+            try {
+                await axios.delete(`http://localhost:8080/management/goods/${goodsuuid}`);
+                alert('상품이 성공적으로 삭제되었습니다.');
+                navigate(`/management/manageGoodsList/${gdetail.team.teamuuid}`);
+            } catch (error) {
+                console.error('삭제 중 오류 발생:', error);
+                alert('삭제에 실패하였습니다. 다시 시도해 주세요.');
+            }
+        }
+
+    }
 
     return (
         <>
             <div className="goodsdetail-container detail-content">
-            <GoodsNav/>
             <div className="row">
 
                     <div className="col-sm-6">
@@ -48,17 +59,12 @@ function GoodsDetail(){
                                                 <p>{gdetail.description}</p>
                                                 <div className="detail-item">
                                                     <span>
-                                                        {totalPrice}원
-                                                    </span>
+                                                        가격 : {gdetail.price}원
+                                                    </span><br/>
                                                     <span>
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                        <input type="number" name="goods-qty" min="1" max="10" value={quantity} onChange={handleChange} />
-                                                        개
-                                                    </span>
+                                                        수량 : {gdetail.qty}개
+                                                    </span><br/>
                                                 </div>
-                                                <button className="welcome-add-cart">
-                                                    Add to Cart
-                                                </button>
                                             </div>
                                         ) : (
                                             <p>찾으시는 상품이 없습니다.</p>
@@ -69,11 +75,20 @@ function GoodsDetail(){
                     <div className="col-sm-6 gdetail-img">
                         <div className="single-welcome-hero">
                             {gdetail && gdetail.fname ? (
-                                <img className="welcome-hero-img" src={`${process.env.PUBLIC_URL}/shop/goods/${gdetail.fname}`} alt="slider image" />
+                                <img className="welcome-hero-img" src={`http://localhost:8080/resources/goodsimg/${gdetail.fname}`} alt="slider image" />
                             ) : (
                                 <div></div>
                             )}
                         </div>
+                    </div>
+                    <div className='update-goods'>
+                        <button className='update-goods-btn' onClick={()=>{handleUpdateClick(goodsuuid)}}>수정하기</button>
+                    </div>
+                    <div className='delete-goods'>
+                        <button className='delete-goods-btn' onClick={()=>{handleDeleteClick(goodsuuid)}}>삭제하기</button>
+                    </div>
+                    <div className='list-goods'>
+                        <button className='list-goods-btn' onClick={()=>{navigate(`/management/manageGoodsList/${gdetail.team.teamuuid}`)}}>목록으로</button>
                     </div>
                 </div>
             </div>
@@ -81,4 +96,4 @@ function GoodsDetail(){
     )
 }
 
-export default GoodsDetail;
+export default ManageGoodsDetail;

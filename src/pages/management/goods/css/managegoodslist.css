@@ -1,0 +1,84 @@
+.goods-list-container {
+  padding: 20px;
+  background-color: #111;
+  color: white;
+  max-height: 80vh;
+  /* 최대 높이 설정 */
+  overflow-y: auto;
+  /* 세로 스크롤 허용 */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.registered-goods-section {
+  margin-top: 20px;
+}
+
+.goods-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* 줄 바꿈 허용 */
+  justify-content: center;
+  gap: 20px;
+}
+
+.goods-item {
+  text-align: center;
+  width: calc(16.66% - 20px);
+  /* 6개씩 배치하기 위한 너비 계산 */
+  cursor: pointer;
+  /* 클릭 가능 표시 */
+}
+
+.goods-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.goods-form-btn{
+  width: 170px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 34px;
+    border:none;
+    background-color: #EAB70E;
+    color: #000000;
+    -webkit-transition: 0.3s linear; 
+    -moz-transition: 0.3s linear; 
+    -ms-transition: 0.3s linear; 
+    -o-transition: 0.3s linear; 
+    transition: 0.3s linear;
+    position:  relative;
+    top: 0px;
+    font-size: 16px;
+    margin-right: 5px;
+}
+
+.goods-manage-btn{
+  width: 170px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 1px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 34px;
+    border:none;
+    background-color: #EAB70E;
+    color: #000000;
+    -webkit-transition: 0.3s linear; 
+    -moz-transition: 0.3s linear; 
+    -ms-transition: 0.3s linear; 
+    -o-transition: 0.3s linear; 
+    transition: 0.3s linear;
+    position:  relative;
+    top: 0px;
+    font-size: 16px;
+    margin-right: 5px;
+}

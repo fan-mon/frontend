@@ -32,7 +32,7 @@
   flex: 1;
   padding: 10px;
   background-color: #191C24;
-  border: none;
+  border: 1px solid #333;
   border-radius: 5px;
   color: white;
 }
@@ -52,7 +52,7 @@
   margin: 10px 0; /* 입력란 사이의 간격 */
   padding: 10px;
   background-color: #191C24;
-  border: none;
+  border: 1px solid #333;
   border-radius: 5px;
   color: white;
   width: 100%;

@@ -1,3 +1,4 @@
+/* 이거 Management header 에서도 같이 쓰고있는 css 입니다!! */
 @charset "UTF-8";
 /* util */
 @font-face {
@@ -579,3 +580,17 @@ p {
 .slider-btns-wrap .btn-slider-next {
   right: -10px;
 }/*# sourceMappingURL=header.css.map */
+
+.logout-menu button {
+  color: #6C7289;
+  cursor: pointer; 
+  font-size: 15px; 
+  padding: 5px 10px; 
+}
+
+.username {
+  text-decoration: none;
+  color: inherit; 
+  cursor: pointer;
+}
+
