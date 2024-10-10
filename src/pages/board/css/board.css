@@ -237,7 +237,11 @@
 .fan-board .fanboard-content-wrap .fanboard-content{
     padding: 10px 20px;
 }
-
+.fan-board .fanboard-content-wrap .edit-field{
+    width: 100%;
+    background-color:rgba(255, 199, 0, 1);
+    border: 0;
+}
 
 .modal-overlay {
     position: fixed;

@@ -54,7 +54,7 @@ const ArtistBoard = ({ teamUuid}) => {
             <div className="board-title">
                 ARTIST BOARD
             </div>
-            { localStorage.getItem("user")==='ARTIST'?
+            {/*{ localStorage.getItem("user")==='ARTIST'?*/}
                 <div className="new-post-wrap">
                 <textarea className="writing-box" name="content"
                           id="content" cols="30" maxLength="150" rows="10"
@@ -62,7 +62,8 @@ const ArtistBoard = ({ teamUuid}) => {
                           onChange={(e) => setContent(e.target.value)}>
                 </textarea>
                 <button className="send-post" onClick={posting}>POST</button>
-            </div> : null }
+            </div>
+                {/*// : null }*/}
             {artistBoards && artistBoards.length > 0 ? (
                 artistBoards.map((board, index) => (
                     <div key={index} className="artistboard-content-wrap">

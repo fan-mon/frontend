@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./css/artistlist.css";
 const ArtistList = () => {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding(세션유지)
+    const managementuuid = '88c46095-01c1-4201-b684-307cd0fbdb7a'; //hard coding(세션유지)
     // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
     // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
 

@@ -4,6 +4,9 @@ import axios from "axios";
 const FanBoard = ({ teamUuid }) => {
     const [fanBoards, setFanBoards] = useState([]);
     const [content, setContent] = useState("");
+    // const [isEditing, setIsEditing] = useState(false);
+    const [editIndex, setEditIndex] = useState(null);
+    const [editcontent, setEditcontent] = useState("");
 
     useEffect(() => {
         getList();
@@ -47,14 +50,16 @@ const FanBoard = ({ teamUuid }) => {
         try {
             const res = await axios.post("http://localhost:8080/board/fanboard",contentData)
             console.log(res.data);
-            // await getList();
-            setFanBoards((prevItems) => [...prevItems, res.data]);
+            await getList();
+            // setFanBoards((prevItems) => [...prevItems, res.data]);
             setContent("");
         }catch (e) {
             console.log(e)
         }finally {
 
         }
+        // setFanBoards((prevItems) => [...prevItems, contentData]);
+        // setContent("");
     }
 
     return (
@@ -62,16 +67,17 @@ const FanBoard = ({ teamUuid }) => {
             <div className="fanboard-title">FAN BOARD</div>
             <div className="fanboard-body">
                 {localStorage.getItem("user") === 'USER' ?
-                    <div className="new-post-wrap">
+                <div className="new-post-wrap">
                         <textarea className="writing-box" name="" id="" cols="30"
                                   maxLength="150" rows="10" value={content}
-                                  onChange={(e)=>setContent(e.target.value)}
+                                  onChange={(e) => setContent(e.target.value)}
                                   placeholder="아티스트에게 응원의 한마디! (150자 이내)">
                         </textarea>
-                        <div className="send-post" onClick={posting}>
-                            post
-                        </div>
-                    </div> : null}
+                    <div className="send-post" onClick={posting}>
+                        post
+                    </div>
+                </div>
+                : null}
                 {fanBoards && fanBoards.length > 0 ? (
                     fanBoards.slice().reverse().map((post, index) => (
                             <div key={index} className="fanboard-content-wrap">
@@ -91,14 +97,27 @@ const FanBoard = ({ teamUuid }) => {
                                     })}
                                     </div>
                                 </div>
-                                <div className="fanboard-content">
-                                    {post.content}
+                                {editIndex===index ?
+                                    (<div>
+                                        <textarea className="edit-field"
+                                            value={editcontent}
+                                            onChange={(e) => setContent(e.target.value)}/>
+                                        <button >저장</button>
+                                        <button onClick={(e)=> setEditIndex(null)}>취소</button>
+                                    </div>)
+                                    : (<div className="fanboard-content">
+                                        {post.content}
+                                    </div>)
+                                }
+                                {localStorage.getItem("uuid") === post.user.useruuid ?
+                                <div className="writer-button">
+                                    <button className="edit-button" onClick={(e)=> {
+                                        setEditIndex(index);
+                                        setEditcontent(post.content);
+                                    }}>수정</button>
+                                    <button className="delete-button">삭제</button>
                                 </div>
-                                {localStorage.getItem("uuid") === post.useruuid ?
-                                    <div className="writer-button">
-                                        <button className="edit-button">수정</button>
-                                        <button className="delete-button">삭제</button>
-                                    </div> : null
+                                : null
                                 }
                             </div>
                         )
