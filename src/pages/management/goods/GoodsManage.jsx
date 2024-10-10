@@ -10,8 +10,8 @@ const GoodsManage = () => {
 
   const [team, setTeam] = useState([]); //팀 리스트
   const [selectedTeamUuid, setSelectedTeamUuid] = useState(null); //선택된 팀의 uuid
+  const [selectedTeamName, setSelectedTeamName] = useState(''); //선택된 팀의 이름
   const [selectedTeamGoods, setSelectedTeamGoods] = useState([]); //선택된 팀의 굿즈
-  const [selectedTeamName, setSelectedTeamName] = useState('');
   const [displayCount, setDisplayCount] = useState(6); //보여줄 상품 개수
   
   const [message, setMessage] = useState('');
@@ -38,8 +38,11 @@ const GoodsManage = () => {
     try {
       const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`);
       console.log("선택된 팀 : " + teamuuid);
-      setSelectedTeamGoods(response.data);
-      setSelectedTeamName(response.data[0].team.name);
+      if (response.data && response.data.length > 0) { // 데이터가 있을 경우
+        setSelectedTeamGoods(response.data);
+      } else {
+        setSelectedTeamGoods([]); // 데이터가 없으면 빈 배열로 초기화
+      }
       setLoading(false); //로딩 종료
       setDisplayCount(6); //새 팀을 선택할 때마다 보여줄 상품 개수 초기화
     } catch (err) {
@@ -51,9 +54,10 @@ const GoodsManage = () => {
   const navigate = useNavigate();
 
   // 아티스트 팀을 클릭하면 해당 아티스트 팀의 굿즈가 출력
-  const handleTeamClick = (teamuuid) => {
-    setSelectedTeamUuid(teamuuid);
-    fetchTeamGoods(teamuuid);
+  const handleTeamClick = (team) => {
+    setSelectedTeamUuid(team.teamuuid);
+    setSelectedTeamName(team.name);
+    fetchTeamGoods(team.teamuuid);
     setMessage('');
   };
 
@@ -90,7 +94,7 @@ const GoodsManage = () => {
         <h2>아티스트(팀)</h2>
         <div className="team-list">
           {team.map((team) => (
-            <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team.teamuuid)}>
+            <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
               <img src={`http://localhost:8080/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
@@ -110,16 +114,18 @@ const GoodsManage = () => {
         {message && <p className="message">{message}</p>}
 
         <div className="goods-list">
-          {/* goods배열을 map으로 돌려서 상품을 표시 */}
-          {selectedTeamGoods.slice(0, displayCount).map(
-            (item) => (
-              <div className="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
-                <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
-                <p>{item.name}</p>
-              </div>
-            )
-          )}
-        </div>
+        {/* 굿즈가 없을 때 메시지 표시 */}
+        {selectedTeamGoods.length === 0 ? (
+          <p>해당 팀의 등록된 굿즈가 없습니다.</p>
+        ) : (
+          selectedTeamGoods.slice(0, displayCount).map((item) => (
+            <div className="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
+              <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
+              <p>{item.name}</p>
+            </div>
+          ))
+        )}
+      </div> 
 
         <div className="view-more">
           {selectedTeamGoods.length > displayCount && (

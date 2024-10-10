@@ -57,6 +57,7 @@ function GoodsUpdate() {
         formData.append('description', gdetail.description);
         formData.append('price', gdetail.price);
         formData.append('qty', gdetail.qty);
+        formData.append('fname',gdetail.fname);
         if (file) {
             formData.append('uploadfile', file);
         }

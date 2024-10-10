@@ -16,7 +16,7 @@ function TeamDetail() {
     const [artists, setArtists] = useState([]); // 소속 아티스트 목록
     const [allArtists, setAllArtists] = useState([]); // 모든 아티스트 목록 (편집 모드에서 사용)
     const [selectedArtists, setSelectedArtists] = useState([]); // 선택된 아티스트 (편집 모드에서 사용)
-    
+
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -43,8 +43,18 @@ function TeamDetail() {
         try {
             const response = await axios.get(`http://localhost:8080/management/artistTeam/${teamuuid}`);
             setArtists(response.data); // 소속 아티스트 목록 설정
-            setSelectedArtists(response.data.map(artist => artist.artistuuid)); // 편집 모드에서 선택된 아티스트 설정
-            
+            setSelectedArtists(response.data.map(artist => artist.artist.artistuuid)); // 편집 모드에서 선택된 아티스트 설정
+            // response.data에서 각 아티스트의 artistuuid를 추출하여 새로운 배열을 생성합니다
+
+            // for 디버깅
+            response.data.forEach(arts => {
+                console.log(arts);
+                if (arts.artist) { // artist가 있는지 체크
+                    console.log(arts.artist.name); // 각 아티스트의 이름 출력
+                } else {
+                    console.log('artist 속성이 없습니다:', arts);
+                }
+            });
         } catch (err) {
             setError('Error fetching team artists: ' + err.message);
         }
@@ -63,14 +73,6 @@ function TeamDetail() {
     useEffect(() => {
         fetchTeamDetail();
         fetchTeamArtists();
-        artists.forEach(arts => {
-            console.log(arts);
-            if (arts.artist) { // artist가 있는지 체크
-                console.log(arts.artist.name); // 각 아티스트의 이름 출력
-            } else {
-                console.log('artist 속성이 없습니다:', arts);
-            }
-        });
     }, [teamuuid]);
 
     // 팀 삭제
@@ -101,6 +103,7 @@ function TeamDetail() {
         formData.append('debut', debut);
         formData.append('description', description);
         formData.append('followers', followers);
+        formData.append('fname', fname);
         if (uploadfile) {
             formData.append('uploadfile', uploadfile);
         }
@@ -108,16 +111,18 @@ function TeamDetail() {
         try {
             //팀 정보 업데이트(PUT)
             await axios.put(`http://localhost:8080/management/team/${teamuuid}`, formData);
-            
+
             //기존 소속 아티스트 삭제(DELETE)
             await axios.delete(`http://localhost:8080/management/artistTeam/${teamuuid}`);
 
             // 소속 아티스트 업데이트
             const artistTeamPromises = selectedArtists.map(artistuuid => {
-                return axios.post('http://localhost:8080/management/artistTeam', {
-                    artistuuid,
-                    teamuuid
-                });
+                console.log(artistuuid);
+                console.log(teamuuid);
+                const relatedData = new FormData();
+                relatedData.append('artistuuid', artistuuid);
+                relatedData.append('teamuuid', teamuuid);
+                return axios.post('http://localhost:8080/management/artistTeam', relatedData);
             });
             await Promise.all(artistTeamPromises);
 
@@ -169,7 +174,7 @@ function TeamDetail() {
             ) : (
                 followers
             )}</p>
-            
+
             {/* 이미지 표시 */}
             {!isEditing && fname && (
                 <img className='team-img' src={`http://localhost:8080/resources/teamimg/${fname}`} alt={`${name} 이미지`} />
@@ -186,7 +191,7 @@ function TeamDetail() {
             {isEditing ? (
                 <div className="artist-list-edit">
                     {allArtists.map(artist => (
-                        <label key={artist.artistteamuuid}>
+                        <label key={artist.artistuuid}>
                             <input
                                 type="checkbox"
                                 value={artist.artistuuid}
