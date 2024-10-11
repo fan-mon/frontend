@@ -50,20 +50,19 @@ function GoodsList() {
   }, [teamuuid, category]);
 
   
-    //장바구니 담기
-    const handleAddToCart = async (gprod) => {
-      try {
-        console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
+  //장바구니 담기
+  const handleAddToCart = async (gprod) => {
+    try {
+      console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
 
-        await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
-        alert('상품이 장바구니에 추가되었습니다.');
+      await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
+      alert('상품이 장바구니에 추가되었습니다.');
 
-      } catch (error) {
-        console.error('장바구니 처리 중 오류 발생:', error);
-        alert('장바구니에 상품을 추가할 수 없습니다.');
-      }
-    };
-    
+    } catch (error) {
+      console.error('장바구니 처리 중 오류 발생:', error);
+      alert('장바구니에 상품을 추가할 수 없습니다.');
+    }
+  };
 
   
   return (
@@ -77,7 +76,7 @@ function GoodsList() {
                     <div className="col-md-3 col-sm-4" key={gprod.goodsuuid}>
                         <div className="single-goods">
                         <div className="single-goods-bg">
-                            <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt="single-goods images" />
+                            <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt={gprod.fname} />
                             <div className="single-goods-bg-overlay"></div>
                         </div>
                         <h4>{gprod.name}</h4>
