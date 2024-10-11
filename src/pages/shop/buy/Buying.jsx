@@ -92,7 +92,7 @@ function Buying() {
             const totalQuantity = ordersData ? ordersData.qty : 0; // ordersData가 null일 경우를 대비
 
             // detailData가 유효한지 확인
-            let name = "수습중입니다";
+            let name = detailData[0].name;
             // if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
             //     name = totalQuantity > 1 
             //         ? detailData[0].name + ' 외 ' + (totalQuantity - 1) + '개' 
@@ -146,10 +146,10 @@ function Buying() {
                                 paid_at: response.paid_at,  // 결제 승인 시각
                                 apply_num: response.apply_num  //신용카드 승인 번호
                             }),
+
+                            // orders, ordersdetail 테이블에 데이터 삽입
+
                         });
-
-                        // orders, ordersdetail 테이블에 데이터 삽입
-
     
                         //세션 삭제
                         sessionStorage.removeItem('ordersData');
