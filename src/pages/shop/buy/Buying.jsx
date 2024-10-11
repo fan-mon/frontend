@@ -92,12 +92,12 @@ function Buying() {
             const totalQuantity = ordersData ? ordersData.qty : 0; // ordersData가 null일 경우를 대비
 
             // detailData가 유효한지 확인
-            let name = null;
-            if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
-                name = totalQuantity > 1 
-                    ? detailData[0].name + ' 외 ' + (totalQuantity - 1) + '개' 
-                    : detailData[0].name;
-            }
+            let name = "수습중입니다";
+            // if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
+            //     name = totalQuantity > 1 
+            //         ? detailData[0].name + ' 외 ' + (totalQuantity - 1) + '개' 
+            //         : detailData[0].name;
+            // }
 
             //DB에서 데이터 가져오기
             
