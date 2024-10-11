@@ -81,8 +81,6 @@ function CartList(){
         }
     };
 
-    
-
     // orders 테이블에 들어갈 데이터 준비
     let [orders, setOrders] = useState([]);
     useEffect(()=>{
@@ -124,7 +122,6 @@ function CartList(){
             console.log("ordersDetailList",ordersDetailList);
         }
     }, [clist, useruuid]);
-
 
     // 장바구니에 담긴 상품 삭제
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다

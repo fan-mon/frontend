@@ -83,9 +83,7 @@ function Buying() {
     }, [useruuid, userData]);
 
     const handlePayment = () => {
-
         if (window.IMP) {
-            
             console.log('IMP 객체가 정상적으로 로드되었습니다.');
             
             // 세션에서 데이터 가져오기
@@ -99,9 +97,7 @@ function Buying() {
                     : detailData[0].name;
             }
 
-            //DB에서 데이터 가져오기
-            
-
+            //총액 계산
             const amount = ordersData.totalcost;
 
             // 결제 요청 실행
@@ -133,14 +129,11 @@ function Buying() {
                     
                     // 결제 성공 처리
                     try{
+                        //Orders 테이블에 데이터 저장
                         const notifiedO = await fetch (`http://localhost:8080/shop/buy/bought/sendO/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-
-                            //전달될 데이터 묶음
                             body: JSON.stringify({
-
-                                // Orders 삽입 데이터
                                 imp_uid: response.imp_uid,  // 포트원 결제ID
                                 apply_num: response.apply_num,  //신용카드 승인 번호
                                 merchant_uid: response.merchant_uid,    //주문번호
@@ -150,23 +143,23 @@ function Buying() {
                                 paid_at: response.paid_at,  // 결제 승인 시각
                                 paid_qty: totalQuantity// 물품 수량
                             }),
-
                         });
 
+                        // 테이블에 저장된 ordres 데이터를 기존 세션/변수에 덮어쓰기
+                        sessionStorage.setItem("ordersData", JSON.stringify(notifiedO.body));
+                        setOrdersData(notifiedO.body);
+
+                        //OrdersDetail 테이블에 데이터 저장
                         const notifiedD = await fetch (`http://localhost:8080/shop/buy/bought/sendD/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-
-                            //전달될 데이터 묶음
                             body: JSON.stringify({
-                                // Orders Detail 삽입 데이터
-                                // 유저 데이터
-                                // Orders 데이터
-                                // 굿즈 데이터
-                                // 동일 상품 총액
-                                // 동일 상품 총수량
+                                user_data: userData,// 유저 데이터
+                                orders_data: ordersData,// Orders 데이터
+                                goods_data: detailData.goodsuuid,// 굿즈 데이터
+                                detail_amount: detailData.amount,// 동일 상품 총액
+                                detail_qty: detailData.qty// 동일 상품 총수량
                             }),
-
                         });
     
                         //세션 삭제
