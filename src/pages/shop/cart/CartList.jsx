@@ -109,6 +109,7 @@ function CartList(){
             
             ordersDetailList = clist.map((crecord) => ({
                 ordersdetailuuid: crecord.goods.goodsuuid, // UUID
+                name : crecord.goods.name,
                 qty: crecord.qty,  // 각 상품의 수량
                 totalcost: crecord.goods.price * crecord.qty,  // 각 상품의 총 금액
                 goodsuuid: crecord.goods.goodsuuid,  // 각 상품의 UUID
@@ -129,7 +130,7 @@ function CartList(){
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
     const deleteCartItem = async (useruuid, cartsequence) => {
         try {
-            await axios.get(`http://localhost:8080/shop/cart/${useruuid}/delete/${cartsequence}`);
+            await axios.get(`http://localhost:8080/shop/cart/delete/${useruuid}/${cartsequence}`);
             // 삭제 후 UI 업데이트
             setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
         } catch (error) {

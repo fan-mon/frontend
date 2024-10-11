@@ -92,12 +92,12 @@ function Buying() {
             const totalQuantity = ordersData ? ordersData.qty : 0; // ordersData가 null일 경우를 대비
 
             // detailData가 유효한지 확인
-            let name = detailData[0].name;
-            // if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
-            //     name = totalQuantity > 1 
-            //         ? detailData[0].name + ' 외 ' + (totalQuantity - 1) + '개' 
-            //         : detailData[0].name;
-            // }
+            let name = null;
+            if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
+                name = detailData.length > 1 
+                    ? detailData[0].name + ' 외 ' + (detailData.length - 1) + '개' 
+                    : detailData[0].name;
+            }
 
             //DB에서 데이터 가져오기
             
@@ -108,10 +108,9 @@ function Buying() {
             window.IMP.init('imp10888263');
             window.IMP.request_pay(
                 {
-                    // pg: cardinfo.provider,
                     pg: 'kcp', // PG사 구분 코드
                     pay_method: 'card', // 결제 방법
-                    merchant_uid: `payment-${crypto.randomUUID()}`, // 고객사 주문번호
+                    merchant_uid: `payment-${crypto.randomUUID()}`, // 승인번호
                     name: name, //상품명
                     amount: amount, //결제 예정 금액
                     buyer_email: userData.email, //이메일
@@ -134,20 +133,39 @@ function Buying() {
                     
                     // 결제 성공 처리
                     try{
-                        const notified = await fetch (`http://localhost:8080/shop/buy/bought/${useruuid}`, {
+                        const notifiedO = await fetch (`http://localhost:8080/shop/buy/bought/sendO/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            // imp_uid와 merchant_uid, 주문 정보를 서버에 전달합니다
+
+                            //전달될 데이터 묶음
                             body: JSON.stringify({
-                                imp_uid: response.imp_uid,  // 포트원 결제번호
+
+                                // Orders 삽입 데이터
+                                imp_uid: response.imp_uid,  // 포트원 결제ID
+                                apply_num: response.apply_num,  //신용카드 승인 번호
                                 merchant_uid: response.merchant_uid,    //주문번호
-                                paid_amount: response.paid_amount,  //결제금액
-                                buyer_addr: response.buyer_addr,    //주문자 주소
+                                user_data: userData,// 유저 데이터
+                                buyer_addr: response.buyer_addr,    // 주문자 주소
+                                paid_amount: response.paid_amount,  // 결제 금액
                                 paid_at: response.paid_at,  // 결제 승인 시각
-                                apply_num: response.apply_num  //신용카드 승인 번호
+                                paid_qty: totalQuantity// 물품 수량
                             }),
 
-                            // orders, ordersdetail 테이블에 데이터 삽입
+                        });
+
+                        const notifiedD = await fetch (`http://localhost:8080/shop/buy/bought/sendD/${useruuid}`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+
+                            //전달될 데이터 묶음
+                            body: JSON.stringify({
+                                // Orders Detail 삽입 데이터
+                                // 유저 데이터
+                                // Orders 데이터
+                                // 굿즈 데이터
+                                // 동일 상품 총액
+                                // 동일 상품 총수량
+                            }),
 
                         });
     
