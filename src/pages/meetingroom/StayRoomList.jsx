@@ -19,7 +19,7 @@ const StayRoomList = () => {
             <div className="col">
               <div className="stayroom-list-wrap">
                 <div className="contents-box my-meeting-recent">
-                  <a href="#" class="my-meeting-content">
+                  <a href="/meetingroom/stayroom" class="my-meeting-content">
                     <div className="img-area">
                       <span className="img-wrap">
                         <img src={`${process.env.PUBLIC_URL}/shop/goods/jung_haein_pillow.png`} alt=""/>
@@ -61,7 +61,7 @@ const StayRoomList = () => {
                             </button>
                           </div>
                         </div>
-                        <button className="btn btn-default btn-create-room">+ 대기방생성</button>
+                        <a href="/meetingroom/createroom" className="btn btn-default btn-create-room">+ 방생성</a>
                       </div>
                     </div>
 
