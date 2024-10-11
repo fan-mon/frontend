@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import "./css/teamdetail.css";
 import axios from 'axios';
+import api from '../../../apiClient';
 import { useParams, useNavigate } from 'react-router-dom';
+import "./css/teamdetail.css";
 
 function TeamDetail() {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
     const { teamuuid } = useParams();
 
     const [name, setName] = useState('');
@@ -21,6 +23,21 @@ function TeamDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+
+    //로그인한 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+            const response = await api.get('/management/myprofile');
+            console.log(response.headers); // 응답 헤더 출력
+            console.log(response.data); // 사용자 정보 로그 출력
+            setMgName(response.data.name);
+            setManagementuuid(response.data.managementuuid);
+            console.log(response.data.managementuuid);
+
+        } catch (error) {
+            console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
 
     // Team detail 정보 가져오기 API 호출
     const fetchTeamDetail = async () => {
@@ -71,6 +88,7 @@ function TeamDetail() {
     };
 
     useEffect(() => {
+        fetchManagementInfo();
         fetchTeamDetail();
         fetchTeamArtists();
     }, [teamuuid]);
@@ -211,12 +229,12 @@ function TeamDetail() {
             )}
 
             {isEditing ? (
-                <button onClick={handleUpdateClick}>수정 완료</button>
+                <button className='btn update-complete-btn' onClick={handleUpdateClick}>수정 완료</button>
             ) : (
-                <button onClick={() => { setIsEditing(true); fetchAllArtists(); }}>수정하기</button>
+                <button className='btn update-btn' onClick={() => { setIsEditing(true); fetchAllArtists(); }}>수정하기</button>
             )}
-            <button onClick={handleDeleteClick}>삭제하기</button>
-            <button onClick={() => navigate('/management/teamList')}>목록으로</button>
+            <button className='btn delete-btn' onClick={handleDeleteClick}>삭제하기</button>
+            <button className='btn list-btn' onClick={() => navigate('/management/teamList')}>목록으로</button>
         </div>
     );
 }
