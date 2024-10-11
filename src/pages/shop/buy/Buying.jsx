@@ -162,9 +162,14 @@ function Buying() {
                             }),
                         });
     
-                        //세션 삭제
+                        // 세션 삭제
                         sessionStorage.removeItem('ordersData');
                         sessionStorage.removeItem('DetailData');
+
+                        // Cart 테이블 비우기
+                        const deleteCartResponse = await fetch(`http://localhost:8080/shop/buy/delete/${useruuid}`, {
+                            method: "GET",
+                        });
                         
                         console.log('결제 성공:', response);
                         alert('결제가 성공적으로 완료되었습니다.');
