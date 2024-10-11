@@ -144,7 +144,7 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-meeting">
-                                <Link to="/">
+                                <Link to="/meetingroom/stayroomlist">
                                     <span className="ico"><PersonSquare /></span>
                                     <span className="txt">팬미팅</span>
                                 </Link>
