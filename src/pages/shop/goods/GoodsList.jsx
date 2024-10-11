@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import api from '../../../apiClient';
 
 function GoodsList() {
     
@@ -11,7 +12,22 @@ function GoodsList() {
   const [glist, setGList] = useState([]);
   const { teamuuid } = useParams();
   const { category } = useParams();
-  const { useruuid } = useParams();
+
+  // user 데이터 불러오기
+  let [useruuid, setUseruuid] = useState(null);
+  useEffect(() => {
+      const fetchUserInfo = async () => {
+          try {
+              const response = await api.get('/users/myprofile');
+              setUseruuid(response.data.useruuid);
+              console.log("Fetched useruuid: " + response.data.useruuid);
+  
+          } catch (error) {
+              console.error('Error fetching user profile:', error);
+          }
+      };
+      fetchUserInfo();
+  }, []);
 
   //상품 목록 불러오기 위한 axios 처리
   useEffect(() => {
@@ -54,13 +70,13 @@ function GoodsList() {
   const handleAddToCart = async (gprod) => {
     try {
       console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
-
       await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
       alert('상품이 장바구니에 추가되었습니다.');
 
     } catch (error) {
       console.error('장바구니 처리 중 오류 발생:', error);
       alert('장바구니에 상품을 추가할 수 없습니다.');
+      
     }
   };
 
