@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import api from '../../../apiClient';
 import "./css/teamform.css";
 import { useParams } from "react-router-dom";
 
 const TeamForm = () => {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
-    // const managementuuid = urlmanagementuuid || sessionStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
 
     const [name, setName] = useState('');
     const [debut, setDebut] = useState('');
@@ -19,17 +19,35 @@ const TeamForm = () => {
 
     const [message, setMessage] = useState('');
 
+    //로그인한 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+            const response = await api.get('/management/myprofile');
+            console.log(response.headers); // 응답 헤더 출력
+            console.log(response.data); // 사용자 정보 로그 출력
+            setMgName(response.data.name);
+            setManagementuuid(response.data.managementuuid);
+            console.log(response.data.managementuuid);
+
+          //managementuuid 설정된 후 fetchArtists 호출
+            await fetchArtists(response.data.managementuuid);
+        } catch (error) {
+            console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
+
     // 아티스트 목록 가져오기
+    const fetchArtists = async (uuid) => {
+        try {
+            const response = await axios.get(`http://localhost:8080/management/artist/list/${uuid}`);
+            setArtists(response.data); // 아티스트 목록 설정
+        } catch (error) {
+            console.error('Error fetching artists: ', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchArtists = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8080/management/artist/list/${managementuuid}`);
-                setArtists(response.data); // 아티스트 목록 설정
-            } catch (error) {
-                console.error('Error fetching artists: ', error);
-            }
-        };
-        fetchArtists();
+        fetchManagementInfo();
     }, []);
 
     const handleSubmit = async (e) => {
@@ -58,14 +76,14 @@ const TeamForm = () => {
                 }
             });
             const teamuuid = teamResponse.data.teamuuid; // 생성된 팀의 UUID
-            
+
             // 선택한 아티스트와 팀의 UUID를 함께 전송
             const artistTeamPromises = selectedArtists.map(artistuuid => {
                 console.log(selectedArtists);
                 const relatedData = new FormData();
-                relatedData.append('artistuuid',artistuuid);
-                relatedData.append('teamuuid',teamuuid);
-                return axios.post('http://localhost:8080/management/artistTeam',relatedData);
+                relatedData.append('artistuuid', artistuuid);
+                relatedData.append('teamuuid', teamuuid);
+                return axios.post('http://localhost:8080/management/artistTeam', relatedData);
             });
 
             // 모든 아티스트 팀 관계 저장 요청

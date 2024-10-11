@@ -1,28 +1,47 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import api from '../../../apiClient';
 import "./css/goodsform.css";
 import { useParams } from "react-router-dom";
 
 const GoodsForm = () => {
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
 
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    // const {managementuuid} = useParams();
-    const {teamuuid} = useParams();
+    const { teamuuid } = useParams();
     const [name, setName] = useState('');
     const [qty, setQty] = useState('');
     const [price, setPrice] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [uploadfile, setUploadfile] = useState(null);
-    const [message,setMessage] = useState('');
-    
+    const [message, setMessage] = useState('');
+
+    //로그인한 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+            const response = await api.get('/management/myprofile');
+            console.log(response.headers); // 응답 헤더 출력
+            console.log(response.data); // 사용자 정보 로그 출력
+            setMgName(response.data.name);
+            setManagementuuid(response.data.managementuuid);
+            console.log(response.data.managementuuid);
+
+        } catch (error) {
+            console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchManagementInfo();
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('managementuuid',managementuuid);
-        formData.append('teamuuid',teamuuid);
+        formData.append('managementuuid', managementuuid);
+        formData.append('teamuuid', teamuuid);
         formData.append('name', name);
         formData.append('price', parseFloat(price));
         formData.append('qty', qty);
