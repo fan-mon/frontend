@@ -13,7 +13,7 @@ function GoodsNav({ teamuuid, glist  }){
     let [gcategory, setGCategory] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:8080/shop/goods/category')
+        axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/category`)
             .then(response => {
                 console.log(response.data);
                 setGCategory(response.data);

@@ -30,7 +30,7 @@ function CartList(){
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/shop/cart/list/${useruuid}`);
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/list/${useruuid}`);
                 setCList(response.data);
             } catch (error) {
                 console.error('Error fetching goods:', error);
@@ -70,7 +70,7 @@ function CartList(){
     
         try {
             // 서버에 수량 업데이트 요청
-            await axios.post(`http://localhost:8080/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
+            await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/update/${useruuid}/${updatedRecord.goods.goodsuuid}/${newQty}`);
             console.log(newQty);
             // 요청 성공 후 상태 업데이트
             setCList(updatedCList);
@@ -80,8 +80,6 @@ function CartList(){
             setCList(clist);
         }
     };
-
-    
 
     // orders 테이블에 들어갈 데이터 준비
     let [orders, setOrders] = useState([]);
@@ -109,6 +107,7 @@ function CartList(){
             
             ordersDetailList = clist.map((crecord) => ({
                 ordersdetailuuid: crecord.goods.goodsuuid, // UUID
+                name : crecord.goods.name,
                 qty: crecord.qty,  // 각 상품의 수량
                 totalcost: crecord.goods.price * crecord.qty,  // 각 상품의 총 금액
                 goodsuuid: crecord.goods.goodsuuid,  // 각 상품의 UUID
@@ -124,12 +123,11 @@ function CartList(){
         }
     }, [clist, useruuid]);
 
-
     // 장바구니에 담긴 상품 삭제
     // 마찬가지로 CORS에서 delete가 허용되면 바꾸겠습니다
     const deleteCartItem = async (useruuid, cartsequence) => {
         try {
-            await axios.get(`http://localhost:8080/shop/cart/${useruuid}/delete/${cartsequence}`);
+            await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/delete/${useruuid}/${cartsequence}`);
             // 삭제 후 UI 업데이트
             setCList(prevItems => prevItems.filter(item => item.cartsequence !== cartsequence));
         } catch (error) {
