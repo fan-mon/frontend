@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "./css/artistdetail.css";
+import api from '../../../apiClient';
 // import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function ArtistDetail() {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
-    // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
+    // const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
     const { artistuuid } = useParams();
 
     const [adetail, setADetail] = useState(null);//디테일 정보 불러와서 담을 것
@@ -23,6 +24,21 @@ function ArtistDetail() {
     const [loading, setLoading] = useState(true);// 로딩 상태
     const [error, setError] = useState(null);// 에러 상태
     const navigate = useNavigate();
+
+    //로그인된 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+          const response = await api.get('/management/myprofile');
+          console.log(response.headers); // 응답 헤더 출력
+          console.log(response.data); // 사용자 정보 로그 출력
+          setMgName(response.data.name);
+          setManagementuuid(response.data.managementuuid);
+          console.log(response.data.managementuuid);
+
+        } catch (error) {
+          console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
 
     //Artist detail 정보 가져오기 api 호출
     const fetchArtistDetail = async () => {
@@ -42,6 +58,7 @@ function ArtistDetail() {
     };
 
     useEffect(() => {
+        fetchManagementInfo();
         fetchArtistDetail();
     }, [artistuuid]);
 

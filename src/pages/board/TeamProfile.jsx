@@ -11,7 +11,6 @@ const TeamProfile = ({teamuuid}) => {
             try {
                 const response = await axios.get(`http://localhost:8080/board/members/${teamuuid}`);
                 setGroup(response.data);
-                console.log(response.data);
             } catch (err) {
                 setError('데이터를 가져오는 데 오류가 발생했습니다.');
             } finally {
@@ -33,7 +32,7 @@ const TeamProfile = ({teamuuid}) => {
                 </div>
                 <div className="member-wrap">
                     {group.map((member, index) => (
-                        <div className="member-info">
+                        <div key={index} className="member-info">
                             <div className="member-photo">
                                 member photo
                             </div>

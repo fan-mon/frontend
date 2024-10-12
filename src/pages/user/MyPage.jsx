@@ -11,10 +11,7 @@ const MyPage = () => {
   const fetchUserInfo = async () => {
     try {
       const response = await api.get('/users/myprofile');
-      console.log("바보");
-      console.log(response.headers); // 응답 헤더 출력
-      console.log(response.data); // 사용자 정보 로그 출력
-      setUserName(response.data.name); // 사용자 이름 상태 업데이트
+      setUserName(response.data.name);
     } catch (error) {
       console.error("사용자 정보 가져오기 오류:", error);
     }
@@ -29,7 +26,7 @@ const MyPage = () => {
 
 
   useEffect(() => {
-    fetchUserInfo(); // 컴포넌트가 마운트될 때 사용자 정보 가져오기
+    fetchUserInfo(); 
   }, []);
 
   return (

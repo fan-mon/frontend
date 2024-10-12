@@ -25,6 +25,7 @@ function ManageGoodsDetail(){
                 console.error('Error fetching goods:', error);
             });
     }, [goodsuuid]);
+    
     const handleUpdateClick = (goodsuuid) => {
         navigate(`/management/goodsUpdate/${goodsuuid}`);
       };

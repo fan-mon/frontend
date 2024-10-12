@@ -2,19 +2,17 @@
 .whole-page{
     display: flex;
     flex-direction: column;
-    height: 100vh;
     padding: 30px;
     margin-top: 30px;
     gap: 30px;
 }
 .page {
     display: flex;
-    height: calc(100vh - 100px);
     flex: 1;
     gap: 30px;
     flex-direction: row;
 }
-@media (max-width: 1400px) {
+@media (max-width: 1150px) {
     .page {
         flex-direction: column;
         height: 100vh;
@@ -65,8 +63,11 @@
      gap: 20px;
      flex-direction: row;
  }
-.edit-button, .delete-button{
+.writer-button .edit-button, .delete-button, .canceledit-button{
     color: grey;
+    background-color: transparent;
+    width: auto;
+    height: auto;
 }
 .left-column {
     flex: 1;
@@ -97,11 +98,23 @@
 }
 .left-column .artist-board-wrap .new-post-wrap {
     display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.left-column .artist-board-wrap .new-post-wrap .content{
+    display: flex;
     gap: 30px;
     flex-direction: row;
     justify-content: space-between;
-    padding: 0 25px 50px 25px;
-    height: 150px;
+    padding: 0 25px 0px 25px;
+    height: 100px;
+}
+.add-photo .photo-button{
+    width: 120px;
+    height: 50px;
+    color: whitesmoke;
+    background-color: transparent;
+    margin : 0;
 }
 .left-column .artist-board-wrap .new-post-wrap .writing-box {
     display: flex;
@@ -111,6 +124,11 @@
 }
 .left-column .artist-board-wrap .new-post-wrap .send-post{
     width: 70px;
+    height: 100%;
+    color: whitesmoke;
+    border-radius: 7px;
+    background-color: black;
+    margin : 0;
 }
 .left-column .artist-board-wrap .board-content {
     display: flex;
@@ -148,8 +166,17 @@
 }
 .left-column .artist-board-wrap .board-content .content-right .content-right-bottom {
     display: flex;
+    background-color:rgba(25, 28, 36, 1) ;
     flex-direction: column;
     gap: 20px;
+}
+.left-column .artist-board-wrap .board-content .content-right .content-right-bottom .edit-content{
+    background-color:rgba(25, 28, 36, 1) ;
+    border: 0.1px solid white;
+    border-radius: 7px;
+    color: white;
+    padding: 10px;
+    width: 100%;
 }
 .left-column .artist-board-wrap .board-content .content-right .content-right-bottom .content-img {
     width: 300px;
@@ -158,7 +185,6 @@
     text-align: center;
 }
 .right-column {
-    width: 500px;
     flex: 1;
     flex-direction: column;
     justify-content: space-between;
@@ -193,7 +219,7 @@
 .fan-board .new-post-wrap .writing-box {
     display: flex;
     background-color: black;
-    border: 1px solid rgba(255, 199, 0, 1);
+    border: gray;
     border-radius: 7px;
     flex: 1;
     color: white;
@@ -206,8 +232,9 @@
     width: 60px;
 }
 .fan-board .fanboard-content-wrap {
-    background-color: rgba(255, 199, 0, 1);
-    color: black;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
     padding: 15px;
     border-radius: 7px;
     gap: 15px;
@@ -237,7 +264,11 @@
 .fan-board .fanboard-content-wrap .fanboard-content{
     padding: 10px 20px;
 }
-
+.fan-board .fanboard-content-wrap .edit-field{
+    width: 100%;
+    background-color:rgba(255, 199, 0, 1);
+    border: 0;
+}
 
 .modal-overlay {
     position: fixed;
