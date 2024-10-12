@@ -34,7 +34,7 @@ const TeamList = () => {
     //Team api 호출 함수
     const fetchTeam = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/team/list/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/list/${uuid}`);
             setTeam(response.data); //팀 정보를 상태에 저장
             setLoading(false); //로딩 종료
             console.log(team);
@@ -72,7 +72,7 @@ const TeamList = () => {
                 <div className="team-list">
                     {team.map((team) => (
                         <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team.teamuuid)}>
-                            <img src={`http://localhost:8080/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
+                            <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
                             <p>{team.name}</p>
                         </div>
                     ))}

@@ -33,7 +33,7 @@ function GoodsUpdate() {
     const fetchGoodsDetail = async () => {
         try {
             // sessionStorage.setItem('goodsuuid',goodsuuid); //세션에 goodsuuid저장
-            const response = await axios.get(`http://localhost:8080/management/goods/${goodsuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`);
             setGDetail(response.data);
             console.log(gdetail);
         } catch (err) {
@@ -79,7 +79,7 @@ function GoodsUpdate() {
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-        axios.put(`http://localhost:8080/management/goods/${goodsuuid}`, formData)
+        axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`, formData)
             .then(response => {
                 alert('상품 수정이 완료되었습니다.');
 

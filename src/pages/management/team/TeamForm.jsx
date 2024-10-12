@@ -29,7 +29,7 @@ const TeamForm = () => {
             setManagementuuid(response.data.managementuuid);
             console.log(response.data.managementuuid);
 
-          //managementuuid 설정된 후 fetchArtists 호출
+            //managementuuid 설정된 후 fetchArtists 호출
             await fetchArtists(response.data.managementuuid);
         } catch (error) {
             console.error("사용자 정보 가져오기 오류:", error);
@@ -39,7 +39,7 @@ const TeamForm = () => {
     // 아티스트 목록 가져오기
     const fetchArtists = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artist/list/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/list/${uuid}`);
             setArtists(response.data); // 아티스트 목록 설정
         } catch (error) {
             console.error('Error fetching artists: ', error);
@@ -70,7 +70,7 @@ const TeamForm = () => {
 
         try {
             // 팀 생성 요청
-            const teamResponse = await axios.post('http://localhost:8080/management/team', formData, {
+            const teamResponse = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/team`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -83,7 +83,7 @@ const TeamForm = () => {
                 const relatedData = new FormData();
                 relatedData.append('artistuuid', artistuuid);
                 relatedData.append('teamuuid', teamuuid);
-                return axios.post('http://localhost:8080/management/artistTeam', relatedData);
+                return axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam`, relatedData);
             });
 
             // 모든 아티스트 팀 관계 저장 요청
@@ -105,7 +105,7 @@ const TeamForm = () => {
 
     return (
         <div className="artist-form-container">
-            <h2>팀 등록</h2>
+            <h2 id="title">팀 등록</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>이름</label>
@@ -156,34 +156,29 @@ const TeamForm = () => {
                 </div>
                 <div className="form-group">
                     <label>아티스트 선택</label>
-                    <div className="artist-dropdown">
-                        <button type="button" className="form-control" onClick={() => {
-                            const artistNames = selectedArtists.map(uuid => artists.find(artist => artist.artistuuid === uuid)?.name).filter(Boolean);
-                            alert(`선택한 아티스트: ${artistNames.join(', ')}`);
-                        }}>
-                            {selectedArtists.length === 0 ? "아티스트 선택하기" : `${selectedArtists.length}명 선택됨`}
-                        </button>
-                        <div className="dropdown-content">
-                            {artists.map(artist => (
-                                <div key={artist.artistuuid}>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            value={artist.artistuuid}
-                                            checked={selectedArtists.includes(artist.artistuuid)}
-                                            onChange={(e) => {
-                                                const uuid = e.target.value;
-                                                setSelectedArtists(prev =>
-                                                    prev.includes(uuid) ? prev.filter(artistuuid => artistuuid !== uuid) : [...prev, uuid]
-                                                );
-                                            }}
-                                        />
-                                        {artist.name}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
+                    <div className="artist-checkboxes">
+                        {artists.map(artist => (
+                            <div key={artist.artistuuid}>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        value={artist.artistuuid}
+                                        checked={selectedArtists.includes(artist.artistuuid)}
+                                        onChange={(e) => {
+                                            const uuid = e.target.value;
+                                            setSelectedArtists(prev =>
+                                                prev.includes(uuid) ? prev.filter(artistuuid => artistuuid !== uuid) : [...prev, uuid]
+                                            );
+                                        }}
+                                    />
+                                    {artist.name}
+                                </label>
+                            </div>
+                        ))}
+
                     </div>
+                    {/* 선택한 아티스트 수 표시 */}
+                    <p>선택한 아티스트 수: {selectedArtists.length}</p>
                 </div>
                 <button type="submit" id="submitBtn">등록</button>
             </form>
