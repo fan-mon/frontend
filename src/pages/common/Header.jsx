@@ -49,6 +49,7 @@ const Header = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('role');
         setUserName('로그인 안됨');
         setIsLoggedIn(false); 
         window.location.href = '/user/main';

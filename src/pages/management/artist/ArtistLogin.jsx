@@ -19,6 +19,7 @@ const ArtistLogin = () => {
       const response = await axios.post(apiEndpoint, requestData);
 
       localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('role', response.data.role);
       navigate('/user/main'); // 로그인 후 메인 페이지로 이동
     } catch (error) {
       console.error("로그인 오류:", error);
