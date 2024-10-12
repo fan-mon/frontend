@@ -5,6 +5,7 @@ import axios from "axios";
 import "./css/artistlist.css";
 
 const ArtistList = () => {
+
     // const managementuuid = '5ee0cb40-3f82-4a40-aefb-540c1126e6a0'; //hard coding(세션유지)
     const [mgName, setMgName] = useState('로그인 안됨');
     const [managementuuid, setManagementuuid] = useState('');

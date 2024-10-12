@@ -34,6 +34,7 @@ body {
     padding: 20px;
     text-align: center;
     color: white;
+    border-radius: 7%;
 }
 
 /* 각각의 카드 크기 고정 */
@@ -72,13 +73,14 @@ body {
     margin-bottom: 15px;
 }
 
-.stat-card p, .stat-card ol {
-    font-size: 15px;
+.stat-card p{
+    font-size: 30px;
 }
 
 ol {
     list-style-type: none;
     padding: 0;
+    font-size: 15px;
 }
 
 ol li {
@@ -99,15 +101,33 @@ ol li {
     cursor: pointer; /* 커서 모양을 포인터로 변경 */
 }
 
-.manageBtn {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+
+/* 각각 관리페이지 링크 동작 */
+.artist-card .group-card .goods-card:hover {
+    background-color: antiquewhite;
 }
 
-.manageBtn:hover {
-    background-color: #0056b3; /* hover 시 색상 변화 */
+.artist-card:hover{
+    background-color: antiquewhite; /* hover 시 색상 변화 */
+    cursor: pointer; /* 커서 모양 변경 */
+}
+
+.tooltip{
+    opacity: 1;
+    position: absolute; /* 위치 설정 */
+    bottom: 50%; /* 카드 위에 위치 */
+    left: 50%; /* 중앙 정렬 */
+    transform: translateX(-50%); /* 중앙 정렬 */
+    background-color: rgba(0, 0, 0, 0.7); /* 배경 색상 */
+    padding: 5px 10px; /* 패딩 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    margin-bottom: 5px; /* 아래 여백 */
+    z-index: 1; /* 다른 요소 위에 표시 */
+    transition: opacity 0.3s;  /* 부드러운 전환 효과 */
+}
+
+.tooltip img{
+    max-width: 20px; /* 아이콘의 최대 너비 */
+    max-height: 20px; /* 아이콘의 최대 높이 */
+    margin-bottom: 5px; /* 이미지와 텍스트 간의 여백 */
 }

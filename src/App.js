@@ -46,6 +46,7 @@ import TeamDetail from './pages/management/team/TeamDetail';
 
 
 function App() {
+
   const useruuid = '0cf55a0d-a2a5-443b-af46-835d70874c40'
   const teamuuid = '8456584b-809d-11ef-b4db-0a2a78c30fc9'       //데이식스
   const artistUuid = 'ca5a5a75-809c-11ef-b4db-0a2a78c30fc9'   //영케이
@@ -55,6 +56,7 @@ function App() {
     <Router>
       <Content useruuid={useruuid} teamuuid={teamuuid} artistUuid={artistUuid} chatuuid={chatuuid} />
     </Router>
+
   );
 }
 
