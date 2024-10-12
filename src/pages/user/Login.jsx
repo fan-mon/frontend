@@ -24,7 +24,9 @@ const Login = () => {
     };
 
     try {
-      const apiEndpoint = isPersonal ? 'http://localhost:8080/users/login' : 'http://localhost:8080/management/login';
+      const apiEndpoint = isPersonal
+      ? `${process.env.REACT_APP_BACKEND_API_URL}/users/login`
+      : `${process.env.REACT_APP_BACKEND_API_URL}/management/login`;
       const response = await axios.post(apiEndpoint, requestData);
 
     // 로그인 성공 시 토큰 저장
@@ -64,7 +66,7 @@ const Login = () => {
 
   const handleGoogleLogin = () => {
     try {
-      window.location.href = "http://localhost:8080/oauth2/authorization/google";
+      window.location.href = `${process.env.REACT_APP_BACKEND_API_URL}/oauth2/authorization/google`;
     } catch (error) {
       console.error('구글 로그인 URL 가져오기 오류:', error);
     }

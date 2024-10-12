@@ -21,7 +21,7 @@ const ManagementSignUp = () => {
     }
 
   try {
-    const response = await axios.post('http://localhost:8080/management/signup', {
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/signup`, {
       email,
       password,
       name,
@@ -44,7 +44,7 @@ const ManagementSignUp = () => {
 
 const handleEmailCheck = async () => {
   try {
-    const response =  await axios.get('http://localhost:8080/management/check-email', {
+    const response =  await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/check-email`, {
       params: {email}  
     });
     if (response.status === 200) {

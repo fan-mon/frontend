@@ -15,7 +15,7 @@ const ArtistLogin = () => {
     };
 
     try {
-      const apiEndpoint = 'http://localhost:8080/management/artist/login';
+      const apiEndpoint = `${process.env.REACT_APP_BACKEND_API_URL}/management/artist/login`; // 환경 변수를 사용하여 API URL 설정
       const response = await axios.post(apiEndpoint, requestData);
 
       localStorage.setItem('accessToken', response.data.accessToken);
