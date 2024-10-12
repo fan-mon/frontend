@@ -55,7 +55,7 @@ const ArtistForm = () => {
         }
 
         try{
-            const response = await axios.post('http://localhost:8080/management/artist', formData);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist`, formData);
             setMessage(`아티스트가 성공적으로 등록되었습니다 : ${response.data.name}`);
             setName('');
             setBirth('');

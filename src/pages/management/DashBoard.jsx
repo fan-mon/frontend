@@ -20,6 +20,8 @@ const DashBoard = () => {
     const [sumGoodsTotalcost, setSumGoodsTotalcost] = useState(0); //굿즈 총 판매액
 
     const [showTooltip, setShowTooltip] = useState(false);
+    const [showTooltip2, setShowTooltip2] = useState(false);
+    const [showTooltip3, setShowTooltip3] = useState(false);
     const settingIcon = `${process.env.PUBLIC_URL}/management/setting_icon2.png`; // public 폴더의 URL
     const navigate = useNavigate();
 
@@ -49,7 +51,7 @@ const DashBoard = () => {
     //아티스트 개수 COUNT
     const fetchArtistCount = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artist/count/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/count/${uuid}`);
             setArtistCount(response.data);
             console.log(response.data);
         } catch (error) {
@@ -60,7 +62,7 @@ const DashBoard = () => {
     //아티스트 개수 COUNT
     const fetchTeamCount = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/team/count/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/count/${uuid}`);
             setTeamCount(response.data);
             console.log(response.data);
         } catch (error) {
@@ -71,7 +73,7 @@ const DashBoard = () => {
     //굿즈 개수 COUNT
     const fetchGoodsCount = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/goods/count/${uuid}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/count/${uuid}`)
             setGoodsCount(response.data);
             console.log(response.data);
         } catch (error) {
@@ -83,7 +85,7 @@ const DashBoard = () => {
     const fetchTeamList = async (uuid) => {
         try {
             console.log(uuid);
-            const response = await axios.get(`http://localhost:8080/management/team/followerorderby/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/followerorderby/${uuid}`);
             setTeamlist(response.data);
             console.log(response.data);
         } catch (error) {
@@ -94,7 +96,7 @@ const DashBoard = () => {
     //굿즈 판매량별 orderby 한거 호출
     const fetchGoodsList = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/ordersdetail/qtyOrderby/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/ordersdetail/qtyOrderby/${uuid}`);
             setGoodslist(response.data);
             console.log(response.data);
         } catch (error) {
@@ -105,7 +107,7 @@ const DashBoard = () => {
     //굿즈 총 판매량 SUM
     const fetchSumGoodsQty = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/ordersdetail/qtySum/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/ordersdetail/qtySum/${uuid}`);
             setSumGoodsQty(response.data);
             console.log(response.data);
         } catch (error) {
@@ -116,7 +118,7 @@ const DashBoard = () => {
     //굿즈 총 판매액 SUM
     const fetchSumGoodsTotalcost = async (uuid) => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/ordersdetail/totalcostSum/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/ordersdetail/totalcostSum/${uuid}`);
             setSumGoodsTotalcost(response.data);
             console.log(response.data);
         } catch (error) {
@@ -130,56 +132,90 @@ const DashBoard = () => {
 
     return (
         <div className="dashboard-content">
-            <div className="stats">
+            
+            <div className="goods-info">
                 <div className="stat-card followers-card">
                     <h3>팔로워수</h3>
-                    <ol>
-                        {teamlist.map((team, index) => (
-                            <li key={team.teamuuid || index}>{`${index + 1}. ${team.name}`}
-                                <span>{team.followers}</span>
-                            </li>
-                        ))}
-                    </ol>
+                    <table>
+                        <tbody>
+                            {teamlist.slice(0, 5).map((team, index) => (
+                                <tr key={team.teamuuid || index}>
+                                    <td><img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image" /></td>
+                                    <td>{team.name}</td>
+                                    <td>{team.followers}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-                <div className="stat-card artist-card"
-                    onMouseEnter={() => setShowTooltip(true)}
-                    onMouseLeave={() => setShowTooltip(false)}
-                    onClick={() => navigate(`/management/artistList`)}>
-                    <h3>아티스트</h3>
-                    <p>{artistCount}</p>
-                    {showTooltip && <span className="tooltip"><img
-                        src={settingIcon}
-                        alt="Settings"
-                        className="settings-icon"
-                    /></span>}
-                </div>
-                <div className="stat-card group-card" onClick={() => navigate(`/management/teamList`)}>
-                    <h3>그룹</h3>
-                    <p>{teamCount}</p>
-                </div>
-                <div className="stat-card goods-card" onClick={() => navigate(`/management/goodsManage`)}>
-                    <h3>굿즈</h3>
-                    <p>{goodsCount}</p>
+                <div className="stat-card sales-amount-card">
+                    <h3>굿즈 총 판매현황</h3>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><p>총 {sumGoodsQty}개</p></td>
+                                <td><p>총 {sumGoodsTotalcost}원</p></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div className="goods-info">
-                <div className="stat-card sales-amount-card">
-                    <h3>굿즈 총 판매현황</h3>
-                    <p>{sumGoodsQty}개</p>
-                    <p>{sumGoodsTotalcost}원</p>
+            <div className="stats">
+                <div className="number-card">
+                    <div className="stat-card artist-card"
+                        onMouseEnter={() => setShowTooltip(true)}
+                        onMouseLeave={() => setShowTooltip(false)}
+                        onClick={() => navigate(`/management/artistList`)}>
+                        <h3>아티스트</h3>
+                        <p>{artistCount}</p>
+                        {showTooltip && <img
+                            src={settingIcon}
+                            alt="Settings"
+                            className="settings-icon"
+                        />}
+                    </div>
+                    <div className="stat-card group-card"
+                        onMouseEnter={() => setShowTooltip2(true)}
+                        onMouseLeave={() => setShowTooltip2(false)}
+                        onClick={() => navigate(`/management/teamList`)}>
+                        <h3>그룹</h3>
+                        <p>{teamCount}</p>
+                        {showTooltip2 && <img
+                            src={settingIcon}
+                            alt="Settings"
+                            className="settings-icon"
+                        />}
+                    </div>
+                    <div className="stat-card goods-card"
+                        onMouseEnter={() => setShowTooltip3(true)}
+                        onMouseLeave={() => setShowTooltip3(false)}
+                        onClick={() => navigate(`/management/goodsManage`)}>
+                        <h3>굿즈</h3>
+                        <p>{goodsCount}</p>
+                        {showTooltip3 && <img
+                            src={settingIcon}
+                            alt="Settings"
+                            className="settings-icon"
+                        />}
+                    </div>
                 </div>
                 <div className="stat-card sales-ranking-card">
                     <h3>굿즈 판매순</h3>
-                    <ol>
-                        {goodslist.map((goods, index) => (
-                            <li key={goods.goodsuuid || index}>{`${index + 1}. ${goods.goods.name}`}
-                                <span>{goods.volume}</span>
-                            </li>
-                        ))}
-                    </ol>
+                    <table>
+                        <tbody>
+                            {goodslist.slice(0, 5).map((goods, index) => (
+                                <tr key={goods.goods.goodsuuid || index}>
+                                    <td><img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${goods.goods.fname}`} alt={goods.goods.fname} className="goods-image" /></td>
+                                    <td>{goods.goods.name}</td>
+                                    <td>{goods.volume}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
         </div>
     );
 };

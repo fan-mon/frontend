@@ -41,7 +41,7 @@ const ArtistList = () => {
         }
         try {
             console.log(uuid); // uuid 확인
-            const response = await axios.get(`http://localhost:8080/management/artist/list/${uuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/list/${uuid}`);
             setArtist(response.data);
             console.log(response.data);
             setLoading(false); // 로딩 종료
@@ -79,7 +79,7 @@ const ArtistList = () => {
                 <div className="artist-list">
                     {artist.map((artist) => (
                         <div className="artist-item" key={artist.artistuuid} onClick={()=>handleArtistClick(artist.artistuuid)}>
-                            <img src={`http://localhost:8080/resources/artistimg/${artist.fname}`} alt={artist.name} className="artist-image"></img>
+                            <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${artist.fname}`} alt={artist.name} className="artist-image"></img>
                             <p>{artist.name}</p>
                         </div>
                     ))}

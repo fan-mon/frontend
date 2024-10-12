@@ -15,7 +15,7 @@ function ManageGoodsDetail(){
     useEffect(() => {
         const uuid = goodsuuid || sessionStorage.getItem('goodsuuid');
 
-        axios.get(`http://localhost:8080/management/goods/${goodsuuid}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`)
             .then(response => {
                 console.log(response.data);
                 setGDetail(response.data);
@@ -35,7 +35,7 @@ function ManageGoodsDetail(){
 
         if (confirmed) {
             try {
-                await axios.delete(`http://localhost:8080/management/goods/${goodsuuid}`);
+                await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`);
                 alert('상품이 성공적으로 삭제되었습니다.');
                 navigate(`/management/manageGoodsList/${gdetail.team.teamuuid}`);
             } catch (error) {
@@ -76,7 +76,7 @@ function ManageGoodsDetail(){
                     <div className="col-sm-6 gdetail-img">
                         <div className="single-welcome-hero">
                             {gdetail && gdetail.fname ? (
-                                <img className="welcome-hero-img" src={`http://localhost:8080/resources/goodsimg/${gdetail.fname}`} alt="slider image" />
+                                <img className="welcome-hero-img" src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${gdetail.fname}`} alt="slider image" />
                             ) : (
                                 <div></div>
                             )}

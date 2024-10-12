@@ -57,7 +57,7 @@ const GoodsForm = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:8080/management/goods', formData);
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods`, formData);
             setMessage(`상품이 성공적으로 등록되었습니다 : ${response.data.name}`);
             //폼 초기화
             setName('');

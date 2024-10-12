@@ -18,7 +18,7 @@ const ManageGoodsList = () => {
     //Goods api 호출 함수
     const fetchGoods = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`); //api호출
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/team/${teamuuid}`); //api호출
             setGoods(response.data); //상품리스트를 상태에 저장
             setLoading(false); //로딩 종료
         } catch (err) {
@@ -30,7 +30,7 @@ const ManageGoodsList = () => {
     //team 정보 가져오기
     const fetchTeamInfo = async () => {
         try{
-            const response = await axios.get(`http://localhost:8080/management/team/${teamuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/${teamuuid}`);
             setTeamInfo(response.data);
             console.log(response.data.name);
         }catch(err){
@@ -80,7 +80,7 @@ const ManageGoodsList = () => {
                     {goods.map(
                         (item) => (
                             <div className="goods-item" key={item.goodsuuid} onClick={() => handleGoodsClick(item.goodsuuid)}>
-                                <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
+                                <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
                                 <p>{item.name}</p>
                             </div>
                         )

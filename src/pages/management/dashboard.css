@@ -3,44 +3,56 @@ body {
     font-family: Arial, sans-serif;
 }
 
-.main-page {
-    display: flex;
-    height: 100vh;
-}
-
-.main-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background-color: #2c2c2c;
-    color: white;
-}
 
 .dashboard-content {
+    display: grid; /* Grid를 사용 */
+    grid-template-columns: 2fr 3fr;
+    gap: 15px; /* 아이템 간의 간격 */
     padding: 20px;
     flex: 1;
-    display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
 }
 
 .stats, .goods-info {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
+    height: 600px;
+}
+
+.stats{
+    display: grid; /* Grid를 사용 */
+    grid-template-rows: 0.7fr 2fr;
+    gap: 20px;
+    height: 100%;
+}
+.goods-info{
+    display: grid; /* Grid를 사용 */
+    grid-template-rows: 2fr 3fr;
+    
+    gap: 20px;
+}
+
+.number-card{
+    display: flex;
+    gap:15px;
+    height: 0%;
 }
 
 .stat-card {
+    
     background-color: rgba(25, 28, 36, 1);
     padding: 20px;
     text-align: center;
     color: white;
-    border-radius: 7%;
+    border-radius: 5%;
+    display: inline-block; /* 인라인 블록으로 설정 */
 }
 
 /* 각각의 카드 크기 고정 */
 .followers-card {
-    width: 300px;
-    height: 250px;
+    width: 400px;
+    height: 350px;
 }
 
 .artist-card {
@@ -59,13 +71,13 @@ body {
 }
 
 .sales-ranking-card {
-    width: 300px;
-    height: 250px;
+    width: 480px;
+    height: 350px;
 }
 
 .sales-amount-card {
-    width: 300px;
-    height: 250px;
+    width: 400px;
+    height: 150px;
 }
 
 /* 공통 스타일 */
@@ -90,6 +102,7 @@ ol li {
 /* Settings icon 스타일 추가 */
 .stat-card {
     position: relative; /* 아이콘 배치를 위한 위치 설정 */
+    width: 100%; /* 카드의 너비를 100%로 설정 */
 }
 
 .settings-icon {
@@ -103,31 +116,50 @@ ol li {
 
 
 /* 각각 관리페이지 링크 동작 */
-.artist-card .group-card .goods-card:hover {
-    background-color: antiquewhite;
-}
-
 .artist-card:hover{
-    background-color: antiquewhite; /* hover 시 색상 변화 */
+    background-color: #EAB70E; /* hover 시 색상 변화 */
     cursor: pointer; /* 커서 모양 변경 */
+    color: black;
 }
 
-.tooltip{
-    opacity: 1;
-    position: absolute; /* 위치 설정 */
-    bottom: 50%; /* 카드 위에 위치 */
-    left: 50%; /* 중앙 정렬 */
-    transform: translateX(-50%); /* 중앙 정렬 */
-    background-color: rgba(0, 0, 0, 0.7); /* 배경 색상 */
-    padding: 5px 10px; /* 패딩 */
-    border-radius: 5px; /* 모서리 둥글게 */
-    margin-bottom: 5px; /* 아래 여백 */
-    z-index: 1; /* 다른 요소 위에 표시 */
-    transition: opacity 0.3s;  /* 부드러운 전환 효과 */
+.goods-card:hover{
+    background-color: #EAB70E; /* hover 시 색상 변화 */
+    cursor: pointer; /* 커서 모양 변경 */
+    color: black;
 }
 
-.tooltip img{
-    max-width: 20px; /* 아이콘의 최대 너비 */
-    max-height: 20px; /* 아이콘의 최대 높이 */
-    margin-bottom: 5px; /* 이미지와 텍스트 간의 여백 */
+.group-card:hover{
+    background-color: #EAB70E; /* hover 시 색상 변화 */
+    cursor: pointer; /* 커서 모양 변경 */
+    color: black;
+}
+
+
+.dashboard-content table {
+    width: 100%; /* 테이블의 너비를 카드의 너비에 맞춤 */
+    border-collapse: collapse; /* 테이블 셀의 경계 합침 */
+}
+
+.dashboard-content td {
+    padding: 8px; /* 셀 안의 여백 */
+    text-align: left; /* 텍스트 정렬 */
+    vertical-align: middle; /* 수직 정렬을 가운데로 설정 */
+}
+
+.sales-amount-card td {
+    text-align: center;
+}
+
+.followers-card img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.sales-ranking-card img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
 }

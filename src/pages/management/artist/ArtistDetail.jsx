@@ -43,7 +43,7 @@ function ArtistDetail() {
     //Artist detail 정보 가져오기 api 호출
     const fetchArtistDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artist/${artistuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`);
             setADetail(response.data);
             setName(response.data.name);
             setDebut(response.data.debut);
@@ -75,7 +75,7 @@ function ArtistDetail() {
 
         if (confirmed) {
             try {
-                await axios.delete(`http://localhost:8080/management/artist/${artistuuid}`);
+                await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`);
                 alert('아티스트가 삭제되었습니다.');
                 navigate('/management/artistList'); // 아티스트 목록 페이지로 이동
             } catch (error) {
@@ -105,7 +105,7 @@ function ArtistDetail() {
         }
 
         try {
-            await axios.put(`http://localhost:8080/management/artist/${artistuuid}`, formData);
+            await axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`, formData);
             alert('아티스트 정보가 수정되었습니다.');
             setIsEditing(false); // 수정 모드 종료
             fetchArtistDetail(); // 최신 데이터 가져오기
@@ -165,7 +165,7 @@ function ArtistDetail() {
                         adetail.birth
                     )}</p>
                     {!isEditing && fname ? (
-                        <img className='artist-img' src={`http://localhost:8080/resources/artistimg/${fname}`} />
+                        <img className='artist-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${fname}`} />
                     ) : (
                         <span>등록된 이미지가 없습니다.</span>
                     )}

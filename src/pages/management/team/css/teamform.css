@@ -1,17 +1,107 @@
+body {
+    background-color: black; /* 배경색 */
+    color: white; /* 글씨색 */
+    font-family: Arial, sans-serif; /* 폰트 스타일 */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 전체 화면 높이 */
+}
+
+.artist-form-container {
+    background-color: rgba(0, 0, 0, 0.8); /* 반투명 배경 */
+    border-radius: 10px; /* 모서리 둥글게 */
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+    width: 400px; /* 폼 너비 */
+    margin-top: 200px;
+}
+
+#title {
+    text-align: center; /* 제목 중앙 정렬 */
+    color: #EAB70E; /* 강조 색상 */
+}
+
+.form-group {
+    margin-bottom: 15px; /* 각 폼 그룹 간격 */
+}
+
+.form-control {
+    width: 100%; /* 너비 100% */
+    padding: 10px; /* 여백 */
+    border: 1px solid #EAB70E; /* 경계선 색상 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: black; /* 입력창 배경색 */
+    color: white; /* 글씨색 */
+}
+
+.form-control:focus {
+    outline: none; /* 포커스 시 테두리 제거 */
+    border-color: #EAB70E; /* 포커스 시 경계선 색상 */
+}
+
+.artist-form-container button {
+    background-color: #EAB70E; /* 버튼 배경색 */
+    color: black; /* 버튼 글씨색 */
+    border: none; /* 버튼 경계선 제거 */
+    padding: 10px; /* 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    cursor: pointer; /* 커서 변경 */
+    width: 100%; /* 버튼 너비 100% */
+    font-size: 16px; /* 버튼 글씨 크기 */
+}
+
+.form-group button:hover {
+    background-color: #d9a40e; /* 버튼 호버 색상 */
+}
+
+.message {
+    text-align: center; /* 메시지 중앙 정렬 */
+    margin-top: 10px; /* 상단 여백 */
+}
+
+.list-anchor {
+    display: block; /* 블록 요소로 변환 */
+    background-color: #EAB70E; /* 버튼 배경색 */
+    color: black; /* 버튼 글씨색 */
+    text-align: center; /* 텍스트 중앙 정렬 */
+    padding: 10px; /* 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    margin-top: 10px; /* 상단 여백 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.list-anchor:hover {
+    background-color: #d9a40e; /* 호버 색상 */
+}
+
 .artist-dropdown {
-    position: relative;
+    position: relative; /* 드롭다운 위치 설정 */
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    color: black;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+.artist-checkboxes {
+    background-color: rgba(0, 0, 0, 0.9); /* 드롭다운 배경색 */
+    border: 1px solid #EAB70E; /* 드롭다운 경계선 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    max-height: 150px; /* 최대 높이 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+    width: 100%; /* 너비 100% */
+    margin-top: 10px; /* 체크박스 상단 여백 추가 */
+    padding: 5px; /* 체크박스 내부 여백 */
 }
 
-.artist-dropdown:hover .dropdown-content {
-    display: block;
+.artist-checkboxes label {
+    display: flex; /* Flexbox를 사용하여 체크박스와 텍스트 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 5px; /* 여백 */
+    color: white; /* 글씨색 */
+}
+
+.artist-checkboxes input[type="checkbox"] {
+    width: 20px; /* 체크박스 너비 */
+    height: 20px; /* 체크박스 높이 */
+    margin-right: 10px; /* 체크박스와 텍스트 간격 */
+    accent-color: #EAB70E; /* 체크박스 강조 색상 */
 }

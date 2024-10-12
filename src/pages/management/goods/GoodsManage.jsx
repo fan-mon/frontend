@@ -44,7 +44,7 @@ const GoodsManage = () => {
       return;
     }
     try {
-      const response = await axios.get(`http://localhost:8080/management/team/list/${uuid}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/list/${uuid}`);
       setTeam(response.data); //팀 정보를 상태에 저장
       setLoading(false); //로딩 종료
       console.log("team List from back : " + response.data); // team을 console에 찍기
@@ -59,7 +59,7 @@ const GoodsManage = () => {
   const fetchTeamGoods = async (teamuuid) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/team/${teamuuid}`);
       console.log("선택된 팀 : " + teamuuid);
       if (response.data && response.data.length > 0) { // 데이터가 있을 경우
         setSelectedTeamGoods(response.data);
@@ -118,7 +118,7 @@ const GoodsManage = () => {
         <div className="team-list">
           {team.map((team) => (
             <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
-              <img src={`http://localhost:8080/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
+              <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
           ))}
@@ -143,7 +143,7 @@ const GoodsManage = () => {
           ) : (
             selectedTeamGoods.slice(0, displayCount).map((item) => (
               <div className="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
-                <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
+                <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
                 <p>{item.name}</p>
               </div>
             ))
