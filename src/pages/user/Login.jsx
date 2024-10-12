@@ -32,6 +32,7 @@ const Login = () => {
 
     // 로그인 성공 시 토큰 저장
     localStorage.setItem('accessToken', response.data.accessToken);
+    localStorage.setItem('role', response.data.role); // 역할 저장 추가
 
     // 개인회원 또는 기업회원에 따라 리디렉션
     if (isPersonal) {
