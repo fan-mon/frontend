@@ -5,7 +5,7 @@ import { ListUl, ArrowBarLeft, BellFill, HeartFill, ThreeDotsVertical, HouseDoor
 import React, { useEffect, useState } from 'react';
 import api from '../../apiClient';
 import ChatList from "../chat/css/ChatList";
-import {getList} from "../chat/api/subscription";
+import {getList} from "../chat/chatApi/subscription";
 
 const Header = () => {
     const [userName, setUserName] = useState('이름 없음');
@@ -20,6 +20,7 @@ const Header = () => {
         try {
             const response = await api.get('/users/myprofile');
             setUserName(response.data.name);
+            console.log(userName)
             setIsLoggedIn(true);
             setUseruuid(response.data.useruuid);
         } catch (error) {

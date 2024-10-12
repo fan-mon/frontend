@@ -25,15 +25,12 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
             setInputMessage('');
         }
     };
-
     const handleImageSelect = (event) => {
         const file = event.target.files[0]; // 선택한 파일 가져오기
         if (file) {
             sendImage(file); // 파일을 전송하는 함수 호출
         }
     };
-
-
     const handleMessage=(msg)=> {
         let uuid=msg.user.useruuid;
         console.log("block user 실행 : " + uuid)
