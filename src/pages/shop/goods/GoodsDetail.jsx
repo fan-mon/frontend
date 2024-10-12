@@ -31,7 +31,7 @@ function GoodsDetail(){
     useEffect(() => {
         const uuid = goodsuuid || sessionStorage.getItem('goodsuuid');
 
-        axios.get(`http://localhost:8080/shop/goods/detail/${goodsuuid}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/detail/${goodsuuid}`)
             .then(response => {
                 console.log(response.data);
                 setGDetail(response.data);
@@ -55,7 +55,7 @@ function GoodsDetail(){
     const handleAddToCart = async (goodsuuid) => {
         try {
         console.log(`User UUID: ${useruuid}, Goods UUID: ${goodsuuid}`);
-        await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${goodsuuid}/${quantity}`);
+        await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/add/${useruuid}/${goodsuuid}/${quantity}`);
         alert('상품이 장바구니에 추가되었습니다.');
 
         } catch (error) {

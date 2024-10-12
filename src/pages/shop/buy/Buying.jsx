@@ -130,7 +130,7 @@ function Buying() {
                     // 결제 성공 처리
                     try{
                         //Orders 테이블에 데이터 저장
-                        const notifiedO = await fetch (`http://localhost:8080/shop/buy/bought/sendO/${useruuid}`, {
+                        const notifiedO = await fetch (`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendO/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
@@ -150,7 +150,7 @@ function Buying() {
                         setOrdersData(notifiedO.body);
 
                         //OrdersDetail 테이블에 데이터 저장
-                        const notifiedD = await fetch (`http://localhost:8080/shop/buy/bought/sendD/${useruuid}`, {
+                        const notifiedD = await fetch (`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
@@ -167,7 +167,7 @@ function Buying() {
                         sessionStorage.removeItem('DetailData');
 
                         // Cart 테이블 비우기
-                        const deleteCartResponse = await fetch(`http://localhost:8080/shop/buy/delete/${useruuid}`, {
+                        const deleteCartResponse = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/delete/${useruuid}`, {
                             method: "GET",
                         });
                         

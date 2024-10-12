@@ -41,7 +41,7 @@ function GoodsList() {
     console.log('Category after removal:', sessionStorage.getItem('category'));
 
     if (!categoryValue) {
-      axios.get(`http://localhost:8080/shop/goods/list/${uuid}/all`)
+      axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/list/${uuid}/all`)
         .then(response => {
           console.log(response.data);
           setGList(response.data);
@@ -52,7 +52,7 @@ function GoodsList() {
           console.error('Error fetching goods:', error);
         });
     } else {
-      axios.get(`http://localhost:8080/shop/goods/list/${uuid}/${categoryValue}`)
+      axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/list/${uuid}/${categoryValue}`)
         .then(response => {
           console.log(response.data);
           setGList(response.data);
@@ -70,7 +70,7 @@ function GoodsList() {
   const handleAddToCart = async (gprod) => {
     try {
       console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
-      await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
+      await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
       alert('상품이 장바구니에 추가되었습니다.');
 
     } catch (error) {
