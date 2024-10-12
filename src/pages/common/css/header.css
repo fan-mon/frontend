@@ -592,3 +592,10 @@ button {
 .slider-btns-wrap .btn-slider-next {
   right: -10px;
 }/*# sourceMappingURL=header.css.map */
+
+.logout-menu button {
+  color: white;
+  background-color: transparent; 
+  font-size: 14px;
+  margin-bottom: 5px;
+}
