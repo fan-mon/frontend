@@ -119,10 +119,9 @@ const ChatRoom = ({ role, messages, sendMessage, sendImage, blockuser }) => {
                                             ref={fileInputRef}
                                             onChange={handleImageSelect} // 파일 선택 시 처리
                                         />
-
                                         <span className="ico-circle-wrap">
-                                    <i className="bi bi-image-fill"></i>
-                                </span>
+                                            <i className="bi bi-image-fill"></i>
+                                        </span>
                                         <span className="label">사진</span>
                                     </button>
                                 </div>
