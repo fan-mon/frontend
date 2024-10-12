@@ -86,6 +86,7 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
     return <Header />; // 기본 헤더
   };
 
+  return (
     <div className='header-wrap'>
       {renderHeader()}
       <div className="content">
