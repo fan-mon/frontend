@@ -124,3 +124,16 @@ body {
     opacity: 0.8;
   }
   
+  .artist-login {
+    margin-top: 18px;
+    margin-left: 205px;
+    font-size: 15px;
+  }
+  
+  .artist-login-link {
+    color: white;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  

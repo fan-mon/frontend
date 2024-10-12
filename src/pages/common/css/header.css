@@ -592,3 +592,29 @@ button {
 .slider-btns-wrap .btn-slider-next {
   right: -10px;
 }/*# sourceMappingURL=header.css.map */
+
+
+.chat-room-list{
+  display: none; /* 기본적으로 숨김 */
+  margin: 10px 0px 10px 70px;
+  gap: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.chat-room-list .profile-photo{
+  width: 25px ;
+  height: 25px;
+  background-color: white;
+  border-radius: 20px;
+}
+.chat-room-list .artist-name {
+  font-size: 13px;
+}
+
+.logout-menu button {
+  color: white;
+  background-color: transparent; 
+  font-size: 14px;
+  margin-bottom: 5px;
+}

@@ -13,7 +13,6 @@ const BoardNotice = ({ teamUuid }) => {
         try{
             const response=await axios.get(`http://localhost:8080/board/boardnotice/${teamUuid}`)
             setBoardNotices(response.data);
-            console.log(`artist board data : ${boardNotices}`)
         }catch (e) {
             console.log(e);
         }finally {
