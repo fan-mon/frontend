@@ -5,8 +5,10 @@ const ArtistBoard = ({ teamUuid}) => {
     const [artistBoards, setArtistBoards] = useState([]);
     const [content, setContent] = useState("");
     const fileInputRef = useRef(null);
-    const [index, setIndex] = useState(null);
+    const [editindex, setEditindex] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
     const [image, setImage] = useState(null);
+    const [editcontent, setEditcontent] = useState("");
 
     useEffect(() => {
         getList();
@@ -34,8 +36,8 @@ const ArtistBoard = ({ teamUuid}) => {
     };
     //create
     const posting = async (e)=>{
+        // e.preventDefault();
         const formData = new FormData();
-        e.preventDefault();
         console.log(`콘텐츠 내용 : ${content}`)
         const postData = {
             artist: {
@@ -43,6 +45,7 @@ const ArtistBoard = ({ teamUuid}) => {
             },
             content: content,
             createdat: null,
+            updatedat: null,
             likecount: 0,
             team: {
                 teamuuid: teamUuid
@@ -53,30 +56,55 @@ const ArtistBoard = ({ teamUuid}) => {
         console.log(`폼 데이터 : ${formData}`)
         formData.append('image', image);
         formData.append('post',JSON.stringify(postData));
-        setImage(null);
-        setContent("");
         // log formData 내용
         for (const [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-        try{
+        try {
             const response = await axios.post("http://localhost:8080/board/artistboard", formData);
             console.log(response.data);
+            await getList(); // getList가 비동기 함수이므로 처리가 완료될때까지 await으로 기다린다.
         }catch (e){
             console.log(e);
+        }finally {
+            setImage(null);
+            setEditcontent("");
         }
-        await getList(); // getList가 비동기 함수이므로 처리가 완료될때까지 await으로 기다린다.
     }
-    
+
     //update
-    const update = async (post) =>{
+    const update = async (board) => {
+        const formData = new FormData();
+        const postData = {
+            artist: {
+                artistuuid: localStorage.getItem("uuid"),
+            },
+            content: editcontent, // 수정할 경우 editcontent 사용
+            createdat: board.createdat,
+            updatedat: board.updatedat,
+            likecount: board.likecount,
+            team: {
+                teamuuid: teamUuid
+            },
+            artistboarduuid: board.artistboarduuid,
+        };
+
+        formData.append('image', image);
+        formData.append('post', JSON.stringify(postData));
+
+
         try {
-            
-        }catch (e) {
-            
+            const response = await axios.put(`http://localhost:8080/board/artistboard/put`, formData);
+            console.log(response.data);
+            await getList(); // 게시물 목록 새로 고침
+        } catch (e) {
+            console.log(e);
+        } finally {
+            setImage(null);
+            setEditcontent("");
         }
-        
-    }
+    };
+
 
     //delete
     const deleteBoard=async (artistboarduuid)=>{
@@ -104,12 +132,13 @@ const ArtistBoard = ({ teamUuid}) => {
                     </div>
                     <div className="add-photo">
                         <button className="photo-button"
-                                onClick={() => fileInputRef.current.click()}>사진 첨부하기</button>
+                                onClick={() => fileInputRef.current.click()}>사진 첨부하기
+                        </button>
                         <input type="file"
                                accept="image/*"
                                style={{display: 'none'}} // input 요소 숨기기
                                ref={fileInputRef}
-                               onChange={handleImageSelect} />
+                               onChange={handleImageSelect}/>
                     </div>
                 </div>
                 : null}
@@ -118,10 +147,30 @@ const ArtistBoard = ({ teamUuid}) => {
                     <div key={index} className="artistboard-content-wrap">
                         {localStorage.getItem("uuid") === board.artist.artistuuid ?
                             <div className="writer-button">
-                                <button className="edit-button">수정</button>
-                                <button className="delete-button"
-                                        onClick={()=>deleteBoard(board.artistboarduuid)}>삭제
+                                <button className="edit-button"
+                                        onClick={() => {
+                                            if (isEditing) {
+                                                // 수정 함수 실행
+                                                update(board);
+                                                setIsEditing(false); // 수정 모드 종료
+                                            } else {
+                                                setEditcontent(board.content);
+                                                setEditindex(index);
+                                                setIsEditing(true);
+                                            }
+                                        }}>수정
                                 </button>
+                                {isEditing ?
+                                    (<button className="canceledit-button"
+                                             onClick={() => {
+                                                 setIsEditing(false)
+                                             }}>취소</button>)
+                                    :
+                                    (<button className="delete-button"
+                                             onClick={() => {
+                                                 deleteBoard(board.artistboarduuid)
+                                             }}>삭제</button>)
+                                }
                             </div>
                             :
                             null
@@ -148,19 +197,41 @@ const ArtistBoard = ({ teamUuid}) => {
                                     </div>
                                 </div>
                                 <div className="content-right-bottom">
-                                    <div className="content">
-                                        <p>{board.content}</p>
-                                    </div>
-                                    <div className="content-img">
-                                        <img src={board.fname} alt="content-image" style={{width:"300px",height:"300px"}}/>
-                                    </div>
+                                    {isEditing && index === editindex ?
+                                        (<div><textarea className="edit-content"
+                                                        onChange={(e) => setEditcontent(e.target.value)}
+                                                        value={editcontent}/>
+                                                <div className="add-photo">
+                                                    <button className="photo-button"
+                                                            onClick={() => fileInputRef.current.click()}>사진 첨부하기
+                                                    </button>
+                                                    <input type="file"
+                                                           accept="image/*"
+                                                           style={{display: 'none'}} // input 요소 숨기기
+                                                           ref={fileInputRef}
+                                                           onChange={handleImageSelect}/>
+                                                </div>
+                                            </div>
+                                        )
+                                        :
+                                        (<div className="content">
+                                            {board.content}
+                                        </div>)
+                                    }
+                                    {board.fname ?
+                                        <div className="content-img">
+                                            <img src={board.fname} alt="content-image"
+                                                 style={{width: "300px", height: "300px"}}/>
+                                        </div>
+                                        :
+                                        null
+                                    }
                                 </div>
                             </div>
                         </div>
                         <hr/>
                     </div>
                 ))
-
             ) : (
                 <p>No artist boards available.</p>
             )}

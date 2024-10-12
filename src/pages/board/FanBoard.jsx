@@ -52,12 +52,10 @@ const FanBoard = ({ teamUuid }) => {
             const res = await axios.post("http://localhost:8080/board/fanboard",contentData)
             console.log(res.data);
             await getList();
-            // setFanBoards((prevItems) => [...prevItems, res.data]);
             setContent("");
         }catch (e) {
             console.log(e)
         }finally {
-
         }
     }
 
@@ -91,11 +89,10 @@ const FanBoard = ({ teamUuid }) => {
         try{
             const res=await axios.delete(`http://localhost:8080/board/fanboard/${uuid}`)
             console.log(res.data)
+            await getList();
         }catch (e) {
-
         }
         console.log(`uuid = ${uuid}`)
-        await getList();
     }
 
     return (
@@ -150,14 +147,14 @@ const FanBoard = ({ teamUuid }) => {
                                     </div>)
                                 }
                                 {localStorage.getItem("uuid") === post.user.useruuid ?
-                                <div className="writer-button">
-                                    <button className="edit-button" onClick={(e)=> {
-                                        setEditIndex(index);
-                                        setEditcontent(post.content);
-                                    }}>수정</button>
-                                    <button className="delete-button" onClick={()=>deleteMsg(post.fanboarduuid)}>삭제</button>
-                                </div>
-                                : null
+                                    <div className="writer-button">
+                                        <button className="edit-button" onClick={(e)=> {
+                                            setEditIndex(index);
+                                            setEditcontent(post.content);
+                                        }}>수정</button>
+                                        <button className="delete-button" onClick={()=>deleteMsg(post.fanboarduuid)}>삭제</button>
+                                    </div>
+                                    : null
                                 }
                             </div>
                         )
