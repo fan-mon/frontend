@@ -43,6 +43,7 @@ import ArtistForm from './pages/management/artist/ArtistForm';
 import ArtistDetail from './pages/management/artist/ArtistDetail';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
+import ChatList from "./pages/chat/css/ChatList";
 
 
 function App() {
@@ -83,8 +84,6 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
     return <Header />; // 기본 헤더
   };
 
-
-  return (
     <div className='header-wrap'>
       {renderHeader()}
       <div className="content">
