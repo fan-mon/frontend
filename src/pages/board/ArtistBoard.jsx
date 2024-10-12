@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from "react";
 import axios from "axios";
-import {getList, handleImageSelect} from "./boardApi/boardAPI";
+import {getList, handleImageSelect} from "./boardAPI/boardAPI";
 
 const ArtistBoard = () => {
     const [artistBoards, setArtistBoards] = useState([]);

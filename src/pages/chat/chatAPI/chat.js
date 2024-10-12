@@ -3,7 +3,7 @@ const CHAT_API_URI=`${process.env.REACT_APP_BACKEND_API_URL}/chat`
 const getMessageList = async (chatuuid)=>{
     try{
         const response = await axios.get(`${CHAT_API_URI}/messages/${chatuuid}`);
-        return response.data
+        return response.data;
     }catch (e){
         console.log(e)
     }

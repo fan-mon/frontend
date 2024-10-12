@@ -88,7 +88,7 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
       {renderHeader()}
       <div className="content">
         <Routes>
-          <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid} />} />
+          <Route path="/chat/ws/:chatuuid" element={<ChatPage />} />
           <Route path="/chat/login" element={<TempLogin />} />
           <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList />} />
           <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList />} />

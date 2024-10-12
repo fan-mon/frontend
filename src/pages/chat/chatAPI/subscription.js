@@ -14,4 +14,15 @@ const getList=async (useruuid, setChatList)=>{
     }
 }
 
-export {getList};
+//유저가 채팅하는 연예인 정보 가져오기
+const getArtistData= async (chatuuid,setChatInfo)=>{
+    try{
+        const res = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/chat/${chatuuid}`)
+        console.log(res.data.artist.name)
+        setChatInfo(res.data)
+    }catch (e){
+        console.log(e)
+    }
+}
+
+export {getList, getArtistData};
