@@ -608,8 +608,9 @@ button {
   background-color: white;
   border-radius: 20px;
 }
-.chat-room-list .artist-name{
+.chat-room-list .artist-name {
   font-size: 13px;
+}
 
 .logout-menu button {
   color: white;

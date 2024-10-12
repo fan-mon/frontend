@@ -61,7 +61,7 @@ function App() {
   );
 }
 
-const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
+const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
   const location = useLocation();
   const [role, setRole] = useState(null);
 
@@ -77,55 +77,57 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
   // 역할에 따라 헤더 선택
   const renderHeader = () => {
     if (role === 'MANAGEMENT') {
-      return <ManagementHeader />;
+      return <ManagementHeader/>;
     } else if (role === 'ARTIST') {
-      return <ArtistHeader />; // 아티스트용 헤더 추가
+      return <ArtistHeader/>; // 아티스트용 헤더 추가
     }
-    return <Header />; // 기본 헤더
+    return <Header/>; // 기본 헤더
   };
 
-    <div className='header-wrap'>
-      {renderHeader()}
-      <div className="content">
-        <Routes>
-          <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid} />} />
-          <Route path="/chat/login" element={<TempLogin />} />
-          <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid} />} />
-          <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList />} />
-          <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList />} />
-          <Route path="/board" element={<BoardPage teamuuid={teamuuid} />} />
-          <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail />} />
-          <Route path="/shop/cart/list" element={<CartList />} />
-          <Route path="/shop/buy/buying" element={<Buying />} />
-          <Route path="/shop/buy/bought" element={<Bought />} />
-          <Route path="/management/goodsform/:teamuuid" element={<GoodsForm />} />
-          <Route path="/management/goodsmanage" element={<GoodsManage />} />
-          <Route path="/management/manageGoodsList/:teamuuid" element={<ManageGoodsList />} /> {/* 더보기 경로 추가 */}
-          <Route path="/management/teamList" element={<TeamList />} />
-          <Route path="/management/artistList" element={<ArtistList />} />
-          <Route path='/management/artistForm/:managementuuid' element={<ArtistForm />} />
-          <Route path='/management/artistDetail/:artistuuid' element={<ArtistDetail />} />
-          <Route path="/management/manageGoodsDetail/:goodsuuid" element={<ManageGoodsDetail />} />
-          <Route path="/management/goodsUpdate/:goodsuuid" element={<GoodsUpdate />} />
-          <Route path="/management/teamForm/:managementuuid" element={<TeamForm />} />
-          <Route path='/management/teamDetail/:teamuuid' element={<TeamDetail />} />
-          <Route path="/user/signup" element={<SignUp />} />
-          <Route path="/user/mypage" element={<MyPage />} />
-          <Route path="/shop/goods/main" element={<GoodsMain />} />
-          <Route path="/management/managementsignup" element={<ManagementSignUp />} />
-          <Route path="/user/login" element={<Login />} />
-          <Route path="/meetingroom/stayroom" element={<StayRoom />} />
-          <Route path="/meetingroom/meetingroom" element={<MeetingRoom />} />
-          <Route path="/meetingroom/stayroomlist" element={<StayRoomList />} />
-          <Route path="/meetingroom/createroom" element={<CreateRoom />} />
-          <Route path="/user/main" element={<Main />} />
-          <Route path="/management/dashboard" element={<DashBoard />} />
-          <Route path="/management/managementmypage" element={<ManagementMyPage />} />
-        </Routes>
+  return (<div className='header-wrap'>
+        {renderHeader()}
+        <div className="content">
+          <Routes>
+            <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid}/>}/>
+            <Route path="/chat/login" element={<TempLogin/>}/>
+            <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>}/>
+            <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>
+            <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList/>}/>
+            <Route path="/board" element={<BoardPage teamuuid={teamuuid}/>}/>
+            <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail/>}/>
+            <Route path="/shop/cart/list" element={<CartList/>}/>
+            <Route path="/shop/buy/buying" element={<Buying/>}/>
+            <Route path="/shop/buy/bought" element={<Bought/>}/>
+            <Route path="/management/goodsform/:teamuuid" element={<GoodsForm/>}/>
+            <Route path="/management/goodsmanage" element={<GoodsManage/>}/>
+            <Route path="/management/manageGoodsList/:teamuuid" element={<ManageGoodsList/>}/> {/* 더보기 경로 추가 */}
+            <Route path="/management/teamList" element={<TeamList/>}/>
+            <Route path="/management/artistList" element={<ArtistList/>}/>
+            <Route path='/management/artistForm/:managementuuid' element={<ArtistForm/>}/>
+            <Route path='/management/artistDetail/:artistuuid' element={<ArtistDetail/>}/>
+            <Route path="/management/manageGoodsDetail/:goodsuuid" element={<ManageGoodsDetail/>}/>
+            <Route path="/management/goodsUpdate/:goodsuuid" element={<GoodsUpdate/>}/>
+            <Route path="/management/teamForm/:managementuuid" element={<TeamForm/>}/>
+            <Route path='/management/teamDetail/:teamuuid' element={<TeamDetail/>}/>
+            <Route path="/user/signup" element={<SignUp/>}/>
+            <Route path="/user/mypage" element={<MyPage/>}/>
+            <Route path="/shop/goods/main" element={<GoodsMain/>}/>
+            <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
+            <Route path="/user/login" element={<Login/>}/>
+            <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
+            <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
+            <Route path="/meetingroom/stayroomlist" element={<StayRoomList/>}/>
+            <Route path="/meetingroom/createroom" element={<CreateRoom/>}/>
+            <Route path="/user/main" element={<Main/>}/>
+            <Route path="/management/dashboard" element={<DashBoard/>}/>
+            <Route path="/management/managementmypage" element={<ManagementMyPage/>}/>
+          </Routes>
 
+        </div>
       </div>
-    </div>
+
   );
+
 }
 
 
