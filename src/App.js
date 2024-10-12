@@ -40,6 +40,7 @@ import ArtistForm from './pages/management/artist/ArtistForm';
 import ArtistDetail from './pages/management/artist/ArtistDetail';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
+import ChatList from "./pages/chat/css/ChatList";
 
 
 function App() {
@@ -65,6 +66,7 @@ function App() {
           <div className="content">
               <Routes>
                 <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid}/>} />
+                <Route path="/chat/list" element={<ChatList />} />
                 <Route path="/chat/login" element={<TempLogin/>} />
                 <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid}/>} />
                 <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList/>}/>

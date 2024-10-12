@@ -132,9 +132,9 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-commu">
-                                <Link to="/chat">
+                                <Link to="/chat/list">
                                     <span className="ico"><ChatHeartFill /></span>
-                                    <span className="txt">커뮤니티</span>
+                                    <span className="txt">채팅</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-goods">
