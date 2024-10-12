@@ -7,6 +7,7 @@ const FanBoard = ({ teamUuid }) => {
     // const [isEditing, setIsEditing] = useState(false);
     const [editIndex, setEditIndex] = useState(null);
     const [editcontent, setEditcontent] = useState("");
+    const FAN_BOARD_API_URL=`${process.env.REACT_APP_BACKEND_API_URL}/board/fanboard`
 
     useEffect(() => {
         getList();
@@ -23,7 +24,7 @@ const FanBoard = ({ teamUuid }) => {
     // Read
     const getList=async ()=>{
         try{
-            const response=await axios.get(`http://localhost:8080/board/fanboard/${teamUuid}`)
+            const response=await axios.get(`${FAN_BOARD_API_URL}/${teamUuid}`)
             setFanBoards(response.data);
         }catch (e) {
             console.log(e);
@@ -49,7 +50,7 @@ const FanBoard = ({ teamUuid }) => {
         console.log(contentData);
 
         try {
-            const res = await axios.post("http://localhost:8080/board/fanboard",contentData)
+            const res = await axios.post(`${FAN_BOARD_API_URL}`,contentData)
             console.log(res.data);
             await getList();
             setContent("");
@@ -74,7 +75,7 @@ const FanBoard = ({ teamUuid }) => {
             }
         }
         console.log(`edit contetn data : ${JSON.stringify(contentData)}`)
-        const res=axios.post(`http://localhost:8080/board/fanboard`, contentData,{
+        const res=axios.post(`${FAN_BOARD_API_URL}`, contentData,{
             headers : {
                 "Content-Type" : "application/json"
             }
@@ -87,7 +88,7 @@ const FanBoard = ({ teamUuid }) => {
     // delete
     const deleteMsg = async (uuid)=>{
         try{
-            const res=await axios.delete(`http://localhost:8080/board/fanboard/${uuid}`)
+            const res=await axios.delete(`${FAN_BOARD_API_URL}/${uuid}`)
             console.log(res.data)
             await getList();
         }catch (e) {

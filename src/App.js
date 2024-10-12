@@ -8,7 +8,6 @@ import GoodsDetail from './pages/shop/goods/GoodsDetail';
 import Header from './pages/common/Header'
 import ManagementHeader from './pages/common/ManagementHeader';
 import ArtistHeader from './pages/common/ArtistHeader';
-import ArtistPage from "./pages/Artist/ArtistPage";
 
 import CartList from './pages/shop/cart/CartList';
 import Buying from "./pages/shop/buy/Buying";
@@ -44,7 +43,6 @@ import ArtistDetail from './pages/management/artist/ArtistDetail';
 import ArtistLogin from './pages/management/artist/ArtistLogin';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
-import ChatList from "./pages/chat/css/ChatList";
 
 
 function App() {
@@ -62,10 +60,9 @@ function App() {
   );
 }
 
-const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
+const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
   const location = useLocation();
   const [role, setRole] = useState(null);
-
 
   // 역할을 로컬 스토리지에서 가져옴
   useEffect(() => {
@@ -79,11 +76,11 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
   // 역할에 따라 헤더 선택
   const renderHeader = () => {
     if (role === 'MANAGEMENT') {
-      return <ManagementHeader />;
+      return <ManagementHeader/>;
     } else if (role === 'ARTIST') {
-      return <ArtistHeader />; // 아티스트용 헤더 추가
+      return <ArtistHeader/>; // 아티스트용 헤더 추가
     }
-    return <Header />; // 기본 헤더
+    return <Header/>; // 기본 헤더
   };
 
   return (
@@ -93,7 +90,6 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
         <Routes>
           <Route path="/chat/ws/:artistUuid" element={<ChatPage chatUuid={chatuuid} />} />
           <Route path="/chat/login" element={<TempLogin />} />
-          <Route path="/chat/subscribe" element={<ArtistPage artistuuid={teamuuid} />} />
           <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList />} />
           <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList />} />
           <Route path="/board" element={<BoardPage teamuuid={teamuuid} />} />
@@ -127,10 +123,11 @@ const Content = ({ useruuid, teamuuid, artistUuid, chatuuid }) => {
           <Route path="/management/managementmypage" element={<ManagementMyPage />} />
         </Routes>
 
+        </div>
       </div>
-    </div>
 
   );
+
 }
 
 
