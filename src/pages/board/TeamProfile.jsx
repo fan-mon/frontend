@@ -13,7 +13,7 @@ const TeamProfile = ({teamuuid}) => {
     useEffect(() => {
         const fetchGroupData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8080/board/members/${teamuuid}`);
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/board/members/${teamuuid}`);
                 setGroup(response.data);
             } catch (err) {
                 setError('데이터를 가져오는 데 오류가 발생했습니다.');

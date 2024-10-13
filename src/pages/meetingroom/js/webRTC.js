@@ -10,7 +10,7 @@ function addEventWhenReady(selector, event, handler) {
     }, 100);
 }
 window.addEventListener("load", function(){
-    const socket = io("http://localhost:3030");
+    const socket = io(process.env.REACT_APP_FRONTEND_API_URL);
     
     let myStream;
     let muted = false;
