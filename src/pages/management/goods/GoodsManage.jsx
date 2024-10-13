@@ -115,9 +115,9 @@ const GoodsManage = () => {
       {/* 팀 목록 */}
       <div className="team-section">
         <h2>{mgName}의 그룹(팀) 목록</h2>
-        <div className="team-list">
+        <div className="team-list" id="team-list">
           {team.map((team) => (
-            <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
+            <div className="team-item" id="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
               <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
@@ -130,20 +130,20 @@ const GoodsManage = () => {
         <h2>등록한 상품</h2>
         <div className="goods-form">
           {selectedTeamUuid && (
-            <button className="goods-form-btn" onClick={() => { navigate(`/management/goodsform/${selectedTeamUuid}`) }}>{selectedTeamName}의 굿즈 등록</button>
+            <button className="goods-form-btn" id="goods-form-btn" onClick={() => { navigate(`/management/goodsform/${selectedTeamUuid}`) }}>{selectedTeamName}의 굿즈 등록</button>
           )}
         </div>
 
         {message && <p className="message">{message}</p>}
 
-        <div className="goods-list">
+        <div className="goods-list" id="goods-list">
           {/* 굿즈가 없을 때 메시지 표시 */}
           {selectedTeamGoods.length === 0 ? (
             <p>해당 팀의 등록된 굿즈가 없습니다.</p>
           ) : (
             selectedTeamGoods.slice(0, displayCount).map((item) => (
-              <div className="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
-                <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
+              <div className="goods-item" id="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
+                <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image"/>
                 <p>{item.name}</p>
               </div>
             ))

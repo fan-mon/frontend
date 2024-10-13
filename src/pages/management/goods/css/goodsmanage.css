@@ -1,99 +1,148 @@
+/* goodsmanage.css */
+
+body {
+  background-color: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 500px;
+}
+
 .goods-management-container {
-    padding: 20px;
-    background-color: #111;
-    color: white;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .team-section {
-    margin-bottom: 40px;
-  }
-  
-  .team-list {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .team-item {
-    text-align: center;
-  }
-  
-  .team-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .registered-goods-section {
-    margin-top: 20px;
-  }
-  
-  .goods-list {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-  .goods-item {
-    text-align: center;
-  }
-  
-  .goods-image {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  .goods-form {
-    text-align: right;
-    margin-top: 10px;
-  }
-  
-  .goods-form a {
-    color: #999;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .goods-form a:hover {
-    color: white;
-    text-decoration: underline;
-  }
+  margin-top: 100px;
+  padding: 20px;
+  width: 100%;
+  width: 800px;
+  position: relative;
+  /* 기본 위치를 상대적으로 설정 */
+  z-index: 1;
+  /* 다른 요소보다 위에 표시되도록 설정 */
+}
 
-  .message {
-    text-align: center;
-  }
-  
-  .goods-form-btn{
-    width: 170px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 1px;
-    font-size: 16px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 34px;
-    border:none;
-    background-color: #EAB70E;
-    color: #000000;
-    -webkit-transition: 0.3s linear; 
-    -moz-transition: 0.3s linear; 
-    -ms-transition: 0.3s linear; 
-    -o-transition: 0.3s linear; 
-    transition: 0.3s linear;
-    position:  relative;
-    top: 0px;
-    font-size: 16px;
-    margin-right: 5px;
-  }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
- .view-more{
-    text-align: center;
+h2 {
+  margin: 10px 0;
+}
 
-  }
+/* Card Styles */
+.team-section,
+.registered-goods-section {
+  background-color: rgba(25, 28, 36, 1);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  white-space: nowrap; /* 내용이 한 줄로 유지되도록 설정 */
+}
+
+#team-list {
+  display: flex;
+  flex-direction: row; /* 가로 방향으로 나열 */
+  justify-content: flex-start; /* 왼쪽 정렬 (원하는 방식에 맞게 조정 가능) */
+  overflow-x: auto; /* 가로 스크롤이 필요할 경우 추가 */
+}
+
+#team-item {
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.team-item:hover {
+  transform: scale(1.05);
+}
+
+.team-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Goods List */
+#goods-list {
+  display: flex;
+  flex-direction: row; /* 가로 방향으로 나열 */
+  justify-content: flex-start; /* 왼쪽 정렬 (원하는 방식에 맞게 조정 가능) */
+  overflow-x: auto; /* 가로 스크롤이 필요할 경우 추가 */
+}
+
+#goods-item {
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.goods-item:hover {
+  transform: scale(1.05);
+}
+
+.goods-image {
+  width: 100px;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* Button Styles */
+#goods-form-btn {
+  background-color: #EAB70E;
+  /* 버튼 배경색 */
+  color: black;
+  /* 버튼 글씨색 */
+  border: none;
+  /* 버튼 경계선 제거 */
+  padding: 10px;
+  /* 여백 */
+  border-radius: 5px;
+  /* 모서리 둥글게 */
+  cursor: pointer;
+  /* 커서 변경 */
+  width: 100%;
+  /* 버튼 너비 100% */
+  font-size: 16px;
+  /* 버튼 글씨 크기 */
+  text-align: center;
+  vertical-align: middle;
+  display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+}
+
+.goods-form-btn:hover {
+  background-color: #d9a60e;
+}
+
+/* Message Styles */
+.message {
+  text-align: center;
+  margin: 10px 0;
+}
+
+/* View More Link */
+.view-more {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.view-more a {
+  color: #EAB70E;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.view-more a:hover {
+  color: #d9a60e;
+}

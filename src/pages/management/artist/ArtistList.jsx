@@ -72,13 +72,13 @@ const ArtistList = () => {
         <div className="artist-list-container">
             {/* 아티스트 목록 */}
             <div className="artist-section">
-                <h2>{mgName}의 아티스트 목록</h2>
+                <h2 id="title">{mgName}의 아티스트 목록</h2>
                 <div className="artist-form">
                     <button className="artist-form-btn" onClick={() => { navigate(`/management/artistForm/${managementuuid}`) }}>아티스트 등록</button>
                 </div>
-                <div className="artist-list">
+                <div className="artist-list" id="artist-list">
                     {artist.map((artist) => (
-                        <div className="artist-item" key={artist.artistuuid} onClick={()=>handleArtistClick(artist.artistuuid)}>
+                        <div className="artist-item" id="artist-item" key={artist.artistuuid} onClick={()=>handleArtistClick(artist.artistuuid)}>
                             <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${artist.fname}`} alt={artist.name} className="artist-image"></img>
                             <p>{artist.name}</p>
                         </div>
