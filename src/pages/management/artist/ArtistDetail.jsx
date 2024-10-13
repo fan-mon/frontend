@@ -119,7 +119,8 @@ function ArtistDetail() {
     return (
         <div className="artist-detail-container">
             {adetail ? (
-                <div>
+                <div className='detail-is'>
+                    <div className='detail-text'>
                     <h2>아티스트 상세 정보</h2>
                     <p>이름: {isEditing ? (
                         <input
@@ -164,6 +165,9 @@ function ArtistDetail() {
                     ) : (
                         adetail.birth
                     )}</p>
+                    </div>
+                    
+                    <div className='detail-img'>
                     {!isEditing && fname ? (
                         <img className='artist-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${fname}`} />
                     ) : (
@@ -180,7 +184,7 @@ function ArtistDetail() {
                             />
                         </div>
                     )}
-
+                    </div>
                     {isEditing ? (
                         <button className="update-form-btn" onClick={handleUpdateClick}>수정 완료</button>
                     ) : (
@@ -188,7 +192,7 @@ function ArtistDetail() {
                     )}
                     <div className='btns'>
                         <button className='delete-btn' onClick={handleDeleteClick}>삭제하기</button>
-                        <button className='list--btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
+                        <button className='list-btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
                     </div>
                 </div>
             ) : (

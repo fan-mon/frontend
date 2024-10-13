@@ -61,24 +61,23 @@ h1 {
     margin-right: 5px;
 }
 
-.goods-manage-btn{
-  width: 170px;
-    height: 60px;
-    line-height: 60px;
-    border-radius: 1px;
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 34px;
-    border:none;
-    background-color: #EAB70E;
-    color: #000000;
-    -webkit-transition: 0.3s linear; 
-    -moz-transition: 0.3s linear; 
-    -ms-transition: 0.3s linear; 
-    -o-transition: 0.3s linear; 
-    transition: 0.3s linear;
-    position:  relative;
-    top: 0px;
-    font-size: 16px;
-    margin-right: 5px;
+#goods-manage-btn{
+  background-color: #EAB70E;
+  /* 버튼 배경색 */
+  color: black;
+  /* 버튼 글씨색 */
+  border: none;
+  /* 버튼 경계선 제거 */
+  padding: 10px;
+  /* 여백 */
+  border-radius: 10px;
+  /* 모서리 둥글게 */
+  cursor: pointer;
+  /* 커서 변경 */
+  width: 100%;
+  /* 버튼 너비 100% */
+  font-size: 16px;
+  /* 버튼 글씨 크기 */
+  text-align: center;
+  vertical-align: middle;
 }
