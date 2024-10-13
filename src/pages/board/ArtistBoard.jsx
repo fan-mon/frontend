@@ -137,7 +137,7 @@ const ArtistBoard = () => {
             <div className="board-title">
                 ARTIST BOARD
             </div>
-            {localStorage.getItem("user") === 'ARTIST' ?
+            {localStorage.getItem("role") === 'ARTIST' ?
                 <div className="new-post-wrap">
                     <div className="content">
                         <textarea className="writing-box" name="content"
