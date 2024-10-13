@@ -19,10 +19,9 @@ const TempLogin = () => {
         }
     };
     // 로그인 함수
-    const login = (user, uuid, stat ) => {
-        localStorage.setItem("user", user);
+    const login = ( user, uuid, stat ) => {
         localStorage.setItem("uuid",uuid);
-        localStorage.setItem("stat",stat);
+        localStorage.setItem("role",user)
         console.log("login success")
     };
     // 로그아웃 함수

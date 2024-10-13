@@ -20,7 +20,6 @@ const BoardNotice = ({ teamUuid }) => {
     }
 
 
-    // 모달 테스트
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);

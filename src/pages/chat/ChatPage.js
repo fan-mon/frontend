@@ -4,53 +4,92 @@ import { Stomp } from '@stomp/stompjs';
 import {useParams} from "react-router-dom";
 import ChatRoom from "./ChatRoom";
 import axios from "axios";
-import {getMessageList, getChatInfo,blockuser} from "./chatApi/chat";
+import {getMessageList, getChatInfo,blockuser} from "./chatAPI/chat";
 import api from "../../apiClient";
-
-const ChatPage = ({ chatUuid }) => {
+import { useLocation } from "react-router-dom";
+const ChatPage = () => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
-    const { chatuuid } = useParams();
     const [artistuuid, setArtistuuid] = useState("");
+    const [useruuid, setUseruuid] = useState("");
+    const [destination, setDestination]=useState("");
+    const [data, setData] = useState(null);
+    const [status,setStatus] = useState("");
+    const location = useLocation();
 
-
+    // 파라미터 teamuuid 받아오기
+    const {chatuuid} = useParams();
+    
     // 유저 식별
     const role=localStorage.getItem("role");
-    let useruuid = "";
-    let destination="";
-    let status = "";
-    if (role==='ARTIST'){
-        useruuid=null;
-        destination=`/pub/${artistuuid}/toFans`
-    }else if(role==='USER'){
-        status = localStorage.getItem("stat");
-        useruuid=localStorage.getItem("uuid");
-        destination=`/pub/${artistuuid}/${useruuid}/toArtist`
-    }
+
+    const fetchUserInfo = async () => {
+        try {
+            const response = await api.get('/users/myprofile');
+            // setUseruuid(response.data.useruuid);
+            console.log("유저정보 가져오기 완료!"+response.data.useruuid)
+            return response.data;
+        } catch (error) {
+            console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
+    useEffect(() => {
+        const fetchData = async () => {
+            if (role === 'USER') {
+                const userData = location.state; // USER 데이터
+                setData(userData);
+                setArtistuuid(userData.chat.artist.artistuuid);
+                setUseruuid(userData.user.useruuid);
+            } else if (role === 'ARTIST') {
+                const artistuuid = localStorage.getItem("uuid");
+                setArtistuuid(artistuuid);
+                try {
+                    const chatInfo = await getChatInfo(chatuuid);
+                    setData(chatInfo); // ARTIST 데이터 설정
+                    setUseruuid(chatInfo.user.useruuid); // 유저 UUID 설정
+                } catch (error) {
+                    console.error("채팅 정보 가져오기 오류: ", error);
+                }
+            }
+        };
+        fetchData();
+    }, [role, location.state, chatuuid]);
+    const fetchMessages = async () => {
+        if (!data) {
+            console.warn("data 또는 user 정보가 없습니다.");
+            return;
+        }
+        const messages = await getMessageList(chatuuid);
+        if (messages) {
+            setMessages(messages);
+            console.log("메세지 로드 완료")
+        }
+    };
+    // artistuuid가 변경될 때 destination을 설정해줌
+    useEffect(() => {
+        fetchMessages();
+    }, [data, chatuuid, role]);
+
+    useEffect(() => {
+        if (artistuuid) {
+            if (role === 'ARTIST') {
+                setDestination(`/pub/${artistuuid}/toFans`);
+                console.log("artist destination : " + destination)
+            } else if (role === 'USER' && useruuid) {
+                setDestination(`/pub/${artistuuid}/${useruuid}/toArtist`);
+                console.log("user destination : " + destination)
+            }
+        }
+        console.log(`useruuid : ${useruuid}`)
+        console.log(`artistuuid : ${artistuuid}`)
+        console.log(`role : ${role}`)
+        console.log(`chatuuid : ${chatuuid}`)
+    }, [artistuuid, useruuid, role, data]);
 
     useEffect(() => {
 
-        // 처음 로딩시 과거 메세지들을 가져온다
-        getMessageList(chatuuid).then((messages) => {
-            if (messages) {
-                setMessages(messages);
-            } else {
-                // 메시지가 없거나 오류가 발생했을 때 처리
-                console.warn("메시지가 없습니다.");
-            }
-        });   //체크 필요
-        getChatInfo(chatuuid).then((chatInfo)=>{
-            if (chatInfo) {
-                // chatInfo 처리
-            } else {
-                // 채팅 정보가 없거나 오류가 발생했을 때 처리
-                console.warn("채팅 정보가 없습니다.");
-            }
-        })
-
         const socket = new SockJS(`${process.env.REACT_APP_BACKEND_API_URL}/chat/ws`);
         const client = Stomp.over(()=>socket); // Stomp 클라이언트 생성
-
         client.connect({}, (frame) => {
             console.log('Connected: ' + frame);
             // 유저와 아티스트의 구독 처리
@@ -58,7 +97,7 @@ const ChatPage = ({ chatUuid }) => {
             client.subscribe(`/sub/${artistuuid}/fromFans`, (message) => {
                 console.log("receive message : "+message.body)
                 const parsedMsg=JSON.parse(message.body);
-                if (role==='ARTIST'||parsedMsg.user.useruuid===localStorage.getItem("uuid")){
+                if (role==='ARTIST'||parsedMsg.user.useruuid===localStorage.getItem("uuid")){   //TODO 여기도 세션 수정 필요
                     setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
                 }
             });
@@ -83,7 +122,7 @@ const ChatPage = ({ chatUuid }) => {
                 client.disconnect();
             }
         };
-    }, [artistuuid, useruuid, role]); // 의존성 배열에 artistUuid와 useruuid 추가
+    }, [artistuuid, useruuid, role]);
 
     // 이미지 전송 함수
     const sendImage = (image) => {
@@ -105,7 +144,11 @@ const ChatPage = ({ chatUuid }) => {
     };
 
     // 메세지 전송 함수
-    const sendMessage = (message) => {
+    const sendMessage = async (message) => {
+        if (destination===''||!destination){
+            console.log("전송에 실패했습니다.")
+            return
+        }
         if (stompClient && stompClient.connected) {
             if (status==='BANNED'){
                 alert("차단 당한 유저입니다.")
@@ -124,11 +167,11 @@ const ChatPage = ({ chatUuid }) => {
                         useruuid: useruuid,  // 유저 UUID
                     },
                     chat: {
-                        chatuuid: chatUuid,  // 채팅 UUID
+                        chatuuid: chatuuid,  // 채팅 UUID
                     },
                 };
-                console.log("messageData : "+JSON.stringify(messageData))
                 stompClient.send(destination, {}, JSON.stringify(messageData));
+                console.log(`destination : ${destination}`)
             }else {
                 messageData = {
                     artistmessageuuid:null,
@@ -138,11 +181,17 @@ const ChatPage = ({ chatUuid }) => {
                         artistuuid: artistuuid,  // 아티스트 UUID
                     },
                     chat: {
-                        chatuuid: chatUuid,  // 채팅 UUID
+                        chatuuid: chatuuid,  // 채팅 UUID
                     },
                 };
                 console.log("messageData : "+JSON.stringify(messageData))
                 stompClient.send(destination, {}, JSON.stringify(messageData));
+            }
+            const updatedMessages = await getMessageList(chatuuid);
+            if (updatedMessages) {
+                setMessages(updatedMessages);
+            } else {
+                console.warn("메시지 리스트를 가져오는 데 실패했습니다.");
             }
         } else {
             console.error("STOMP client is not connected");
@@ -156,6 +205,8 @@ const ChatPage = ({ chatUuid }) => {
                       sendMessage={sendMessage}
                       sendImage={sendImage}
                       blockuser={blockuser}
+                      chatuuid={chatuuid}
+                      data={data}
             />
         </div>
     );

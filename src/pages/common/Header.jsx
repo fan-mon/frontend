@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { ListUl, ArrowBarLeft, BellFill, HeartFill, ThreeDotsVertical, HouseDoorFill, ChatHeartFill, CartFill, PersonSquare, QuestionCircleFill, XLg, Search, XCircleFill } from 'react-bootstrap-icons';
 import React, { useEffect, useState } from 'react';
 import api from '../../apiClient';
-import ChatList from "../chat/css/ChatList";
-import {getList} from "../chat/chatApi/subscription";
+import ChatList from "../chat/ChatList";
+import {getList} from "../chat/chatAPI/subscription";
 
 const Header = () => {
     const [userName, setUserName] = useState('이름 없음');

@@ -6,8 +6,8 @@ const ChatList=({chatList=[]})=>{
 
     const navigate = useNavigate(); // useNavigate 훅을 사용하여 navigate 함수 얻기
 
-    const handleChatClick = (chatuuid) => {
-        navigate(`/chat/ws/${chatuuid}`); // URL로 이동
+    const handleChatClick = (data) => {
+        navigate(`/chat/ws/${data.chat.chatuuid}`, { state: data }); // URL로 이동
     };
 
     return (
@@ -15,7 +15,7 @@ const ChatList=({chatList=[]})=>{
             {chatList.length > 0 ?
                 (chatList.map(data => (
                         <div key={data.chat.chatuuid} // 유일한 key 추가
-                             onClick={() => handleChatClick(data.chat.chatuuid)}
+                             onClick={() => handleChatClick(data)}
                             className="chat-room-list">
                             <div className="profile-photo"></div>
                             < div className="artist-name">
