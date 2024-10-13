@@ -133,9 +133,9 @@ const ManagementHeader = () => {
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-commu">
-                                <Link to="/chat">
+                                <Link to="/management/goodsmanage">
                                     <span className="ico"><ChatHeartFill /></span>
-                                    <span className="txt">메뉴1</span>
+                                    <span className="txt">굿즈관리</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-goods">
