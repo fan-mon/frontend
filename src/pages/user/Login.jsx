@@ -33,7 +33,7 @@ const Login = () => {
     localStorage.setItem('accessToken', response.data.accessToken);
     localStorage.setItem('role', response.data.role); // 역할 저장 추가
 
-      // 개인회원 또는 기업회원에 따라 리디렉션
+     
       if (isPersonal) {
         navigate('/user/main');
       } else {
