@@ -9,7 +9,7 @@ const TempLogin = () => {
         e.preventDefault();
         try{
             console.log("uuid : "+uuid);
-            const response = await axios.post('http://localhost:8080/chat/login',{
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/chat/login`, {     
                 uuid
             })
             console.log("login response : "+response.data)
