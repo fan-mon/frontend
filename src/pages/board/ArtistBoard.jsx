@@ -123,7 +123,7 @@ const ArtistBoard = () => {
     //delete
     const deleteBoard=async (artistboarduuid)=>{
         try{
-            await axios.delete(`http://localhost:8080/board/artistboard/${artistboarduuid}`, artistboarduuid);
+            await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/board/artistboard/${artistboarduuid}`, artistboarduuid);
             console.log("삭제완료")
             await getList({
                 API_URL: ARTIST_BOARD_API_URL,
