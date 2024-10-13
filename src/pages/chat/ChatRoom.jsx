@@ -4,7 +4,7 @@ import '../meetingroom/fonts/bootstrap-icons.min.css'
 import './css/ChatRoom.css'
 import axios from "axios";
 import {getArtistData} from "./chatAPI/subscription";
-const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser}) => {
+const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser, data}) => {
     const [inputMessage, setInputMessage] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
     const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
@@ -12,18 +12,20 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser}
     const messagesEndRef = useRef(null);
     const [chatInfo, setChatInfo] = useState([]);
     const scrollToBottom = () => {
-        console.log("스크롤 작동!!")
+        // console.log("스크롤 작동!!")
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    };
+    };  //TODO 스크롤 작동 안됌..
+
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
     // 스크롤 맨 아래로
+
     useEffect(() => {
         getArtistData(chatuuid, setChatInfo)
-        console.log(chatInfo)
+        // console.log(chatInfo)
     }, [messages],[chatuuid]);
 
     const openChatRoom = () => setIsChatOpen(true);
@@ -53,7 +55,13 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser}
             <div className={`chatroom-area`}>
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
-                        <div></div>
+                        <div>{role === 'USER' && data ? (
+                            data.chat.artist.name // USER일 때
+                        ) : role === 'ARTIST' && data ? (
+                            data.artist.name // ARTIST일 때
+                        ) : (
+                            <div>No artist information available.</div> // 데이터가 없을 때 표시할 메시지
+                        )}</div>
                     </div>
                     <div className="chat-contents">
                         <div className="date-wrap">2024년 09월 19일</div>
