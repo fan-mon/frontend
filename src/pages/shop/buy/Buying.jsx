@@ -143,7 +143,9 @@ function Buying() {
                                 paid_at: response.paid_at,  // 결제 승인 시각
                                 paid_qty: totalQuantity// 물품 수량
                             }),
+                            
                         });
+                        console.log("notifiedO"+ notifiedO.body);
 
                         // 테이블에 저장된 ordres 데이터를 기존 세션/변수에 덮어쓰기
                         sessionStorage.setItem("ordersData", JSON.stringify(notifiedO.body));
@@ -161,6 +163,7 @@ function Buying() {
                                 detail_qty: detailData.qty// 동일 상품 총수량
                             }),
                         });
+                        console.log("notifiedD"+ notifiedD.body);
     
                         // 세션 삭제
                         sessionStorage.removeItem('ordersData');
