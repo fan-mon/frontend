@@ -79,13 +79,13 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                     status: 'BEFORE',   // 결제 상태 : 기본은 enums에 없는 값인 'BEFORE'으로 갈게요
                     totalcost: goodsData.price ,  // 결제 예정 금액 (배송비가 포함된 총액)
                     useruuid: useruuid,  // 로그인된 사용자의 UUID
-                    qty: 1  // 장바구니에 담긴 총 상품 수량
-                    // ,postcode: null //우편번호입니다. 테이블 구조 고쳐지면 추가할게요
+                    qty: 1,  // 장바구니에 담긴 총 상품 수량
+                    postcode: null //우편번호입니다. 테이블 구조 고쳐지면 추가할게요
                 };
                 ordersDetailList= {
                     ordersdetailuuid: null, // UUID
                     goodsuuid: goodsuuid,  // 각 상품의 UUID
-                    name: goodsData.name,
+                    name: '채팅',
                     qty: 1,  // 각 상품의 수량
                     totalcost:goodsData.price,  // 각 상품의 총 금액
                     ordersuuid: null,  // ordersuuid가 아직 존재하지 않음
