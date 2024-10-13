@@ -80,7 +80,7 @@ const ChatPage = ({ chatUuid }) => {
         //     }
         // })
 
-        const socket = new SockJS(`http://localhost:8080/chat/ws`); // WebSocket 연결
+        const socket = new SockJS(`${process.env.REACT_APP_BACKEND_API_URL}/chat/ws`);
         const client = Stomp.over(()=>socket); // Stomp 클라이언트 생성
 
         client.connect({}, (frame) => {
@@ -122,7 +122,7 @@ const ChatPage = ({ chatUuid }) => {
         const formData = new FormData();
         formData.append("image", image);
 
-        axios.post('http://localhost:8080/chat/sendImage', formData, {
+        axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/chat/sendImage`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // 멀티파트 폼 데이터로 전송
             },
