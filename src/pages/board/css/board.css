@@ -43,7 +43,12 @@
  .team-profile .member-info{
      margin-left: 40px;
      flex-direction: column;
+     border-radius: 7px;
+     padding: 10px;
  }
+.team-profile .member-info:hover {
+    background-color:gray ; /* 호버 시 노란색으로 변경 */
+}
  .team-profile .member-info .member-photo {
      height: 100px;
      width: 100px;
