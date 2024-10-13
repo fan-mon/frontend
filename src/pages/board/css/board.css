@@ -3,7 +3,8 @@
     display: flex;
     flex-direction: column;
     padding: 30px;
-    margin-top: 30px;
+    margin-top: 300px;
+    margin-left: 500px;
     gap: 30px;
 }
 .page {
@@ -63,7 +64,7 @@
      gap: 20px;
      flex-direction: row;
  }
-.writer-button .edit-button, .delete-button, .canceledit-button{
+.writer-button, .edit-button, .delete-button, .canceledit-button{
     color: grey;
     background-color: transparent;
     width: auto;
@@ -266,8 +267,10 @@
 }
 .fan-board .fanboard-content-wrap .edit-field{
     width: 100%;
-    background-color:rgba(255, 199, 0, 1);
-    border: 0;
+    background-color: black;;
+    border: 1px solid white;
+    border-radius: 7px;
+    color: white;
 }
 
 .modal-overlay {
@@ -303,4 +306,30 @@
 }
 .modal-wrap .modal-title{
     font-size: 25px;
+}
+
+.profile-modal-wrap{
+    display: flex;
+    background-color: rgba(25, 28, 36, 0.8);
+    padding: 40px;
+    border-radius: 7px;
+    height: 250px;
+    width: 500px;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+.info-top{
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+    align-items: center;
+}
+.profile-modal-wrap button{
+    color: white;
+    max-height: 100px;
+    width: 150px;
+    border-radius: 7px;
+    font-size: 20px;
+
 }

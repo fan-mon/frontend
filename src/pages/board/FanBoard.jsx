@@ -26,6 +26,7 @@ const FanBoard = ({ teamUuid }) => {
         try{
             const response=await axios.get(`${FAN_BOARD_API_URL}/${teamUuid}`)
             setFanBoards(response.data);
+            console.log("fanboard : "+response.data)
         }catch (e) {
             console.log(e);
         }finally {
@@ -100,7 +101,7 @@ const FanBoard = ({ teamUuid }) => {
         <div className="fanboard-wrap">
             <div className="fanboard-title">FAN BOARD</div>
             <div className="fanboard-body">
-                {localStorage.getItem("user") === 'USER' ?
+                {localStorage.getItem("role") === 'USER' ?
                 <div className="new-post-wrap">
                         <textarea className="writing-box" name="" id="" cols="30"
                                   maxLength="150" rows="10" value={content}
@@ -138,10 +139,11 @@ const FanBoard = ({ teamUuid }) => {
                                             onChange={(e) => {
                                                 setEditcontent(e.target.value)
                                             }}/>
-                                        <button onClick={()=>{
+                                        <button className='edit-button'
+                                            onClick={()=>{
                                             update(post)
                                         }}>저장</button>
-                                        <button onClick={(e)=> setEditIndex(null)}>취소</button>
+                                        <button className='canceledit-button' onClick={(e)=> setEditIndex(null)}>취소</button>
                                     </div>)
                                     : (<div className="fanboard-content">
                                         {post.content}

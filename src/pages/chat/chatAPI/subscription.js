@@ -10,7 +10,6 @@ const getList=async (useruuid, setChatList)=>{
             setChatList(response.data)
         }
     }catch (e) {
-
     }
 }
 

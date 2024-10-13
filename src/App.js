@@ -92,7 +92,7 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
           <Route path="/chat/login" element={<TempLogin />} />
           <Route path="/shop/goods/list/:teamuuid/all" element={<GoodsList />} />
           <Route path="/shop/goods/list/:teamuuid/:category" element={<GoodsList />} />
-          <Route path="/board" element={<BoardPage teamuuid={teamuuid} />} />
+          <Route path="/board/:teamuuid" element={<BoardPage />} />
           <Route path="/shop/goods/detail/:goodsuuid" element={<GoodsDetail />} />
           <Route path="/shop/cart/list" element={<CartList />} />
           <Route path="/shop/buy/buying" element={<Buying />} />
