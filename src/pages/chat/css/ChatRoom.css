@@ -91,9 +91,12 @@ p {
 .artist-chat .chatroom-area .contents-box.contents-scroll-box::-webkit-scrollbar {
     /*display: none;*/
 }
-
+.chat-room{
+    padding: 30px;
+}
 .artist-chat .chatroom-area {
-    min-width: 300px;
+
+    width: 300px;
 }
 
 .chatroom .chat-top {

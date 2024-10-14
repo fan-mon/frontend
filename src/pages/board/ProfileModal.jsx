@@ -91,7 +91,7 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                 ordersDetailList= {
                     ordersdetailuuid: null, // UUID
                     goodsuuid: goodsuuid,  // 각 상품의 UUID
-                    name: '채팅',
+                    name: "채팅",
                     qty: 1,  // 각 상품의 수량
                     totalcost:goodsData.price,  // 각 상품의 총 금액
                     ordersuuid: null,  // ordersuuid가 아직 존재하지 않음
