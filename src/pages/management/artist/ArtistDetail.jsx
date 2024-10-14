@@ -171,7 +171,7 @@ function ArtistDetail() {
                     {!isEditing && fname ? (
                         <img className='artist-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${fname}`} />
                     ) : (
-                        <span>등록된 이미지가 없습니다.</span>
+                        <span>등록된 이미지 : {fname ? (<span>{fname}</span>):(<span>등록된 이미지가 없습니다.</span>)}</span>
                     )}
                     {isEditing && (
                         <div>
@@ -185,12 +185,13 @@ function ArtistDetail() {
                         </div>
                     )}
                     </div>
+                    <div className='btns'>
                     {isEditing ? (
                         <button className="update-form-btn" onClick={handleUpdateClick}>수정 완료</button>
                     ) : (
                         <button className="update-btn" onClick={handleEditClick}>수정하기</button>
                     )}
-                    <div className='btns'>
+                    
                         <button className='delete-btn' onClick={handleDeleteClick}>삭제하기</button>
                         <button className='list-btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
                     </div>

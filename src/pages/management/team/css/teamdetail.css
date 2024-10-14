@@ -1,5 +1,66 @@
-.team-detail-container .btn{
+
+.team-detail-container{
+    padding: 20px;
+    background-color: rgba(25, 28, 36, 1);
+    color: white;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 20px;
+    width: 800px;
+}
+
+.team-detail-container #first-column{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.detail-team-text{
+    margin : 10px 10px;
+}
+
+.detail-team-text h2{
+    margin-bottom: 20px;
+    font-size: 30px;
+    color: #EAB70E;
+}
+.update-complete-btn {
     background-color: #EAB70E;
+    color: white;
+    text-align: center;
+    font-size:12px;
+    height: 50px;
+    width: 100px;
+    margin: 20px 10px;
+    border: none;
+    font-weight: bold;
+}
+
+.update-btn{
+    background-color: #EAB70E;
+    color: white;
+    text-align: center;
+    font-size:12px;
+    height: 50px;
+    width: 100px;
+    margin: 20px 10px;
+    border: none;
+    font-weight: bold;
+}
+
+.delete-btn{
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size:12px;
+    height: 50px;
+    width: 100px;
+    margin: 20px 10px;
+    border: none;
+    font-weight: bold;
+}
+
+.list-btn{
+    background-color: grey;
     color: white;
     text-align: center;
     font-size:12px;
@@ -12,4 +73,78 @@
 
 .team-img{
     width: 300px;
+    display: flex;
+    margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 중앙 정렬합니다. */
+    height: 400px;
+}
+
+.btns{
+    display: flex;
+}
+
+.detail-artist h3{
+    color :#EAB70E;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.detail-artist table{
+    width: 30%;
+    border-collapse: collapse; /* 테이블 셀의 경계 합침 */
+}
+
+.detail-artist td{
+    padding: 8px; /* 셀 안의 여백 */
+    text-align: left; /* 텍스트 정렬 */
+    vertical-align: middle; /* 수직 정렬을 가운데로 설정 */
+}
+
+.detail-artist img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.artist-list-edit {
+    background-color: rgba(0, 0, 0, 0.9); /* 드롭다운 배경색 */
+    border: 1px solid #EAB70E; /* 드롭다운 경계선 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    max-height: 150px; /* 최대 높이 */
+    overflow-y: auto; /* 세로 스크롤 가능 */
+    width: 100%; /* 너비 100% */
+    margin-top: 10px; /* 체크박스 상단 여백 추가 */
+    padding: 5px; /* 체크박스 내부 여백 */
+}
+
+.artist-list-edit label {
+    display: flex; /* Flexbox를 사용하여 체크박스와 텍스트 정렬 */
+    align-items: center; /* 수직 중앙 정렬 */
+    padding: 5px; /* 여백 */
+    color: white; /* 글씨색 */
+}
+
+.artist-list-edit input[type="checkbox"] {
+    width: 20px; /* 체크박스 너비 */
+    height: 20px; /* 체크박스 높이 */
+    margin-right: 10px; /* 체크박스와 텍스트 간격 */
+    accent-color: #EAB70E; /* 체크박스 강조 색상 */
+}
+
+
+/*버튼 hover*/
+.update-btn:hover {
+    background-color: #d9a40e; /* 밝은 노란색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.delete-btn:hover {
+    background-color: darkred; /* 어두운 빨간색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.list-btn:hover {
+    background-color: darkgrey; /* 어두운 회색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
 }

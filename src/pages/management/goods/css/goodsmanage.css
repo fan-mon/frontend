@@ -1,32 +1,27 @@
 /* goodsmanage.css */
 
-body {
-  background-color: black;
-  color: white;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  width: 500px;
-}
-
 .goods-management-container {
-  margin-top: 100px;
+  margin-top: 0px;
   padding: 20px;
-  width: 100%;
-  width: 800px;
+  width: 900px;
   position: relative;
   /* 기본 위치를 상대적으로 설정 */
   z-index: 1;
   /* 다른 요소보다 위에 표시되도록 설정 */
 }
 
-h1 {
+.goods-management-container h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: #EAB70E;
+  font-size: 30px;
+  font-weight: 500;
 }
 
-h2 {
+.goods-management-container h2 {
   margin: 10px 0;
+  color: #EAB70E;
+  font-size: 20px;
 }
 
 /* Card Styles */
@@ -74,6 +69,7 @@ h2 {
   flex-direction: row; /* 가로 방향으로 나열 */
   justify-content: flex-start; /* 왼쪽 정렬 (원하는 방식에 맞게 조정 가능) */
   overflow-x: auto; /* 가로 스크롤이 필요할 경우 추가 */
+  gap: 60px;
 }
 
 #goods-item {
@@ -125,7 +121,7 @@ h2 {
 }
 
 /* Message Styles */
-.message {
+.registered-goods-section .message {
   text-align: center;
   margin: 10px 0;
 }
@@ -141,8 +137,28 @@ h2 {
   text-decoration: none;
   font-weight: bold;
   transition: color 0.3s;
+  cursor: pointer;
 }
 
-.view-more a:hover {
+.view-more-link:hover {
   color: #d9a60e;
+}
+
+/* 스크롤바 스타일 */
+.team-section .team-list::-webkit-scrollbar {
+  height: 10px; /* 스크롤바 너비 */
+}
+
+.team-section .team-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); /* 트랙 색상 */
+  border-radius: 5px; /* 트랙 모서리 둥글게 */
+}
+
+.team-section .team-list::-webkit-scrollbar-thumb {
+  background: grey; /* 스크롤바 색상 */
+  border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+}
+
+.team-section .team-list::-webkit-scrollbar-thumb:hover {
+  background: #d9a60e; /* 호버 시 색상 변경 */
 }

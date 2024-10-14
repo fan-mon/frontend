@@ -1,21 +1,193 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
+import { useParams } from 'react-router-dom';
+import api from '../../apiClient';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './fonts/bootstrap-icons.min.css';
 import "./css/stayroom.css";
 
+const getBack = async (url, func) => {
+  try {
+    const response = await api.get(url);
+    func(response);
+  } catch (error) {
+    //console.log("Back 단과 통신 오류 : ", error);
+  }
+};
+
 const StayRoom = () => {
-    const [isChatOpen, setIsChatOpen] = useState(false);
-    const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
+  const [mngUserName, setMngUserName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [displayName, setDisplayName] = useState('');
+  const [displayNo, setDisplayNo] = useState("");
+  const [meetingTime, setMeetingTime] = useState(0);
+  const [restTime, setRestTime] = useState(0);
+  const [meetingstartedat, setMeetingstartedat] = useState(new Date());
+  const [progresstime, setProgresstime] = useState(0);
+  const [totaltime, setTotaltime] = useState(0);
+  const [meetingendedat, setMeetingendedat] = useState(new Date());
+
+  const fetchUserMngInfo = async () => {
+    try {
+      const response = await api.get('/management/myprofile');
+      setMngUserName(response.data.name);
+    } catch (error) {
+      //console.error("사용자 정보 가져오기 오류: ", error);
+    }
+  }
+
+  const fetchUserInfo = async () => {
+    try {
+      const response = await api.get('/users/myprofile');
+      setUserName(response.data.name);
+      setUserEmail(response.data.email);
+    } catch (error) {
+      //console.error("사용자 정보 가져오기 오류:", error);
+    }
+  };
+
+  useEffect(()=> {
+    fetchUserMngInfo();
+    fetchUserInfo();
+  },[]);
+
+  const { stayuuid } = useParams();
+  const [roomData, setRoomData] = useState(null);
+  const [userlist, setUserlist] = useState([]);
+  const [userlistLen, setUserlistLen] = useState(0);
+
+  useEffect(() => {
+    getBack(`/meetingroom/stayroom/${stayuuid}`, (res) => {
+      setRoomData(res.data);
+      setRestTime(res.data.restTime * 60);
+      setMeetingTime(res.data.meetingTime * 60);
+      setMeetingstartedat(new Date(res.data.meetingstartedat));
+    });
+
+  getBack(`/meetingroom/stayroom/userlist/${stayuuid}`, (res) => {
+    setUserlist(res.data);
+    setUserlistLen(res.data.length);
+    setTotaltime((meetingTime + restTime) * res.data.length);
+  });
   
-    const openChatRoom = () => setIsChatOpen(true);
-    const closeChatRoom = () => setIsChatOpen(false);
-    const toggleChatPlus = () => setIsChatPlusOpen(!isChatPlusOpen);
+  const timer = setInterval(() => {
+      setProgresstime(prev => Math.floor((new Date() - meetingstartedat) / 1000));
+      setMeetingendedat(new Date(meetingstartedat.getTime() + totaltime * 1000));
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [stayuuid, meetingstartedat, totaltime, meetingTime, restTime]);
   
+  //timer
+  const timeFormat = (time) => {
+    if (time <= 0) return "00:00";
+    const m = Math.floor(time / 60).toString().padStart(2, '0');
+    const s = (time % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  };
+
+  const [currentNo, setCurrentNo] = useState(0);
+  const [currentMeetingTime, setCurrentMeetingTime] = useState(0);
+  const [currentRestTime, setCurrentRestTime] = useState(0);
+  const [isMeetingActive, setIsMeetingActive] = useState(true);
+  useEffect(()=>{
+    setCurrentNo(Math.floor(((new Date().getTime()-meetingstartedat.getTime())/1000)/(meetingTime+restTime)));
+  }, [meetingstartedat,meetingTime, restTime, currentNo]);
+
+
+  const setCurrentTimes = ()=>{
+    //계산해야하는 시간 = 흐른 시간 - 전 사람까지 소비한 시간
+    const test = Math.floor((new Date().getTime()-meetingstartedat.getTime())/1000) - ((meetingTime+restTime)*(currentNo));
+    let mt, rt;
+    if(test <= meetingTime){
+      mt = meetingTime - test;
+      rt = restTime;
+    }else{
+      mt = 0;
+      rt = restTime-(test-meetingTime);
+    }
+    setCurrentMeetingTime(mt);
+    setCurrentRestTime(rt);
+  }
+  useEffect(() => {
+    setCurrentTimes();
+  }, [currentNo, meetingTime, restTime]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTimes();
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isMeetingActive, currentMeetingTime, currentRestTime, meetingTime, restTime]);
+
+  const userToMeet = () => {
+    if ((currentNo + 1) === displayNo) {
+      window.location.href=`/meetingroom/meetingroom/${stayuuid}`;
+    }
+  };
+
+  const [displayTimeS, setDisplayTimeS] = useState();
+
+  const setDT = () => {
+    let t;
+    if (displayNo == "M" || displayNo == "X") {
+      //총 남은 시간 = 끝나는 시간(시작시간+모든 유저들이 끝나는 시간) - 현재 시간 
+      t = Math.floor((meetingstartedat.getTime()+(totaltime*1000) - new Date().getTime()) / 1000);
+    } else {
+      if(currentNo < displayNo){
+        t = Math.floor(((meetingTime + restTime) * (displayNo - 1)) - (new Date().getTime()-meetingstartedat.getTime())/1000);
+      }else{
+        t = 0;
+      }
+    }
+    return t;
+  }
+  
+  useEffect(() => {
+    if (mngUserName) {
+      setDisplayName(mngUserName);
+      setDisplayNo('M');
+    } else {
+      if (userName) {
+        setDisplayName(userName);
+        setDisplayNo("X");
+
+        userlist.forEach(li => {
+          if (li.user.email === userEmail) {
+            setDisplayNo(li.no);
+          }
+        });
+      } else {
+        setDisplayName("비로그인");
+        setDisplayNo("X");
+      }
+    }
+  }, [mngUserName, userName, userlist]);
+
+  useEffect(() => {
+    const displayTimerS = setInterval(() => {
+      setDisplayTimeS(setDT());
+    }, 1000);
+    return () => clearInterval(displayTimerS);
+  }, [meetingendedat, meetingTime, restTime, displayNo, totaltime]);
+
+  useEffect(() => {
+    userToMeet();
+  }, [currentNo, displayNo]);
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isChatPlusOpen, setIsChatPlusOpen] = useState(false);
+
+  const openChatRoom = () => setIsChatOpen(true);
+  const closeChatRoom = () => setIsChatOpen(false);
+  const toggleChatPlus = () => setIsChatPlusOpen(!isChatPlusOpen);
+
     return (
         <>
-        <a href="/meetingroom/meetingroom" style={{position:'fixed', bottom: '100px', left: '500px'}}>테스트 링크</a>
+        {/* <a href="/meetingroom/meetingroom" style={{position:'fixed', bottom: '100px', left: '500px'}}>테스트 링크</a> */}
         <div className="container-fluid">
           <div className="row">
             <div className="col">
@@ -47,35 +219,55 @@ const StayRoom = () => {
                             <th>순번</th>
                             <th>대기명단</th>
                             <th>시간</th>
+                            <th>휴식</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td><span className="profile-wrap"></span><span>케니스</span></td>
-                            <td>05:00</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td><span className="profile-wrap"></span><span>케니스</span></td>
-                            <td>05:00</td>
-                          </tr>
+                          {userlist.length > 0 ? (
+                            userlist.map((user, index) => (
+                              <tr key={user.stayuserlistuuid} className={index === currentNo ? "current" : ""}>
+                                <td>{user.no}</td>
+                                <td>
+                                  <span className="profile-wrap"></span>
+                                  <span>{user.user.name}</span>
+                                </td>
+                                <td className='meeting-time'>
+                                {(index === currentNo)
+                                ? timeFormat(currentMeetingTime)
+                                 : (index < currentNo 
+                                  ? "00:00" 
+                                  : timeFormat(meetingTime))}
+                                </td>
+                                <td className='rest-time'>
+                                {index === currentNo 
+                                  ? timeFormat(currentRestTime) 
+                                  : (index < currentNo 
+                                    ? "00:00" 
+                                    : timeFormat(restTime))}
+                                </td>
+                              </tr>
+                            ))
+                          ) : (
+                            <tr>
+                              <td colSpan="4">대기 중인 사용자가 없습니다.</td>
+                            </tr>
+                          )}
                         </tbody>
                       </table>
                     </div>
                   </div>
                 </div>
                 <div className="contents-box current-box">
-                  <span className="no">18</span>
-                  <span className="name">케니스</span>
+                  <span className="no" id="myNo">{displayNo}</span>
+                  <span className="name" id="myName">{displayName}</span>
                   <div className="my-stay-time">
-                    <p className="time">43:00</p>
+                    <p className="time" id="myStayTime">{timeFormat(displayTimeS)}</p>
                   </div>
                 </div>
               </div>
             </div>
-
-            <div className={`col-4 chatroom-area ${isChatOpen ? 'open' : ''}`}>
+            
+            {/* <div className={`col-4 chatroom-area ${isChatOpen ? 'open' : ''}`}>
               <div className="contents-box contents-scroll-box chatroom">
                 <div className="chat-top">
                   <p className="current-people-num">현재 인원&nbsp;&nbsp;<span className="people-num">254</span>명</p>
@@ -164,7 +356,7 @@ const StayRoom = () => {
                 </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

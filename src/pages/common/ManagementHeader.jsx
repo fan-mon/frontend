@@ -129,33 +129,33 @@ const ManagementHeader = () => {
                             <li className="sidemenu-item sidemenu-main">
                                 <Link to="/management/dashboard">
                                     <span className="ico"><HouseDoorFill /></span>
-                                    <span className="txt">메인화면</span>
+                                    <span className="txt">대시보드</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-commu">
                                 <Link to="/management/goodsmanage">
-                                    <span className="ico"><ChatHeartFill /></span>
+                                    <span className="ico"><CartFill /></span>
                                     <span className="txt">굿즈관리</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-goods">
-                                <Link to="/">
-                                    <span className="ico"><CartFill /></span>
-                                    <span className="txt">메뉴2</span>
+                                <Link to="/management/artistList">
+                                    <span className="ico"><PersonSquare /></span>
+                                    <span className="txt">아티스트 관리</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-meeting">
-                                <Link to="/">
+                                <Link to="/management/teamList">
                                     <span className="ico"><PersonSquare /></span>
-                                    <span className="txt">메뉴3</span>
+                                    <span className="txt">팀 관리</span>
                                 </Link>
                             </li>
-                            <li className="sidemenu-item sidemenu-qna">
+                            {/* <li className="sidemenu-item sidemenu-qna">
                                 <Link to="/">
                                     <span className="ico"><QuestionCircleFill /></span>
                                     <span className="txt">메뉴4</span>
                                 </Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </nav>
                 </div>

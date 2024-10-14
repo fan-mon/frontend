@@ -49,9 +49,7 @@ const TeamProfile = ({teamuuid}) => {
                     className="member-wrap">
                     {group.map((member, index) => (
                         <div key={index} className="member-info" onClick={()=>openModal(member)} >
-                            <div className="member-photo">
-                                member photo
-                            </div>
+                            <img className="member-photo" src={`http://localhost:8080/resources/artistimg/${member.fname}`}/>
                             <div  className="member-name">
                                 {member.name}
                             </div>

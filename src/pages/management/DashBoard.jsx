@@ -139,7 +139,7 @@ const DashBoard = () => {
                     <table>
                         <tbody>
                             {teamlist.slice(0, 5).map((team, index) => (
-                                <tr key={team.teamuuid || index}>
+                                <tr key={team.teamuuid || index} onClick={()=>{navigate(`../management/teamDetail/${team.teamuuid}`)}}>
                                     <td><img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image" /></td>
                                     <td>{team.name}</td>
                                     <td>{team.followers}</td>

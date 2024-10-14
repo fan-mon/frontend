@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 
 const FanBoard = ({ teamUuid }) => {
@@ -102,25 +102,24 @@ const FanBoard = ({ teamUuid }) => {
             <div className="fanboard-title">FAN BOARD</div>
             <div className="fanboard-body">
                 {localStorage.getItem("role") === 'USER' ?
-                <div className="new-post-wrap">
+                    <div className="new-post-wrap">
                         <textarea className="writing-box" name="" id="" cols="30"
                                   maxLength="150" rows="10" value={content}
                                   onChange={(e) => setContent(e.target.value)}
                                   placeholder="아티스트에게 응원의 한마디! (150자 이내)">
                         </textarea>
-                    <div className="send-post" onClick={posting}>
-                        post
+                        <div className="send-post" onClick={posting}>
+                            post
+                        </div>
                     </div>
-                </div>
-                : null}
+                    : null}
                 {fanBoards && fanBoards.length > 0 ? (
                     fanBoards.slice().reverse().map((post, index) => (
                             <div key={index} className="fanboard-content-wrap">
                                 <div className="content-top">
                                     <div className="user-profile">
-                                        <div className="fanmon-img">
-                                            icon
-                                        </div>
+                                        <img className="fanmon-img" src={`${process.env.PUBLIC_URL}/common/symbol.svg`}
+                                             alt=""/>
                                         <div className="fanname">
                                             {post.user.name}
                                         </div>
@@ -132,18 +131,20 @@ const FanBoard = ({ teamUuid }) => {
                                     })}
                                     </div>
                                 </div>
-                                {editIndex===index ?
+                                {editIndex === index ?
                                     (<div>
                                         <textarea className="edit-field"
-                                            value={editcontent}
-                                            onChange={(e) => {
-                                                setEditcontent(e.target.value)
-                                            }}/>
+                                                  value={editcontent}
+                                                  onChange={(e) => {
+                                                      setEditcontent(e.target.value)
+                                                  }}/>
                                         <button className='edit-button'
-                                            onClick={()=>{
-                                            update(post)
-                                        }}>저장</button>
-                                        <button className='canceledit-button' onClick={(e)=> setEditIndex(null)}>취소</button>
+                                                onClick={() => {
+                                                    update(post)
+                                                }}>저장
+                                        </button>
+                                        <button className='canceledit-button' onClick={(e) => setEditIndex(null)}>취소
+                                        </button>
                                     </div>)
                                     : (<div className="fanboard-content">
                                         {post.content}
@@ -151,11 +152,13 @@ const FanBoard = ({ teamUuid }) => {
                                 }
                                 {localStorage.getItem("uuid") === post.user.useruuid ?
                                     <div className="writer-button">
-                                        <button className="edit-button" onClick={(e)=> {
+                                        <button className="edit-button" onClick={(e) => {
                                             setEditIndex(index);
                                             setEditcontent(post.content);
-                                        }}>수정</button>
-                                        <button className="delete-button" onClick={()=>deleteMsg(post.fanboarduuid)}>삭제</button>
+                                        }}>수정
+                                        </button>
+                                        <button className="delete-button" onClick={() => deleteMsg(post.fanboarduuid)}>삭제
+                                        </button>
                                     </div>
                                     : null
                                 }

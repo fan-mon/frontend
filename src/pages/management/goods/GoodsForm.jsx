@@ -75,81 +75,83 @@ const GoodsForm = () => {
     };
 
     return (
-        <div>
-            <h2>상품 등록</h2>
-            <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <div>
-                    <label htmlFor="name">상품명:</label>
-                    <input
-                        type="text"
-                        id="name"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required //필수입력 필드
-                    />
-                </div>
-                <div>
-                    <label htmlFor="category">카테고리:</label>
-                    <select
-                        id="category"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
-                        required
-                    >
-                        <option value="">선택하세요</option>
-                        <option value="ALBUM">앨범</option>
-                        <option value="MAGAZINE">잡지류</option>
-                        <option value="PHOTOBOOK">포토북</option>
-                        <option value="COLLAB">콜라보</option>
-                        <option value="MERCH">상품</option>
-                        <option value="DVD">DVD</option>
-                        <option value="OTHERS">기타</option>
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="price">가격:</label>
-                    <input
-                        type="text"
-                        id="price"
-                        value={price}
-                        onChange={(e) => setPrice(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="qty">수량:</label>
-                    <input
-                        type="text"
-                        id="qty"
-                        value={qty}
-                        onChange={(e) => setQty(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label htmlFor="description">설명:</label>
-                    <textarea
-                        id="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
+        <body className="goodsform">
+            <div className="goods-form-container">
+                <h2>상품 등록</h2>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <div>
+                        <label htmlFor="name">상품명:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required //필수입력 필드
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="category">카테고리:</label>
+                        <select
+                            id="category"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                            required
+                        >
+                            <option value="">선택하세요</option>
+                            <option value="ALBUM">앨범</option>
+                            <option value="MAGAZINE">잡지류</option>
+                            <option value="PHOTOBOOK">포토북</option>
+                            <option value="COLLAB">콜라보</option>
+                            <option value="MERCH">상품</option>
+                            <option value="DVD">DVD</option>
+                            <option value="OTHERS">기타</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label htmlFor="price">가격:</label>
+                        <input
+                            type="text"
+                            id="price"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="qty">수량:</label>
+                        <input
+                            type="text"
+                            id="qty"
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="description">설명:</label>
+                        <textarea
+                            id="description"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
 
-                    />
-                </div>
-                <div>
-                    <label htmlFor="uploadfile">이미지:</label>
-                    <input
-                        type="file"
-                        id="uploadfile"
-                        accept="image/*" //이미지 파일만 선택 가능
-                        onChange={(e) => setUploadfile(e.target.files[0])}
-                    //여러개의 파일을 올렸을 경우 첫번째 파일 참조
-                    />
-                </div>
-                <button type="submit" id="submitBtn">등록</button>
-            </form>
-            {message && <p>{message}</p>}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="uploadfile">이미지:</label>
+                        <input
+                            type="file"
+                            id="uploadfile"
+                            accept="image/*" //이미지 파일만 선택 가능
+                            onChange={(e) => setUploadfile(e.target.files[0])}
+                        //여러개의 파일을 올렸을 경우 첫번째 파일 참조
+                        />
+                    </div>
+                    <button type="submit" id="submitBtn">등록</button>
+                </form>
+                {message && <p>{message}</p>}
 
-        </div>
+            </div>
+        </body>
     );
 };
 

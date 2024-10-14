@@ -78,7 +78,9 @@
     }
 
     th, td{
-        padding: 12px 24px;
+        padding: 12px 8px;
+        text-overflow: ellipsis;
+        overflow: hidden;
         text-align: center;
     }
     th{
@@ -319,6 +321,7 @@
         }
 
         .btn-chat-add{
+            display:block;
             width:100%;
             padding:0;
             color: #FFF;
@@ -335,8 +338,10 @@
             background: $G-lighten-black;
         }
         .btn-chat-add .label{
-            font-size: $G-font-size-sm;
-            color:$G-font-darken;
+            display: inline-block;
+            margin-top: 9px;
+            font-size: 12px;
+            color: #6C7293;
         }
     }
 }

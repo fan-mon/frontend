@@ -67,15 +67,24 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                         <div className="date-wrap">2024년 09월 19일</div>
                         {messages.map((msg, index) => (
                             <div key={index} className="chat-wrap" >
-                                <div className={msg.type === role ? "mine" : "yours"} onClick={role === 'ARTIST'&& msg.type === 'USER' ? () => handleMessage(msg) : null}>
-                                    <div className="profile"></div>
+                                <div className={msg.type === role ? "mine" : "yours"}
+                                     onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}>
+                                    {msg.type==='USER' ?
+                                        (<img className="profile" src={`${process.env.PUBLIC_URL}/common/logo_black.png`}
+                                          alt=""/>)
+                                    :
+                                        (<img className="profile"
+                                              src={msg.artist.fname}
+                                              alt=""/>)
+                                    }
                                     <div className="content-wrap">
-                                        <p className="name">{msg.type}</p>
+                                    <p className="name">{msg.type}</p>
                                         <div className="same-time">
                                             <div className="bubble-wrap">
                                                 <div className="bubble">
                                                     {msg.messagetext.startsWith('http') ? (
-                                                        <img src={msg.messagetext} alt="Sent image" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                                                        <img src={msg.messagetext} alt="Sent image"
+                                                             style={{maxWidth: '100%', maxHeight: '200px'}}/>
                                                     ) : (
                                                         msg.messagetext
                                                     )}

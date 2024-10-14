@@ -1,4 +1,4 @@
-body {
+.teamform {
     background-color: black; /* 배경색 */
     color: white; /* 글씨색 */
     font-family: Arial, sans-serif; /* 폰트 스타일 */
@@ -10,13 +10,13 @@ body {
     height: 100vh; /* 전체 화면 높이 */
 }
 
-.artist-form-container {
+.team-form-container {
     background-color: rgba(0, 0, 0, 0.8); /* 반투명 배경 */
     border-radius: 10px; /* 모서리 둥글게 */
     padding: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
     width: 400px; /* 폼 너비 */
-    margin-top: 200px;
+    margin-top: 50px;
 }
 
 #title {
@@ -77,9 +77,6 @@ body {
     background-color: #d9a40e; /* 호버 색상 */
 }
 
-.artist-dropdown {
-    position: relative; /* 드롭다운 위치 설정 */
-}
 
 .artist-checkboxes {
     background-color: rgba(0, 0, 0, 0.9); /* 드롭다운 배경색 */
@@ -105,3 +102,22 @@ body {
     margin-right: 10px; /* 체크박스와 텍스트 간격 */
     accent-color: #EAB70E; /* 체크박스 강조 색상 */
 }
+
+/* 스크롤바 스타일 */
+.artist-checkboxes::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 */
+  }
+  
+  .artist-checkboxes::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* 트랙 색상 */
+    border-radius: 10px; /* 트랙 모서리 둥글게 */
+  }
+  
+  .artist-checkboxes::-webkit-scrollbar-thumb {
+    background: grey; /* 스크롤바 색상 */
+    border-radius: 10px; /* 스크롤바 모서리 둥글게 */
+  }
+  
+  .artist-checkboxes::-webkit-scrollbar-thumb:hover {
+    background: #d9a60e; /* 호버 시 색상 변경 */
+  }

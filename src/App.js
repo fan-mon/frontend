@@ -43,6 +43,9 @@ import ArtistDetail from './pages/management/artist/ArtistDetail';
 import ArtistLogin from './pages/management/artist/ArtistLogin';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
+import MyProfile from './pages/user/MyProfile';
+// import ManagementMyProfile from './pages/management/ManagementMyProfile;'
+
 
 
 function App() {
@@ -114,15 +117,16 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
           <Route path="/shop/goods/main" element={<GoodsMain />} />
           <Route path="/management/managementsignup" element={<ManagementSignUp />} />
           <Route path="/user/login" element={<Login />} />
-          <Route path="/meetingroom/stayroom" element={<StayRoom />} />
-          <Route path="/meetingroom/meetingroom" element={<MeetingRoom />} />
           <Route path="/meetingroom/stayroomlist" element={<StayRoomList />} />
+          <Route path="/meetingroom/stayroom/:stayuuid" element={<StayRoom/>}/>
+          <Route path="/meetingroom/meetingroom/:stayuuid" element={<MeetingRoom/>}/>
           <Route path="/meetingroom/createroom" element={<CreateRoom />} />
           <Route path="/user/main" element={<Main />} />
           <Route path="/management/dashboard" element={<DashBoard />} />
           <Route path="/management/managementmypage" element={<ManagementMyPage />} />
+          <Route path="/user/myprofile" element={<MyProfile />} />
+          {/* <Route path="/management/managementmyprofile" element={<ManagementMyProfile />} /> */}
         </Routes>
-
         </div>
       </div>
 

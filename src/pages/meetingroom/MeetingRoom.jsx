@@ -1,11 +1,92 @@
 import React, { useState, useEffect, useRef  } from 'react';
+import api from '../../apiClient';
+import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './fonts/bootstrap-icons.min.css';
 import "./css/stayroom.css";
 import "./js/meeting.js";
 import "./js/webRTC.js";
 
+const getBack = async (url, func) => {
+  try {
+    const response = await api.get(url);
+    func(response);
+  } catch (error) {
+    //console.log("Back 단과 통신 오류 : ", error);
+  }
+};
+
+
+
 function MeetingRoom() {
+    const [mngUserName, setMngUserName] = useState("");
+    const [userName, setUserName] = useState("");
+    const [userEmail, setUserEmail] = useState("");
+
+    const [meetingTime, setMeetingTime] = useState(0);
+    const [meetingstartedat, setMeetingstartedat] = useState(null);
+    const [meetingendedat, setMeetingendedat] = useState(0);
+    const { stayuuid } = useParams();
+    const [countDown, setCountDown] = useState(0);
+
+    const fetchUserMngInfo = async () => {
+      try {
+        const response = await api.get('/management/myprofile');
+        setMngUserName(response.data.name);
+      } catch (error) {
+        //console.error("사용자 정보 가져오기 오류: ", error);
+      }
+    }
+    
+    const fetchUserInfo = async () => {
+      try {
+        const response = await api.get('/users/myprofile');
+        setUserName(response.data.name);
+        setUserEmail(response.data.email);
+      } catch (error) {
+        //console.error("사용자 정보 가져오기 오류:", error);
+      }
+    };
+
+    useEffect(()=> {
+      fetchUserMngInfo();
+      fetchUserInfo();
+    },[]);
+
+    
+    
+    useEffect(() => {
+      getBack(`/meetingroom/meetingroom/${stayuuid}`, (res) => {
+        setMeetingTime(res.data.meetingTime * 60 * 30);//임시
+        setCountDown(meetingTime);
+      });
+    }, [meetingTime]);
+    //timer
+    const timeFormat = (time) => {
+      if (time <= 0) return "00:00";
+      const m = Math.floor(time / 60).toString().padStart(2, '0');
+      const s = (time % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    };
+
+    useEffect(()=>{
+      const timer = setInterval(() => {
+        setCountDown(prev=>{
+          if(prev > 0){
+            return prev-1;
+          }else{
+            clearInterval(timer);
+            //window.location.href=`/meetingroom/stayroom/${stayuuid}`;
+            return 0;
+          }
+        });
+        console.log(countDown);
+        
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }, [countDown]);
+
     return (
     <>
     <div className="container-fluid">
@@ -81,7 +162,7 @@ function MeetingRoom() {
                 <div className="control-right-area">
                   <p>
                     <span className="label">남은시간</span>
-                    <span className="implement-txt meeting-time">02:48</span>
+                    <span className="implement-txt meeting-time">{timeFormat(countDown)}</span>
                   </p>
                   <button className="btn btn-default me-2">잠시휴식</button>
                   <button className="btn btn-danger">긴급종료</button>
