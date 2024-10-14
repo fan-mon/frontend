@@ -158,7 +158,7 @@ function Buying() {
                         console.log('포트원 결제 id'+res.imp_uid);
                         console.log('신용카드 승인번호'+res.apply_num);
                         console.log('주문번호'+res.merchant_uid);
-                        console.log('유저데이터'+res.UpdateUserData);
+                        console.log('유저데이터'+UpdateUserData);
                         console.log('주문자주소'+res.buyer_addr);
                         console.log('결제액'+res.paid_amount);
                         console.log('결제승인시각'+res.paid_at);
@@ -230,6 +230,16 @@ function Buying() {
                         //일단 Orders 테이블에 들어갈게 다 나오는지 보자
                         console.log('유저데이터 생일 나오나'+UpdateUserData.birth);
                         console.log('유저데이터 생일 타입은?'+typeof UpdateUserData.birth);
+
+                        console.log("보내는 데이터:", JSON.stringify(response, null, 2));
+                        console.log('포트원 결제 id'+response.imp_uid);
+                        console.log('신용카드 승인번호'+response.apply_num);
+                        console.log('주문번호'+response.merchant_uid);
+                        console.log('유저데이터'+UpdateUserData);
+                        console.log('주문자주소'+response.buyer_addr);
+                        console.log('결제액'+response.paid_amount);
+                        console.log('결제승인시각'+response.paid_at);
+                        console.log('물품 수량'+totalQuantity);
 
                         // 결제 실패 처리
                         console.error('서버 통신 중 오류 발생:', error);
