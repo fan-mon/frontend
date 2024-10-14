@@ -22,6 +22,9 @@ const MyPage = () => {
     const handleBackButtonClick = () => {
         navigate('/user/main');
     };
+    const handleProfileClick = () => {
+      navigate('/user/myprofile');
+    };
   
 
 
@@ -33,7 +36,7 @@ const MyPage = () => {
     <div className="mypage-container">
         <h1 className="user-name">{userName} 님</h1> 
         <div className="menu-container">
-            <div className="menu-item">회원조회/수정</div>
+            <div className="menu-item" onClick={handleProfileClick}>회원조회/수정</div>
             <div className="menu-item">결제내역</div>
             <div className="menu-item">좋아하는 Artist</div>
             <div className="menu-item">내 게시물 조회</div>
