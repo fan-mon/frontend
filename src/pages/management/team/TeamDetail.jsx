@@ -172,65 +172,75 @@ function TeamDetail() {
     return (
         <body className='teamDetail'>
             <div className="team-detail-container">
-                <div></div>
-                <div className='detail-team-text'>
-                    <h2>팀 상세 정보</h2>
+                <div id="first-column">
+                    <div className='detail-team-text'>
+                        <h2>팀 상세 정보</h2>
 
-                    <p>이름: {isEditing ? (
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                    ) : (
-                        name
-                    )}</p>
-                    <p>데뷔일: {isEditing ? (
-                        <input type="date" value={debut} onChange={(e) => setDebut(e.target.value)} />
-                    ) : (
-                        debut
-                    )}</p>
-                    <p>설명: {isEditing ? (
-                        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-                    ) : (
-                        description
-                    )}</p>
-                    <p>팔로워 수: {isEditing ? (
-                        <input type="number" value={followers} onChange={(e) => setFollowers(e.target.value)} />
-                    ) : (
-                        followers
-                    )}</p>
-                </div>
+                        <p>이름: {isEditing ? (
+                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                        ) : (
+                            name
+                        )}</p>
+                        <p>데뷔일: {isEditing ? (
+                            <input type="date" value={debut} onChange={(e) => setDebut(e.target.value)} />
+                        ) : (
+                            debut
+                        )}</p>
+                        <p>설명: {isEditing ? (
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+                        ) : (
+                            description
+                        )}</p>
+                    </div>
 
-                <div className='detail-team-img'>
-                    {/* 이미지 표시 */}
-                    {!isEditing && fname && (
-                        <img className='team-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${fname}`} alt={`${name} 이미지`} />
-                    )}
-                    {isEditing && (
-                        <div>
-                            <label>이미지 파일:</label>
-                            <input type="file" accept="image/*" onChange={handleFileChange} />
-                        </div>
-                    )}
+                    <div className='detail-team-img'>
+                        {/* 이미지 표시 */}
+                        {!isEditing && fname && (
+                            <img className='team-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${fname}`} alt={`${name} 이미지`} />
+                        )}
+                        {isEditing && (
+                            <div>
+                                <label>이미지 파일:</label>
+                                <input type="file" accept="image/*" onChange={handleFileChange} />
+                            </div>
+                        )}
+                    </div>
                 </div>
                 <div className='detail-artist'>
                     <h3>소속 아티스트</h3>
                     {isEditing ? (
-                        <div className="artist-list-edit">
-                            {allArtists.map(artist => (
-                                <label key={artist.artistuuid}>
-                                    <input
-                                        type="checkbox"
-                                        value={artist.artistuuid}
-                                        checked={selectedArtists.includes(artist.artistuuid)}
-                                        onChange={() => handleArtistChange(artist.artistuuid)}
-                                    />
-                                    {artist.name}
-                                </label>
-                            ))}
+                        <div>
+                            <div className="artist-list-edit">
+                                {allArtists.map(artist => (
+                                    <label key={artist.artistuuid}>
+                                        <input
+                                            type="checkbox"
+                                            value={artist.artistuuid}
+                                            checked={selectedArtists.includes(artist.artistuuid)}
+                                            onChange={() => handleArtistChange(artist.artistuuid)}
+                                        />
+                                        {artist.name}
+                                    </label>
+                                ))}
+                            </div>
+                            {/* 선택한 아티스트 수 표시 */}
+                            <p>선택한 아티스트 수: {selectedArtists.length}</p>
                         </div>
                     ) : (
                         <ul>
-                            {artists.map(arts => (
-                                <li key={arts.artistteamuuid}>{arts.artist.name}</li>
-                            ))}
+                            <table>
+                                <tbody>
+                                    {artists.map(arts => (
+                                        <tr key={arts.artistteamuuid}>
+                                            <td><img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${arts.artist.fname}`}
+                                                alt={arts.artist.name} className="artist-img"></img></td>
+                                            <td>{arts.artist.name}</td>
+                                        </tr>
+
+                                    ))}
+                                </tbody>
+                            </table>
+
                         </ul>
                     )}
                 </div>

@@ -13,7 +13,7 @@ const GoodsManage = () => {
   const [selectedTeamUuid, setSelectedTeamUuid] = useState(null); //선택된 팀의 uuid
   const [selectedTeamName, setSelectedTeamName] = useState(''); //선택된 팀의 이름
   const [selectedTeamGoods, setSelectedTeamGoods] = useState([]); //선택된 팀의 굿즈
-  const [displayCount, setDisplayCount] = useState(6); //보여줄 상품 개수
+  const [displayCount, setDisplayCount] = useState(4); //보여줄 상품 개수
 
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);// 로딩 상태
@@ -67,7 +67,7 @@ const GoodsManage = () => {
         setSelectedTeamGoods([]); // 데이터가 없으면 빈 배열로 초기화
       }
       setLoading(false); //로딩 종료
-      setDisplayCount(6); //새 팀을 선택할 때마다 보여줄 상품 개수 초기화
+      setDisplayCount(4); //새 팀을 선택할 때마다 보여줄 상품 개수 초기화
     } catch (err) {
       setError(err.message);
       setLoading(false);
@@ -91,7 +91,7 @@ const GoodsManage = () => {
 
   //더보기 클릭 핸들러
   const handleViewMore = () => {
-    setDisplayCount(prevCount => prevCount + 6); //6개씩 증가
+    setDisplayCount(prevCount => prevCount + 4); //6개씩 증가
   }
 
   //컴포넌트가 마운트되면 fetchGoods 실행
@@ -139,7 +139,7 @@ const GoodsManage = () => {
         <div className="goods-list" id="goods-list">
           {/* 굿즈가 없을 때 메시지 표시 */}
           {selectedTeamGoods.length === 0 ? (
-            <p>해당 팀의 등록된 굿즈가 없습니다.</p>
+            <p className="message">해당 팀의 등록된 굿즈가 없습니다.</p>
           ) : (
             selectedTeamGoods.slice(0, displayCount).map((item) => (
               <div className="goods-item" id="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
@@ -152,7 +152,7 @@ const GoodsManage = () => {
 
         <div className="view-more">
           {selectedTeamGoods.length > displayCount && (
-            <a onClick={handleViewMore}>더보기</a>
+            <a onClick={handleViewMore} className="view-more-link">더보기</a>
           )}
         </div>
 

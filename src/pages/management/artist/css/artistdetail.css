@@ -6,7 +6,7 @@
     margin-left: 20px;
     margin-top: 20px;
     margin-right: 20px;
-    width: 100%;
+    width: 95%;
 }
 
 .update-form-btn {
@@ -19,6 +19,7 @@
     margin: 20px 10px;
     border: none;
     font-weight: bold;
+    border-radius: 7px;
 }
 
 .update-btn{
@@ -31,6 +32,7 @@
     margin: 20px 10px;
     border: none;
     font-weight: bold;
+    border-radius: 7px;
 }
 
 .delete-btn{
@@ -43,6 +45,7 @@
     margin: 20px 10px;
     border: none;
     font-weight: bold;
+    border-radius: 7px;
 }
 
 .list-btn{
@@ -55,6 +58,7 @@
     margin: 20px 10px;
     border: none;
     font-weight: bold;
+    border-radius: 7px;
 }
 
 .artist-img{
@@ -84,4 +88,20 @@
     margin-bottom: 20px;
     font-size: 30px;
     color: #EAB70E;
+}
+
+/*버튼 hover*/
+.update-btn:hover {
+    background-color: #d9a40e; /* 밝은 노란색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.delete-btn:hover {
+    background-color: darkred; /* 어두운 빨간색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
+}
+
+.list-btn:hover {
+    background-color: darkgrey; /* 어두운 회색으로 변경 */
+    cursor: pointer; /* 커서 포인터로 변경 */
 }
