@@ -104,89 +104,91 @@ const TeamForm = () => {
     };
 
     return (
-        <div className="artist-form-container">
-            <h2 id="title">팀 등록</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>이름</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        className="form-control"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>데뷔일</label>
-                    <input
-                        type="date"
-                        value={debut}
-                        onChange={(e) => setDebut(e.target.value)}
-                        className="form-control"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>설명</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="form-control"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>팔로워 수</label>
-                    <input
-                        type="number"
-                        value={followers}
-                        onChange={(e) => setFollowers(e.target.value)}
-                        className="form-control"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label>파일 업로드</label>
-                    <input
-                        type="file"
-                        onChange={(e) => setFile(e.target.files[0])}
-                        className="form-control"
-                    />
-                </div>
-                <div className="form-group">
-                    <label>아티스트 선택</label>
-                    <div className="artist-checkboxes">
-                        {artists.map(artist => (
-                            <div key={artist.artistuuid}>
-                                <label>
-                                    <input
-                                        type="checkbox"
-                                        value={artist.artistuuid}
-                                        checked={selectedArtists.includes(artist.artistuuid)}
-                                        onChange={(e) => {
-                                            const uuid = e.target.value;
-                                            setSelectedArtists(prev =>
-                                                prev.includes(uuid) ? prev.filter(artistuuid => artistuuid !== uuid) : [...prev, uuid]
-                                            );
-                                        }}
-                                    />
-                                    {artist.name}
-                                </label>
-                            </div>
-                        ))}
-
+        <body className="teamform">
+            <div className="artist-form-container">
+                <h2 id="title">팀 등록</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>이름</label>
+                        <input
+                            type="text"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="form-control"
+                            required
+                        />
                     </div>
-                    {/* 선택한 아티스트 수 표시 */}
-                    <p>선택한 아티스트 수: {selectedArtists.length}</p>
+                    <div className="form-group">
+                        <label>데뷔일</label>
+                        <input
+                            type="date"
+                            value={debut}
+                            onChange={(e) => setDebut(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>설명</label>
+                        <textarea
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>팔로워 수</label>
+                        <input
+                            type="number"
+                            value={followers}
+                            onChange={(e) => setFollowers(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>파일 업로드</label>
+                        <input
+                            type="file"
+                            onChange={(e) => setFile(e.target.files[0])}
+                            className="form-control"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>아티스트 선택</label>
+                        <div className="artist-checkboxes">
+                            {artists.map(artist => (
+                                <div key={artist.artistuuid}>
+                                    <label>
+                                        <input
+                                            type="checkbox"
+                                            value={artist.artistuuid}
+                                            checked={selectedArtists.includes(artist.artistuuid)}
+                                            onChange={(e) => {
+                                                const uuid = e.target.value;
+                                                setSelectedArtists(prev =>
+                                                    prev.includes(uuid) ? prev.filter(artistuuid => artistuuid !== uuid) : [...prev, uuid]
+                                                );
+                                            }}
+                                        />
+                                        {artist.name}
+                                    </label>
+                                </div>
+                            ))}
+
+                        </div>
+                        {/* 선택한 아티스트 수 표시 */}
+                        <p>선택한 아티스트 수: {selectedArtists.length}</p>
+                    </div>
+                    <button type="submit" id="submitBtn">등록</button>
+                </form>
+                {message && <p className="message">{message}</p>}
+                <div>
+                    <a className="list-anchor" href="/management/teamList">목록으로</a>
                 </div>
-                <button type="submit" id="submitBtn">등록</button>
-            </form>
-            {message && <p className="message">{message}</p>}
-            <div>
-                <a className="list-anchor" href="/management/teamList">목록으로</a>
             </div>
-        </div>
+        </body>
     );
 }
 export default TeamForm;
