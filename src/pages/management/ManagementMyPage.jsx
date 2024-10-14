@@ -11,10 +11,7 @@ const ManagementMyPage = () => {
   const fetchUserInfo = async () => {
     try {
       const response = await api.get('/management/myprofile');
-      console.log("바보");
-      console.log(response.headers); // 응답 헤더 출력
-      console.log(response.data); // 사용자 정보 로그 출력
-      setUserName(response.data.name); // 사용자 이름 상태 업데이트
+      setUserName(response.data.name);
     } catch (error) {
       console.error("사용자 정보 가져오기 오류:", error);
     }
@@ -26,6 +23,12 @@ const ManagementMyPage = () => {
         navigate('/management/dashboard');
     };
   
+    const handleDetailButtonClick = () => {
+      navigate('/management/managementmyprofile');
+  };
+  const handleUpdateButtonClick = () => {
+    navigate('/management/updatemanagement');
+};
 
 
   useEffect(() => {
@@ -36,11 +39,11 @@ const ManagementMyPage = () => {
     <div className="mypage-container">
         <h1 className="user-name">{userName} 님</h1> 
         <div className="menu-container">
-            <div className="menu-item">회원조회/수정</div>
-            <div className="menu-item">test1</div>
-            <div className="menu-item">test2</div>
+            <div className="menu-item"  onClick={handleDetailButtonClick}>회원조회</div>
+            <div className="menu-item"  onClick={handleUpdateButtonClick}>회원수정</div>
+            {/* <div className="menu-item">test2</div>
             <div className="menu-item">test3</div>
-            <div className="menu-item">test4</div>
+            <div className="menu-item">test4</div> */}
             <div className="menu-item">회원탈퇴</div>
 
         </div>

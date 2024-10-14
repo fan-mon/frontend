@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import api from '../../apiClient';
+import api from '../../apiClient'; 
 import { useNavigate } from 'react-router-dom';
-import './myprofile.css';
+import './managementmyprofile.css';
 
-const MyProfile = () => {
+const ManagementMyProfile = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const fetchUserInfo = async () => {
     try {
-      const response = await api.get('/users/myprofile');
+      const response = await api.get('/management/myprofile');
       setUser(response.data); 
     } catch (error) {
       console.error("사용자 정보 가져오기 오류:", error);
@@ -17,17 +17,14 @@ const MyProfile = () => {
     }
   };
 
-  // 뒤로가기 버튼 클릭 시 동작
   const handleBackButtonClick = () => {
-    navigate('/user/mypage');
+    navigate('/management/managementmypage');
   };
 
-  // 정보 수정 버튼 클릭 시 동작
   const handleEdit = () => {
-    navigate('/user/updateprofile');
+    navigate('/management/updatemanagement');
   };
 
-  // 컴포넌트가 마운트될 때 사용자 정보 가져오기
   useEffect(() => {
     fetchUserInfo(); 
   }, []);
@@ -45,16 +42,12 @@ const MyProfile = () => {
           <span className="value">{user.email}</span>
         </div>
         <div className="info-row">
-          <span className="label">이름:</span>
+          <span className="label">회사명:</span>
           <span className="value">{user.name}</span>
         </div>
         <div className="info-row">
-          <span className="label">생년월일:</span>
-          <span className="value">{user.birth}</span>
-        </div>
-        <div className="info-row">
-          <span className="label">휴대폰:</span>
-          <span className="value">{user.phone}</span>
+          <span className="label">사업자번호:</span>
+          <span className="value">{user.businessno}</span>
         </div>
         <div className="info-row">
           <span className="label">주소:</span>
@@ -74,4 +67,4 @@ const MyProfile = () => {
   );
 };
 
-export default MyProfile;
+export default ManagementMyProfile;
