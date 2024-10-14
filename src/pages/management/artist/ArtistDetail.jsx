@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import "./css/artistdetail.css";
+import api from '../../../apiClient';
 // import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 
 function ArtistDetail() {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
-    // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
+    // const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
     const { artistuuid } = useParams();
 
     const [adetail, setADetail] = useState(null);//디테일 정보 불러와서 담을 것
@@ -24,10 +25,25 @@ function ArtistDetail() {
     const [error, setError] = useState(null);// 에러 상태
     const navigate = useNavigate();
 
+    //로그인된 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+          const response = await api.get('/management/myprofile');
+          console.log(response.headers); // 응답 헤더 출력
+          console.log(response.data); // 사용자 정보 로그 출력
+          setMgName(response.data.name);
+          setManagementuuid(response.data.managementuuid);
+          console.log(response.data.managementuuid);
+
+        } catch (error) {
+          console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
+
     //Artist detail 정보 가져오기 api 호출
     const fetchArtistDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artist/${artistuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`);
             setADetail(response.data);
             setName(response.data.name);
             setDebut(response.data.debut);
@@ -42,6 +58,7 @@ function ArtistDetail() {
     };
 
     useEffect(() => {
+        fetchManagementInfo();
         fetchArtistDetail();
     }, [artistuuid]);
 
@@ -58,7 +75,7 @@ function ArtistDetail() {
 
         if (confirmed) {
             try {
-                await axios.delete(`http://localhost:8080/management/artist/${artistuuid}`);
+                await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`);
                 alert('아티스트가 삭제되었습니다.');
                 navigate('/management/artistList'); // 아티스트 목록 페이지로 이동
             } catch (error) {
@@ -88,7 +105,7 @@ function ArtistDetail() {
         }
 
         try {
-            await axios.put(`http://localhost:8080/management/artist/${artistuuid}`, formData);
+            await axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/${artistuuid}`, formData);
             alert('아티스트 정보가 수정되었습니다.');
             setIsEditing(false); // 수정 모드 종료
             fetchArtistDetail(); // 최신 데이터 가져오기
@@ -102,7 +119,8 @@ function ArtistDetail() {
     return (
         <div className="artist-detail-container">
             {adetail ? (
-                <div>
+                <div className='detail-is'>
+                    <div className='detail-text'>
                     <h2>아티스트 상세 정보</h2>
                     <p>이름: {isEditing ? (
                         <input
@@ -147,8 +165,11 @@ function ArtistDetail() {
                     ) : (
                         adetail.birth
                     )}</p>
+                    </div>
+                    
+                    <div className='detail-img'>
                     {!isEditing && fname ? (
-                        <img className='artist-img' src={`http://localhost:8080/resources/artistimg/${fname}`} />
+                        <img className='artist-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${fname}`} />
                     ) : (
                         <span>등록된 이미지가 없습니다.</span>
                     )}
@@ -163,7 +184,7 @@ function ArtistDetail() {
                             />
                         </div>
                     )}
-
+                    </div>
                     {isEditing ? (
                         <button className="update-form-btn" onClick={handleUpdateClick}>수정 완료</button>
                     ) : (
@@ -171,7 +192,7 @@ function ArtistDetail() {
                     )}
                     <div className='btns'>
                         <button className='delete-btn' onClick={handleDeleteClick}>삭제하기</button>
-                        <button className='list--btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
+                        <button className='list-btn' onClick={() => { navigate(`/management/artistList`) }}>목록으로</button>
                     </div>
                 </div>
             ) : (

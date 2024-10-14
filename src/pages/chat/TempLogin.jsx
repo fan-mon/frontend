@@ -9,7 +9,7 @@ const TempLogin = () => {
         e.preventDefault();
         try{
             console.log("uuid : "+uuid);
-            const response = await axios.post('http://localhost:8080/chat/login',{
+            const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/chat/login`, {     
                 uuid
             })
             console.log("login response : "+response.data)
@@ -19,10 +19,9 @@ const TempLogin = () => {
         }
     };
     // 로그인 함수
-    const login = (user, uuid, stat ) => {
-        localStorage.setItem("user", user);
+    const login = ( user, uuid, stat ) => {
         localStorage.setItem("uuid",uuid);
-        localStorage.setItem("stat",stat);
+        localStorage.setItem("role",user)
         console.log("login success")
     };
     // 로그아웃 함수

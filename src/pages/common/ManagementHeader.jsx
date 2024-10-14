@@ -37,6 +37,7 @@ const ManagementHeader = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('role');
         setUserName('로그인 안됨');
         setIsLoggedIn(false); 
         window.location.href = '/management/dashboard';
@@ -126,15 +127,15 @@ const ManagementHeader = () => {
                     <nav>
                         <ul>
                             <li className="sidemenu-item sidemenu-main">
-                                <Link to="/">
+                                <Link to="/management/dashboard">
                                     <span className="ico"><HouseDoorFill /></span>
                                     <span className="txt">메인화면</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-commu">
-                                <Link to="/chat">
+                                <Link to="/management/goodsmanage">
                                     <span className="ico"><ChatHeartFill /></span>
-                                    <span className="txt">메뉴1</span>
+                                    <span className="txt">굿즈관리</span>
                                 </Link>
                             </li>
                             <li className="sidemenu-item sidemenu-goods">

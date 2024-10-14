@@ -1,26 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import "./css/goodsupdate.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import api from '../../../apiClient';
+// import "bootstrap/dist/css/bootstrap.min.css";
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
 function GoodsUpdate() {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding(세션유지)
-    // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
-    // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
-    const { goodsuuid: urlGoodsuuid } = useParams(); //url에서 goodsuuid 가져오기
-    const goodsuuid = urlGoodsuuid || sessionStorage.getItem('goodsuuid'); //세션 저장소에서 가져오기
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
+    const { goodsuuid } = useParams(); //url에서 goodsuuid 가져오기
 
     const [gdetail, setGDetail] = useState([]); //원래 굿즈 detail정보 담을것
     const [file, setFile] = useState(null); //파일 업로드 위해서
 
     const navigate = useNavigate();
 
+    //로그인된 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+          const response = await api.get('/management/myprofile');
+          console.log(response.headers); // 응답 헤더 출력
+          console.log(response.data); // 사용자 정보 로그 출력
+          setMgName(response.data.name);
+          setManagementuuid(response.data.managementuuid);
+          console.log(response.data.managementuuid);
+
+        } catch (error) {
+          console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
     //원래 굿즈 detail 정보 가져오기 api 호출
     const fetchGoodsDetail = async () => {
         try {
             // sessionStorage.setItem('goodsuuid',goodsuuid); //세션에 goodsuuid저장
-            const response = await axios.get(`http://localhost:8080/management/goods/${goodsuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`);
             setGDetail(response.data);
             console.log(gdetail);
         } catch (err) {
@@ -29,6 +42,7 @@ function GoodsUpdate() {
     };
 
     useEffect(() => {
+        fetchManagementInfo();
         fetchGoodsDetail();
     }, [goodsuuid]);
 
@@ -65,7 +79,7 @@ function GoodsUpdate() {
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-        axios.put(`http://localhost:8080/management/goods/${goodsuuid}`, formData)
+        axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/${goodsuuid}`, formData)
             .then(response => {
                 alert('상품 수정이 완료되었습니다.');
 

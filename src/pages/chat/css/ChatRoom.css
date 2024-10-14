@@ -1,17 +1,17 @@
 
-html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
-}
+/*html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    border: 0;*/
+/*    font-size: 100%;*/
+/*    font: inherit;*/
+/*    vertical-align: baseline;*/
+/*}*/
 
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-    display: block;
-}
+/*!* HTML5 display-role reset for older browsers *!*/
+/*article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {*/
+/*    display: block;*/
+/*}*/
 
 body {
     line-height: 1;
@@ -67,48 +67,6 @@ body {
 p {
     line-height: 1.5;
 }
-
-/* layout */
-.content {
-    margin: 0;
-}
-
-.container-fluid {
-    height: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-.row {
-    margin-left: -10px;
-    margin-right: -10px;
-}
-.row [class^=col] {
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.container-fluid.little-gatter {
-    padding-left: 20px;
-    padding-right: 20px;
-}
-.container-fluid.little-gatter .row {
-    margin-left: -5px;
-    margin-right: -5px;
-}
-.container-fluid.little-gatter .row.row-v-center [class^=col] {
-    height: 100%;
-    align-content: center;
-}
-.container-fluid.little-gatter .row [class^=col] {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-.container-fluid.little-gatter .row.full-row {
-    margin-left: -20px;
-    margin-right: -20px;
-}
-
 .contents-box {
     margin-top: 24px;
     margin-bottom: 24px;
@@ -116,112 +74,28 @@ p {
     border-radius: 8px;
     background: #191C24;
 }
-.contents-box .title-wrap {
+.artist-chat .contents-box .title-wrap {
     margin-bottom: 21px;
 }
-.contents-box .sub-title {
+.artist-chat .contents-box .sub-title {
     color: #6C7293;
 }
-.contents-box .title {
+.artist-chat .contents-box .title {
     font-size: 24px;
     font-family: NotoSansKoreanB;
 }
-.contents-box.contents-scroll-box {
+.artist-chat .chatroom-area .contents-box.contents-scroll-box {
     height: calc(100vh - 80px - 24px * 2);
     overflow: auto;
 }
-.contents-box.contents-scroll-box::-webkit-scrollbar {
-    display: none;
-}
-.contents-box.user-list-box {
-    height: calc(100vh - 80px - 24px * 3 - 44px);
-    margin-bottom: 12px;
-}
-.contents-box.current-box {
-    display: flex;
-    align-items: center;
-    padding-top: 0;
-    padding-bottom: 0;
-    height: 56px;
-    margin-top: 12px;
-    margin-bottom: 24px;
-}
-.contents-box.current-box .no {
-    width: 80px;
-    padding: 0 24px;
-    text-align: center;
-}
-.contents-box.current-box .name {
-    flex: 1 1 auto;
-    padding: 0 24px;
-}
-.contents-box.current-box .my-stay-time {
-    display: flex;
-    align-items: center;
-    color: #6C7293;
-    font-size: 14px;
-}
-.contents-box.current-box .my-stay-time .time {
-    width: 80px;
-    padding: 0 24px 0 16px;
-    text-align: center;
-    color: #FFC700;
-    font-size: 20px;
+.artist-chat .chatroom-area .contents-box.contents-scroll-box::-webkit-scrollbar {
+    /*display: none;*/
 }
 
-.table {
-    table-layout: fixed;
-}
-.table .w-80 {
-    width: 80px;
-}
-.table th, .table td {
-    padding: 12px 24px;
-    text-align: center;
-}
-.table th {
-    background: #0F1015;
-    color: #FFF;
-    white-space: nowrap;
-}
-.table th:first-child {
-    border-radius: 8px 0 0 8px;
-}
-.table th:last-child {
-    border-radius: 0 8px 8px 0;
-}
-.table td {
-    background: none;
-    color: #6C7293;
-}
-.table td:first-child {
-    border-radius: 100px 0 0 100px;
-}
-.table td:last-child {
-    border-radius: 0 100px 100px 0;
-}
-.table .current {
-    background: rgba(255, 199, 0, 0.07);
-}
-.table .current td {
-    color: #FFF;
+.artist-chat .chatroom-area {
+    min-width: 300px;
 }
 
-.user-list-table td:nth-child(2) {
-    text-align: left;
-}
-
-.chatroom-area {
-    min-width: 280px;
-}
-
-.chatroom {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-}
 .chatroom .chat-top {
     flex: 0 0 56px;
     display: flex;
@@ -237,17 +111,14 @@ p {
 .chatroom .chat-top .people-num {
     color: #FFF;
 }
-.chatroom .chat-top .btn-chat-close {
+.artist-chat .chatroom .chat-top .btn-chat-close {
     display: none;
 }
-.chatroom .chat-contents {
-    flex: 1 1 auto;
+.artist-chat .chatroom .chat-contents {
     padding: 0 16px;
-    overflow: auto;
+    /*overflow: auto;*/
 }
-.chatroom .chat-contents::-webkit-scrollbar {
-    display: none;
-}
+
 .chatroom .chat-contents .date-wrap {
     padding: 24px 0 0;
     font-size: 14px;
@@ -452,7 +323,7 @@ p {
     margin-top: 0;
 }
 .meeting-box .meeting-show-area.full {
-    position: fixed;
+    /*position: fixed;*/
     width: 100%;
     height: 100%;
     top: 0;

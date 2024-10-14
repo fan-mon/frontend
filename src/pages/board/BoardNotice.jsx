@@ -11,9 +11,8 @@ const BoardNotice = ({ teamUuid }) => {
 
     const getList=async ()=>{
         try{
-            const response=await axios.get(`http://localhost:8080/board/boardnotice/${teamUuid}`)
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/board/boardnotice/${teamUuid}`);
             setBoardNotices(response.data);
-            console.log(`artist board data : ${boardNotices}`)
         }catch (e) {
             console.log(e);
         }finally {
@@ -21,7 +20,6 @@ const BoardNotice = ({ teamUuid }) => {
     }
 
 
-    // 모달 테스트
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
         setIsModalOpen(true);

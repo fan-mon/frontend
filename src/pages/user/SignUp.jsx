@@ -23,7 +23,7 @@ const SignUp = () => {
 
 
   try {
-    const response = await axios.post('http://localhost:8080/users/signup', {
+    const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/users/signup`, {
       email,
       password,
       name,
@@ -49,7 +49,7 @@ const SignUp = () => {
 
 const handleEmailCheck = async () => {
   try {
-    const response =  await axios.get('http://localhost:8080/users/check-email', {
+    const response =  await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/users/check-email`, {
       params: {email}  
     });
     if (response.status === 200) {

@@ -1,27 +1,50 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+import api from '../../../apiClient';
 import "./css/goodsmanage.css";
 
 const GoodsManage = () => {
-  const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
-  // const { managementuuid: urlmanagementuuid} = useParams(); //url에서 managementuuid 가져오기
-  // const managementuuid = urlmanagementuuid || localStorage.getItem('managementuuid'); //세션 저장소에서 가져오기
+  // const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+  const [mgName, setMgName] = useState('로그인 안됨');
+  const [managementuuid, setManagementuuid] = useState('');
 
   const [team, setTeam] = useState([]); //팀 리스트
   const [selectedTeamUuid, setSelectedTeamUuid] = useState(null); //선택된 팀의 uuid
   const [selectedTeamName, setSelectedTeamName] = useState(''); //선택된 팀의 이름
   const [selectedTeamGoods, setSelectedTeamGoods] = useState([]); //선택된 팀의 굿즈
   const [displayCount, setDisplayCount] = useState(6); //보여줄 상품 개수
-  
+
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(true);// 로딩 상태
   const [error, setError] = useState(null);// 에러 상태
-  
-  //Team api 호출 함수
-  const fetchTeam = useCallback(async () => { // useCallback으로 감싸기
+
+  //로그인한 Management 정보 가져오기
+  const fetchManagementInfo = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/management/team/list/${managementuuid}`);
+      const response = await api.get('/management/myprofile');
+      console.log(response.headers); // 응답 헤더 출력
+      console.log(response.data); // 사용자 정보 로그 출력
+      setMgName(response.data.name);
+      setManagementuuid(response.data.managementuuid);
+      console.log(response.data.managementuuid);
+
+      // managementuuid가 설정된 후 fetchArtist 호출
+      await fetchTeam(response.data.managementuuid);
+
+    } catch (error) {
+      console.error("사용자 정보 가져오기 오류:", error);
+    }
+  };
+
+  //Team api 호출 함수
+  const fetchTeam = useCallback(async (uuid) => { // useCallback으로 감싸기
+    if(!uuid){
+      console.error("managementuuid가 없습니다.");
+      return;
+    }
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/list/${uuid}`);
       setTeam(response.data); //팀 정보를 상태에 저장
       setLoading(false); //로딩 종료
       console.log("team List from back : " + response.data); // team을 console에 찍기
@@ -36,7 +59,7 @@ const GoodsManage = () => {
   const fetchTeamGoods = async (teamuuid) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:8080/management/goods/team/${teamuuid}`);
+      const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/goods/team/${teamuuid}`);
       console.log("선택된 팀 : " + teamuuid);
       if (response.data && response.data.length > 0) { // 데이터가 있을 경우
         setSelectedTeamGoods(response.data);
@@ -73,7 +96,7 @@ const GoodsManage = () => {
 
   //컴포넌트가 마운트되면 fetchGoods 실행
   useEffect(() => {
-    fetchTeam();
+    fetchManagementInfo();
   }, [fetchTeam]);
 
   if (loading) {
@@ -89,13 +112,13 @@ const GoodsManage = () => {
     <div className="goods-management-container">
       <h1>굿즈 관리 페이지</h1>
 
-      {/* 아티스트 목록 */}
+      {/* 팀 목록 */}
       <div className="team-section">
-        <h2>아티스트(팀)</h2>
-        <div className="team-list">
+        <h2>{mgName}의 그룹(팀) 목록</h2>
+        <div className="team-list" id="team-list">
           {team.map((team) => (
-            <div className="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
-              <img src={`http://localhost:8080/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
+            <div className="team-item" id="team-item" key={team.teamuuid} onClick={() => handleTeamClick(team)}>
+              <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
               <p>{team.name}</p>
             </div>
           ))}
@@ -107,32 +130,32 @@ const GoodsManage = () => {
         <h2>등록한 상품</h2>
         <div className="goods-form">
           {selectedTeamUuid && (
-            <button className="goods-form-btn" onClick={() => { navigate(`/management/goodsform/${selectedTeamUuid}`) }}>{selectedTeamName}의 굿즈 등록</button>
+            <button className="goods-form-btn" id="goods-form-btn" onClick={() => { navigate(`/management/goodsform/${selectedTeamUuid}`) }}>{selectedTeamName}의 굿즈 등록</button>
           )}
         </div>
 
         {message && <p className="message">{message}</p>}
 
-        <div className="goods-list">
-        {/* 굿즈가 없을 때 메시지 표시 */}
-        {selectedTeamGoods.length === 0 ? (
-          <p>해당 팀의 등록된 굿즈가 없습니다.</p>
-        ) : (
-          selectedTeamGoods.slice(0, displayCount).map((item) => (
-            <div className="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
-              <img src={`http://localhost:8080/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image" />
-              <p>{item.name}</p>
-            </div>
-          ))
-        )}
-      </div> 
+        <div className="goods-list" id="goods-list">
+          {/* 굿즈가 없을 때 메시지 표시 */}
+          {selectedTeamGoods.length === 0 ? (
+            <p>해당 팀의 등록된 굿즈가 없습니다.</p>
+          ) : (
+            selectedTeamGoods.slice(0, displayCount).map((item) => (
+              <div className="goods-item" id="goods-item" key={item.goodsuuid} onClick={() => { handleGoodsClick(item.goodsuuid) }}>
+                <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${item.fname}`} alt={item.name} className="goods-image"/>
+                <p>{item.name}</p>
+              </div>
+            ))
+          )}
+        </div>
 
         <div className="view-more">
           {selectedTeamGoods.length > displayCount && (
             <a onClick={handleViewMore}>더보기</a>
           )}
         </div>
-        
+
       </div>
     </div>
   );

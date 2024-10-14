@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import api from '../../../apiClient';
 
 function GoodsList() {
     
@@ -11,7 +12,22 @@ function GoodsList() {
   const [glist, setGList] = useState([]);
   const { teamuuid } = useParams();
   const { category } = useParams();
-  const { useruuid } = useParams();
+
+  // user 데이터 불러오기
+  let [useruuid, setUseruuid] = useState(null);
+  useEffect(() => {
+      const fetchUserInfo = async () => {
+          try {
+              const response = await api.get('/users/myprofile');
+              setUseruuid(response.data.useruuid);
+              console.log("Fetched useruuid: " + response.data.useruuid);
+  
+          } catch (error) {
+              console.error('Error fetching user profile:', error);
+          }
+      };
+      fetchUserInfo();
+  }, []);
 
   //상품 목록 불러오기 위한 axios 처리
   useEffect(() => {
@@ -25,7 +41,7 @@ function GoodsList() {
     console.log('Category after removal:', sessionStorage.getItem('category'));
 
     if (!categoryValue) {
-      axios.get(`http://localhost:8080/shop/goods/list/${uuid}/all`)
+      axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/list/${uuid}/all`)
         .then(response => {
           console.log(response.data);
           setGList(response.data);
@@ -36,7 +52,7 @@ function GoodsList() {
           console.error('Error fetching goods:', error);
         });
     } else {
-      axios.get(`http://localhost:8080/shop/goods/list/${uuid}/${categoryValue}`)
+      axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/list/${uuid}/${categoryValue}`)
         .then(response => {
           console.log(response.data);
           setGList(response.data);
@@ -50,20 +66,19 @@ function GoodsList() {
   }, [teamuuid, category]);
 
   
-    //장바구니 담기
-    const handleAddToCart = async (gprod) => {
-      try {
-        console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
+  //장바구니 담기
+  const handleAddToCart = async (gprod) => {
+    try {
+      console.log(`User UUID: ${useruuid}, Goods UUID: ${gprod.goodsuuid}`);
+      await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
+      alert('상품이 장바구니에 추가되었습니다.');
 
-        await axios.post(`http://localhost:8080/shop/cart/add/${useruuid}/${gprod.goodsuuid}/1`);
-        alert('상품이 장바구니에 추가되었습니다.');
-
-      } catch (error) {
-        console.error('장바구니 처리 중 오류 발생:', error);
-        alert('장바구니에 상품을 추가할 수 없습니다.');
-      }
-    };
-    
+    } catch (error) {
+      console.error('장바구니 처리 중 오류 발생:', error);
+      alert('장바구니에 상품을 추가할 수 없습니다.');
+      
+    }
+  };
 
   
   return (
@@ -77,7 +92,7 @@ function GoodsList() {
                     <div className="col-md-3 col-sm-4" key={gprod.goodsuuid}>
                         <div className="single-goods">
                         <div className="single-goods-bg">
-                            <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt="single-goods images" />
+                            <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt={gprod.fname} />
                             <div className="single-goods-bg-overlay"></div>
                         </div>
                         <h4>{gprod.name}</h4>

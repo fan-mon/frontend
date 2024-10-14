@@ -4,8 +4,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import GoodsNav from "./GoodsNav";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import api from '../../../apiClient';
 
 function GoodsDetail(){
+
+    // user 데이터 불러오기
+    let [useruuid, setUseruuid] = useState(null);
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await api.get('/users/myprofile');
+                setUseruuid(response.data.useruuid);
+                console.log("Fetched useruuid: " + response.data.useruuid);
+    
+            } catch (error) {
+                console.error('Error fetching user profile:', error);
+            }
+        };
+        fetchUserInfo();
+    }, []);
 
     //goods 테이블에서 데이터 가져오기
     let [gdetail, setGDetail] = useState(null);
@@ -14,7 +31,7 @@ function GoodsDetail(){
     useEffect(() => {
         const uuid = goodsuuid || sessionStorage.getItem('goodsuuid');
 
-        axios.get(`http://localhost:8080/shop/goods/detail/${goodsuuid}`)
+        axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/detail/${goodsuuid}`)
             .then(response => {
                 console.log(response.data);
                 setGDetail(response.data);
@@ -32,6 +49,21 @@ function GoodsDetail(){
         setQuantity(Number(event.target.value));
     };
     const totalPrice = (pricePerItem * quantity).toLocaleString();
+
+
+    //장바구니 담기
+    const handleAddToCart = async (goodsuuid) => {
+        try {
+        console.log(`User UUID: ${useruuid}, Goods UUID: ${goodsuuid}`);
+        await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/add/${useruuid}/${goodsuuid}/${quantity}`);
+        alert('상품이 장바구니에 추가되었습니다.');
+
+        } catch (error) {
+        console.error('장바구니 처리 중 오류 발생:', error);
+        alert('장바구니에 상품을 추가할 수 없습니다.');
+        
+        }
+    };
 
     return (
         <>
@@ -56,7 +88,7 @@ function GoodsDetail(){
                                                         개
                                                     </span>
                                                 </div>
-                                                <button className="welcome-add-cart">
+                                                <button className="welcome-add-cart" onClick={() => handleAddToCart(goodsuuid)}>
                                                     Add to Cart
                                                 </button>
                                             </div>

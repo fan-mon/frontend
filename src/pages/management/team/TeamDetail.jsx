@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import "./css/teamdetail.css";
 import axios from 'axios';
+import api from '../../../apiClient';
 import { useParams, useNavigate } from 'react-router-dom';
+import "./css/teamdetail.css";
 
 function TeamDetail() {
-    const managementuuid = '32eb55e2-022c-4741-8a41-d32916480b4e'; //hard coding
+    const [mgName, setMgName] = useState('로그인 안됨');
+    const [managementuuid, setManagementuuid] = useState('');
     const { teamuuid } = useParams();
 
     const [name, setName] = useState('');
@@ -22,10 +24,25 @@ function TeamDetail() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    //로그인한 management 정보 가져오기
+    const fetchManagementInfo = async () => {
+        try {
+            const response = await api.get('/management/myprofile');
+            console.log(response.headers); // 응답 헤더 출력
+            console.log(response.data); // 사용자 정보 로그 출력
+            setMgName(response.data.name);
+            setManagementuuid(response.data.managementuuid);
+            console.log(response.data.managementuuid);
+
+        } catch (error) {
+            console.error("사용자 정보 가져오기 오류:", error);
+        }
+    };
+
     // Team detail 정보 가져오기 API 호출
     const fetchTeamDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/team/${teamuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/${teamuuid}`);
             const team = response.data;
             setName(team.name);
             setDebut(team.debut);
@@ -41,7 +58,7 @@ function TeamDetail() {
     // 소속 아티스트 가져오기 API 호출
     const fetchTeamArtists = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artistTeam/${teamuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam/${teamuuid}`);
             setArtists(response.data); // 소속 아티스트 목록 설정
             setSelectedArtists(response.data.map(artist => artist.artist.artistuuid)); // 편집 모드에서 선택된 아티스트 설정
             // response.data에서 각 아티스트의 artistuuid를 추출하여 새로운 배열을 생성합니다
@@ -63,7 +80,7 @@ function TeamDetail() {
     // 모든 아티스트 목록 가져오기 (편집 모드에서 사용)
     const fetchAllArtists = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/management/artist/list/${managementuuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/list/${managementuuid}`);
             setAllArtists(response.data);
         } catch (err) {
             setError('Error fetching all artists: ' + err.message);
@@ -71,6 +88,7 @@ function TeamDetail() {
     };
 
     useEffect(() => {
+        fetchManagementInfo();
         fetchTeamDetail();
         fetchTeamArtists();
     }, [teamuuid]);
@@ -81,9 +99,9 @@ function TeamDetail() {
         if (confirmed) {
             try {
                 //아티스트-팀 관계 삭제
-                await axios.delete(`http://localhost:8080/management/artistTeam/${teamuuid}`);
+                await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam/${teamuuid}`);
                 //팀 삭제
-                await axios.delete(`http://localhost:8080/management/team/${teamuuid}`);
+                await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/${teamuuid}`);
                 alert('팀이 삭제되었습니다.');
                 navigate('/management/teamList');
             } catch (error) {
@@ -110,10 +128,10 @@ function TeamDetail() {
 
         try {
             //팀 정보 업데이트(PUT)
-            await axios.put(`http://localhost:8080/management/team/${teamuuid}`, formData);
+            await axios.put(`${process.env.REACT_APP_BACKEND_API_URL}/management/team/${teamuuid}`, formData);
 
             //기존 소속 아티스트 삭제(DELETE)
-            await axios.delete(`http://localhost:8080/management/artistTeam/${teamuuid}`);
+            await axios.delete(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam/${teamuuid}`);
 
             // 소속 아티스트 업데이트
             const artistTeamPromises = selectedArtists.map(artistuuid => {
@@ -122,7 +140,7 @@ function TeamDetail() {
                 const relatedData = new FormData();
                 relatedData.append('artistuuid', artistuuid);
                 relatedData.append('teamuuid', teamuuid);
-                return axios.post('http://localhost:8080/management/artistTeam', relatedData);
+                return axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam`, relatedData);
             });
             await Promise.all(artistTeamPromises);
 
@@ -177,7 +195,7 @@ function TeamDetail() {
 
             {/* 이미지 표시 */}
             {!isEditing && fname && (
-                <img className='team-img' src={`http://localhost:8080/resources/teamimg/${fname}`} alt={`${name} 이미지`} />
+                <img className='team-img' src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${fname}`} alt={`${name} 이미지`} />
             )}
 
             {isEditing && (
@@ -211,12 +229,12 @@ function TeamDetail() {
             )}
 
             {isEditing ? (
-                <button onClick={handleUpdateClick}>수정 완료</button>
+                <button className='btn update-complete-btn' onClick={handleUpdateClick}>수정 완료</button>
             ) : (
-                <button onClick={() => { setIsEditing(true); fetchAllArtists(); }}>수정하기</button>
+                <button className='btn update-btn' onClick={() => { setIsEditing(true); fetchAllArtists(); }}>수정하기</button>
             )}
-            <button onClick={handleDeleteClick}>삭제하기</button>
-            <button onClick={() => navigate('/management/teamList')}>목록으로</button>
+            <button className='btn delete-btn' onClick={handleDeleteClick}>삭제하기</button>
+            <button className='btn list-btn' onClick={() => navigate('/management/teamList')}>목록으로</button>
         </div>
     );
 }

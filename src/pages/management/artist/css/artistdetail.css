@@ -1,3 +1,10 @@
+.artist-detail-container{
+    padding: 20px;
+    background-color: #111;
+    color: white;
+    width: 800px;
+}
+
 .update-form-btn {
     background-color: #EAB70E;
     color: white;
@@ -22,7 +29,7 @@
     font-weight: bold;
 }
 
-.delete--btn{
+.delete-btn{
     background-color: red;
     color: white;
     text-align: center;
@@ -35,7 +42,7 @@
 }
 
 .list-btn{
-    background-color: #EAB70E;
+    background-color: grey;
     color: white;
     text-align: center;
     font-size:12px;
@@ -51,4 +58,20 @@
     display: block; /* 이미지가 블록 요소로 설정됩니다. */
     margin: 0 auto; /* 좌우 여백을 자동으로 설정하여 중앙 정렬합니다. */
     margin-left: 500px; /* 오른쪽으로 20px 치우치게 설정합니다. */
+}
+
+.detail-is {
+    display: flex; /* 가로로 배치 */
+    justify-content: space-between; /* 간격을 evenly하게 분배 */
+    align-items: flex-start; /* 상단 정렬 */
+}
+
+.detail-text {
+    flex: 1; /* 텍스트 부분의 너비를 자동 조절 */
+    margin-right: 20px; /* 텍스트와 이미지 간의 간격 */
+}
+
+.detail-img {
+    flex: 0 0 150px; /* 고정 너비 (원하는 크기로 조정 가능) */
+    text-align: center; /* 이미지 가운데 정렬 */
 }
