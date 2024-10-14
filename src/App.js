@@ -90,8 +90,8 @@ function App() {
                 <Route path="/shop/goods/main" element={<GoodsMain/>}/>
                 <Route path="/management/managementsignup" element={<ManagementSignUp/>}/>
                 <Route path="/user/login" element={<Login/>}/>
-                <Route path="/meetingroom/stayroom" element={<StayRoom/>}/>
-                <Route path="/meetingroom/meetingroom" element={<MeetingRoom/>}/>
+                <Route path="/meetingroom/stayroom/:stayuuid" element={<StayRoom/>}/>
+                <Route path="/meetingroom/meetingroom/:stayuuid" element={<MeetingRoom/>}/>
                 <Route path="/meetingroom/stayroomlist" element={<StayRoomList/>}/>
                 <Route path="/meetingroom/createroom" element={<CreateRoom/>}/>
                 <Route path="/user/main" element={<Main/>}/>
