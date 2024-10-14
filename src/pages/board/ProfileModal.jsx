@@ -9,6 +9,7 @@ const ProfileModal = ({isOpen, onClose, data}) => {
     const [chatInfo, setChatInfo]=useState(null)
     const useruuid = localStorage.getItem("uuid"); // 여기서 바로 가져옵니다.
     const goodsuuid='66f9c803-b769-4b95-9247-a0ec9869e90c';
+    const [list, setList] = useState([]);
     const getGoods=async ()=>{
         try{
             const res=await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/shop/goods/detail/${goodsuuid}`)
@@ -21,23 +22,29 @@ const ProfileModal = ({isOpen, onClose, data}) => {
     }
     const getList = async () => {
         try {
-            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/chat/chatlist/${useruuid}`);
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/chat/subscription/${useruuid}`);
             if (response.data === 204) {
                 console.log("구독중인 아티스트 없음");
             }else {
+                console.log("응답 데이터:", response.data);
                 // response.data가 배열인지 확인
                 if (Array.isArray(response.data)) {
+                    setList(response.data);
                     const subscribedArtists = response.data.map(item => {
-                        console.log("현재 item:", item); // 추가된 로그
-                        // 구독 중인 아티스트의 chat 정보를 포함
-                        const artistUUID = item.chat.artist.artistuuid;
-                        const chatuuid = item.chat.chatuuid; // chatuuid 저장
-                        // 만약 현재 아티스트가 구독 중이라면 chatuuid를 저장
-                        if (artistUUID === data.artistuuid) {
-                            setChatuuid(chatuuid);
-                            setIsSubscribed(true);
-                            setChatInfo(item);
-                            return artistUUID;
+                        if(item && item.chat){
+                            console.log("현재 item:", item); // 추가된 로그
+                            // 구독 중인 아티스트의 chat 정보를 포함
+                            const artistUUID = item.chat.artist.artistuuid;
+                            const chatuuid = item.chat.chatuuid; // chatuuid 저장
+                            // 만약 현재 아티스트가 구독 중이라면 chatuuid를 저장
+                            if (artistUUID === data.artistuuid) {
+                                setChatuuid(chatuuid);
+                                setIsSubscribed(true);
+                                setChatInfo(item);
+                                return artistUUID;
+                            }
+                        }else {
+                            console.log("item이 null입니다")
                         }
                         return null; // 현재 아티스트가 아닐 경우 null 반환
                     }).filter(Boolean); //null값을 제거
@@ -47,6 +54,7 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                 }
             }
         } catch (e) {
+            console.error("API 호출 중 오류 발생:", e);
         } finally {
             setLoading(false);
         }
@@ -61,10 +69,8 @@ const ProfileModal = ({isOpen, onClose, data}) => {
     }, [data, useruuid]);
 
     const navigate = useNavigate();
-    const goChat = () => {
-        if (chatuuid) {
-            navigate(`/chat/ws/${chatuuid}`); // URL로 이동
-        }
+    const goChat = (data) => {
+            navigate(`/chat/ws/${data.chat.chatuuid}`, { state: data }); // URL로 이동
     };
     let [orders, setOrders] = useState();
     let [ordersDetailList, setOrdersDetailList] = useState();
@@ -85,7 +91,7 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                 ordersDetailList= {
                     ordersdetailuuid: null, // UUID
                     goodsuuid: goodsuuid,  // 각 상품의 UUID
-                    name: '채팅',
+                    name: "채팅",
                     qty: 1,  // 각 상품의 수량
                     totalcost:goodsData.price,  // 각 상품의 총 금액
                     ordersuuid: null,  // ordersuuid가 아직 존재하지 않음
@@ -126,7 +132,7 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                     ) : (
                         isSubscribed ? (
                             <button onClick={() => {
-                                goChat()
+                                goChat(chatInfo)
                             }}>
                                 채팅하러 가기
                             </button>

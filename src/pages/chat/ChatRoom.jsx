@@ -1,7 +1,7 @@
 import React, {useState,useRef,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../meetingroom/fonts/bootstrap-icons.min.css'
-import './css/ChatRoom.css'
+
 import axios from "axios";
 import {getArtistData} from "./chatAPI/subscription";
 const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser, data}) => {
@@ -50,8 +50,8 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     }
 
     return (
+        <body>
         <div className="artist-chat">
-            <h2>{role === 'USER' ? 'Fan Chat' : 'Artist Chat'}</h2>
             <div className={`chatroom-area`}>
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
@@ -66,19 +66,20 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                     <div className="chat-contents">
                         <div className="date-wrap">2024년 09월 19일</div>
                         {messages.map((msg, index) => (
-                            <div key={index} className="chat-wrap" >
+                            <div key={index} className="chat-wrap">
                                 <div className={msg.type === role ? "mine" : "yours"}
                                      onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}>
-                                    {msg.type==='USER' ?
-                                        (<img className="profile" src={`${process.env.PUBLIC_URL}/common/logo_black.png`}
-                                          alt=""/>)
-                                    :
+                                    {msg.type === 'USER' ?
+                                        (<img className="profile"
+                                              src={`${process.env.PUBLIC_URL}/common/logo_black.png`}
+                                              alt=""/>)
+                                        :
                                         (<img className="profile"
                                               src={msg.artist.fname}
                                               alt=""/>)
                                     }
                                     <div className="content-wrap">
-                                    <p className="name">{msg.type}</p>
+                                        <p className="name">{msg.type}</p>
                                         <div className="same-time">
                                             <div className="bubble-wrap">
                                                 <div className="bubble">
@@ -167,6 +168,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                 </div>
             </div>
         </div>
+        </body>
     );
 };
 
