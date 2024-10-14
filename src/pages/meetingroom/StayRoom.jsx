@@ -125,7 +125,7 @@ const StayRoom = () => {
 
   const userToMeet = () => {
     if ((currentNo + 1) === displayNo) {
-      window.location.href = "/meetingroom/meetingroom";
+      window.location.href=`/meetingroom/meetingroom/${stayuuid}`;
     }
   };
 

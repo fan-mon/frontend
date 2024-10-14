@@ -97,6 +97,16 @@ p {
   line-height: 1.5;
 }
 
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.header-wrap {
+  width: 100%;
+  min-height: 100%;
+}
+
 /* component */
 .hidden-label {
   display: none;
