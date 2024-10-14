@@ -1,4 +1,8 @@
 /* .goods-frame {padding: 100px;} */
+.goodslist-container{
+    height: 600px;
+}
+
 .goodslist-content{margin: 0 80px;}
 .single-goods{
     margin-bottom: 50px;

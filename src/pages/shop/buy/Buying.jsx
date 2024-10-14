@@ -137,42 +137,51 @@ function Buying() {
                     
                     // 결제 성공 처리
                     try{
-                        //일단 Orders 테이블에 들어갈게 다 나오는지 보자
-                        console.log('포트원 결제 id'+response.imp_uid);
-                        console.log('신용카드 승인번호'+response.apply_num);
-                        console.log('주문번호'+response.merchant_uid);
-                        console.log('유저데이터'+UpdateUserData);
-                        console.log('주문자주소'+response.buyer_addr);
-                        console.log('결제액'+response.paid_amount);
-                        console.log('결제승인시각'+response.paid_at);
-                        console.log('물품 수량'+totalQuantity);
-                        
 
                         //Orders 테이블에 데이터 저장
-                        // 요청 데이터 로그
-                        const requestBody = {
-                            imp_uid: response.imp_uid,  // 포트원 결제ID
-                            apply_num: response.apply_num,  // 신용카드 승인 번호
-                            merchant_uid: response.merchant_uid,    // 주문번호
-                            user_data: UpdateUserData, // 유저 데이터
-                            buyer_addr: response.buyer_addr,    // 주문자 주소
-                            paid_amount: response.paid_amount,  // 결제 금액
-                            paid_at: response.paid_at,  // 결제 승인 시각
-                            paid_qty: totalQuantity // 물품 수량
-                        };
-
-                        console.log("보내는 데이터:", JSON.stringify(requestBody, null, 2)); // 요청 데이터 콘솔 출력
-
-                        // Orders 테이블에 데이터 저장
                         const notifiedO = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendO/${useruuid}`, {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify(requestBody), // 요청 데이터 사용
+                            body: JSON.stringify({
+                                imp_uid: response.imp_uid,  // 포트원 결제ID
+                                apply_num: response.apply_num,  // 신용카드 승인 번호
+                                merchant_uid: response.merchant_uid,    // 주문번호
+                                user_data: UpdateUserData, // 유저 데이터
+                                buyer_addr: response.buyer_addr,    // 주문자 주소
+                                paid_amount: response.paid_amount,  // 결제 금액
+                                paid_at: response.paid_at,  // 결제 승인 시각
+                                paid_qty: totalQuantity // 물품 수량
+                            }), 
                         });
+                        const res = await notifiedO.json();
+                        console.log("보내는 데이터:", JSON.stringify(res, null, 2));
+                        console.log('포트원 결제 id'+res.imp_uid);
+                        console.log('신용카드 승인번호'+res.apply_num);
+                        console.log('주문번호'+res.merchant_uid);
+                        console.log('유저데이터'+res.UpdateUserData);
+                        console.log('주문자주소'+res.buyer_addr);
+                        console.log('결제액'+res.paid_amount);
+                        console.log('결제승인시각'+res.paid_at);
+                        console.log('물품 수량'+res.paid_qty);
+
+                        console.log("보내는 데이터2:", JSON.stringify({
+                            imp_uid: response.imp_uid,
+                            apply_num: response.apply_num,
+                            merchant_uid: response.merchant_uid,
+                            user_data: UpdateUserData,
+                            buyer_addr: response.buyer_addr,
+                            paid_amount: response.paid_amount,
+                            paid_at: response.paid_at,
+                            paid_qty: totalQuantity
+                        }, null, 2));
 
                         if (!notifiedO.ok) {
-                            console.log("notifiedO 에러 응답:", JSON.stringify(await notifiedO.json(), null, 2));
-                            throw new Error(`Orders 데이터 저장 실패: ${notifiedO.status}`);
+                            console.error('응답 오류:', notifiedO.statusText);
+                            const errorText = await notifiedO.text(); // 오류 메시지 출력
+                            console.error('서버 응답 본문:', errorText);
+                            return;
+                            // console.log("notifiedO 에러 응답:", JSON.stringify(await notifiedO.json(), null, 2));
+                            // throw new Error(`Orders 데이터 저장 실패: ${notifiedO.status}`);
                         }
 
                         // 성공적인 응답 출력
