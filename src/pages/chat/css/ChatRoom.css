@@ -177,6 +177,7 @@ p {
 .artist-chat .chatroom .chat-wrap .mine .profile {
     display:flex;
     justify-self: end;
+    background-color: transparent;
 }
 .artist-chat .chatroom .chat-wrap .mine .name {
     font-size: 14px;
