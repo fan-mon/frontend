@@ -52,10 +52,12 @@ function MeetingRoom() {
       fetchUserMngInfo();
       fetchUserInfo();
     },[]);
+
+    
     
     useEffect(() => {
       getBack(`/meetingroom/meetingroom/${stayuuid}`, (res) => {
-        setMeetingTime(res.data.meetingTime * 60);
+        setMeetingTime(res.data.meetingTime * 60 * 30);//임시
         setCountDown(meetingTime);
       });
     }, [meetingTime]);
@@ -74,7 +76,7 @@ function MeetingRoom() {
             return prev-1;
           }else{
             clearInterval(timer);
-            window.location.href=`/meetingroom/stayroom/${stayuuid}`;
+            //window.location.href=`/meetingroom/stayroom/${stayuuid}`;
             return 0;
           }
         });
