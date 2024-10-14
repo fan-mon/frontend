@@ -143,7 +143,7 @@ const Header = () => {
                     <nav>
                         <ul>
                             <li className="sidemenu-item sidemenu-main">
-                                <Link to="/">
+                                <Link to="/user/main">
                                     <span className="ico"><HouseDoorFill/></span>
                                     <span className="txt">메인화면</span>
                                 </Link>
