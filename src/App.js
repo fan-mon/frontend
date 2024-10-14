@@ -114,7 +114,7 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
           <Route path="/shop/goods/main" element={<GoodsMain />} />
           <Route path="/management/managementsignup" element={<ManagementSignUp />} />
           <Route path="/user/login" element={<Login />} />
-          <Route path="/meetingroom/stayroom" element={<StayRoom />} />
+          <Route path="/meetingroom/stayroomlist" element={<StayRoomList />} />
           <Route path="/meetingroom/stayroom/:stayuuid" element={<StayRoom/>}/>
           <Route path="/meetingroom/meetingroom/:stayuuid" element={<MeetingRoom/>}/>
           <Route path="/meetingroom/createroom" element={<CreateRoom />} />
