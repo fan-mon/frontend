@@ -9,10 +9,13 @@ import api from '../../../apiClient';
 
 function CartList(){
 
+    
+
     // 유저 정보 불러오기
     let [useruuid, setUseruuid] = useState(null);
     useEffect(() => {
         const fetchUserInfo = async () => {
+            console.log('CartList.jsx 시작!!');
             try {
                 const response = await api.get('/users/myprofile');
                 setUseruuid(response.data.useruuid);

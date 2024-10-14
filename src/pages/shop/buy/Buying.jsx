@@ -11,6 +11,7 @@ function Buying() {
     let [UpdateUserData, setUpdateUserData] = useState(null);
 
     useEffect(() => {
+        console.log('Buying.jsx 시작!!')
         const fetchUserInfo = async () => {
             try {
                 const response = await api.get('/users/myprofile');
@@ -173,7 +174,7 @@ function Buying() {
 
                         // 성공적인 응답 출력
                         const responseData = await notifiedO.json();
-                        console.log("notifiedO 응답 데이터:", JSON.stringify(responseData, null, 2));
+                        console.log("notifiedO 응답 데이터:"+ JSON.stringify(responseData, null, 2));
 
                         // 테이블에 저장된 ordres 데이터를 기존 세션/변수에 덮어쓰기
                         sessionStorage.setItem("ordersData", JSON.stringify(responseData));
@@ -195,7 +196,8 @@ function Buying() {
                         if (!notifiedD.ok) {
                             throw new Error(`OrdersDetail 데이터 저장 실패: ${notifiedD.status}`);
                         }
-                        console.log("notifiedD"+ await notifiedD.json());
+                        const responseDetail = await notifiedD.json();
+                        console.log("notifiedD"+ JSON.stringify(responseDetail, null, 2));
     
                         // 세션 삭제
                         sessionStorage.removeItem('ordersData');
