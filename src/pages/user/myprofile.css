@@ -1,73 +1,74 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #000000;
-    color: white;
-  }
-  
-  .title {
-    font-size: 40px;
-    margin-bottom: 40px;
-  }
-  
-  .profile-info {
-    display: flex;
-    flex-direction: column;
-    width: 320px;
-  }
-  
-  .info-row {
-    display: flex;
-    justify-content: space-between;
-    margin: 10px 0;
-    padding: 13px;
-    background-color: #191C24;
-    border: 1px solid #333;
-    border-radius: 5px;
-  }
-  
-  .label {
-    font-weight: bold;
-  }
-  
-  .value {
-    color: white;
-  }
-  
-  .button {
-    padding: 10px;
-    width: 100%;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    color: black;
-    height: 42px;
-    flex: 1; /* 버튼을 같은 비율로 늘리기 */
-    margin-right: 10px; /* 버튼 사이의 간격 */
-  }
-  
-  .loading {
-    color: white;
-    font-size: 20px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between; /* 버튼 사이의 공간을 고르게 분배 */
-    margin-top: 20px; /* 버튼과 프로필 정보 사이의 간격 */
-    width: 100%; /* 버튼 컨테이너의 너비를 전체로 설정 */
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000000;
+  color: white;
+}
 
-  
-  .back-button {
-    margin-right: 0; /* 오른쪽 버튼의 마진을 제거 */
-  }
-  
-  .button:last-child {
-    margin-right: 0; /* 마지막 버튼의 오른쪽 마진 제거 */
-  }
-  
+.title {
+  font-size: 40px;
+  margin-bottom: 40px;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+  padding: 13px;
+  background-color: #191C24;
+  border: 1px solid #333;
+  border-radius: 5px;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.value {
+  color: white;
+}
+
+.button {
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  color: black;
+  height: 42px;
+  flex: 1; /* 버튼을 같은 비율로 늘리기 */
+  margin-right: 10px; /* 버튼 사이의 간격 */
+}
+
+.loading {
+  color: white;
+  font-size: 20px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between; 
+  margin-top: 5px; /* 버튼과 프로필 정보 사이의 간격 */
+  width: 100%;
+  max-width: 320px;
+}
+
+
+.back-button {
+  margin-right: 0;
+  background-color: grey;
+}
+
+.button:last-child {
+  margin-right: 0; /* 마지막 버튼의 오른쪽 마진 제거 */
+}

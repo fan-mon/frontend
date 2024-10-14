@@ -1,0 +1,88 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #000000;
+    color: white;
+  }
+  
+  .profile-title {
+    font-size: 40px;
+    margin-bottom: 40px;
+  }
+  
+  .profile-info-container {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+  }
+  
+  .profile-info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 13px;
+    background-color: #191C24;
+    border: 1px solid #333;
+    border-radius: 5px;
+  }
+  
+  .profile-label {
+    font-weight: bold;
+    width: 30%; 
+    white-space: nowrap;
+  }
+  
+  .profile-value {
+    color: grey;
+  }
+  
+  .profile-input {
+    background-color: transparent; /* 배경 투명 */
+    color: white; /* 입력 텍스트 색상 흰색 */
+    border: none; /* 테두리 제거 */
+    outline: none; /* 클릭 시 외곽선 제거 */
+    width: 100%; /* 입력 필드 너비를 100%로 */
+    font-size: 16px;
+    text-align: right; 
+  }
+  
+  .profile-input::placeholder {
+    color: #888; /* 입력되지 않았을 때의 텍스트 색상 */
+  }
+  
+  .profile-loading {
+    color: white;
+    font-size: 20px;
+  }
+  
+  .profile-button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .profile-button {
+    padding: 10px;
+    width: 48%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    height: 42px;
+    background-color:#FFC700;
+  }
+  
+  .profile-back-button {
+    margin-right: 0;
+    background-color: grey;
+  }
+  
+  .profile-button:last-child {
+    margin-right: 0;
+  }
+  
