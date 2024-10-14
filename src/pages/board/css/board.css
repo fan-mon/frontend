@@ -1,10 +1,15 @@
-
+body {
+    background-color: black;
+    color: white !important;
+    font-family: Arial, sans-serif;
+    margin : 0 ;
+    padding: 0;
+    width: 100% ;
+}
 .whole-page{
     display: flex;
     flex-direction: column;
     padding: 30px;
-    margin-top: 300px;
-    margin-left: 500px;
     gap: 30px;
 }
 .page {
@@ -259,8 +264,6 @@
     align-items: center;
 }
 .fan-board .fanmon-img {
-    background-color: whitesmoke;
-    border-radius: 100px;
     width: 40px;
     height: 40px;
 }
