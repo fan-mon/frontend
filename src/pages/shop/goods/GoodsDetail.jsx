@@ -67,7 +67,8 @@ function GoodsDetail(){
 
     return (
         <>
-            <div className="goodsdetail-container detail-content">
+            <body>
+            <div className="goodsdetail-container">
             <GoodsNav/>
             <div className="row">
 
@@ -109,6 +110,7 @@ function GoodsDetail(){
                     </div>
                 </div>
             </div>
+            </body>
         </>
     )
 }

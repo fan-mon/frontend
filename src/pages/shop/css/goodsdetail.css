@@ -1,8 +1,8 @@
-/* .detail-content{
-    padding-top: 165px;
-} */
-
-.goodsdetail-container{margin: 0 80px;}
+.goodsdetail-container{
+    margin-top: 0px;
+    width: 1250px;
+    height: 100%;
+}
 
 /*welcome-hero-content*/
 .single-detail{
