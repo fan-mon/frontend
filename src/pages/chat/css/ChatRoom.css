@@ -67,6 +67,11 @@ body {
 p {
     line-height: 1.5;
 }
+@media (max-width: 960px) {
+    .header-wrap:not(.side-min) .artist-chat .chatroom-area {
+        display: block;
+    }
+}
 .contents-box {
     margin-top: 24px;
     margin-bottom: 24px;

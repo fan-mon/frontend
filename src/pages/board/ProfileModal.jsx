@@ -131,13 +131,13 @@ const ProfileModal = ({isOpen, onClose, data}) => {
                         <div>로딩 중...</div>
                     ) : (
                         isSubscribed ? (
-                            <button onClick={() => {
+                            <button className="gochat" onClick={() => {
                                 goChat(chatInfo)
                             }}>
                                 채팅하러 가기
                             </button>
                         ) : (
-                            <button onClick={() => {
+                            <button className="gosubscribe" onClick={() => {
                                 goSubscribe()
                             }}>
                                 채팅 구독하기
