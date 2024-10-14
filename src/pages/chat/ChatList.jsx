@@ -1,6 +1,7 @@
 import axios from "axios";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import '../common/css/header.css'
 
 const ChatList=({chatList=[]})=>{
 
@@ -15,9 +16,9 @@ const ChatList=({chatList=[]})=>{
             {chatList.length > 0 ?
                 (chatList.map(data => (
                         <div key={data.chat.chatuuid} // 유일한 key 추가
-                             onClick={() => handleChatClick(data)}
+                            onClick={() => handleChatClick(data)}
                             className="chat-room-list">
-                            <div className="profile-photo"></div>
+                            <img className="profile-photo" src={data.chat.artist.fname}></img>
                             < div className="artist-name">
                                 {data.chat.artist.name}
                             </div>
