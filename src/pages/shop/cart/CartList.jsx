@@ -106,7 +106,7 @@ function CartList(){
         if (clist && clist.length > 0) {
             
             ordersDetailList = clist.map((crecord) => ({
-                ordersdetailuuid: crecord.goods.goodsuuid, // UUID
+                goodsuuid: crecord.goods.goodsuuid, // UUID
                 name : crecord.goods.name,
                 qty: crecord.qty,  // 각 상품의 수량
                 totalcost: crecord.goods.price * crecord.qty,  // 각 상품의 총 금액
@@ -152,7 +152,7 @@ function CartList(){
                         {clist.map((crecord, index) => (
                             <tr key={crecord.cartsequence}>
                                 <td className="cart-list-no cart-list-center">{index + 1}</td>
-                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}><img src={`${process.env.PUBLIC_URL}/shop/common/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
+                                <td className="cart-list-file cart-list-center"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}><img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${crecord.goods.fname}`} alt={`${crecord.goods.fname}`}/></a></td>
                                 <td className="cart-list-name"><a href={`/shop/goods/detail/${crecord.goods.goodsuuid}`}>{crecord.goods.name}</a></td>
                                 <td className="cart-list-qty cart-list-center">
                                     <input 

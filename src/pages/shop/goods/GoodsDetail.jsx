@@ -102,7 +102,7 @@ function GoodsDetail(){
                     <div className="col-sm-6 gdetail-img">
                         <div className="single-welcome-hero">
                             {gdetail && gdetail.fname ? (
-                                <img className="welcome-hero-img" src={`${process.env.PUBLIC_URL}/shop/goods/${gdetail.fname}`} alt="slider image" />
+                                <img className="welcome-hero-img" src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${gdetail.fname}`} alt="slider image" />
                             ) : (
                                 <div></div>
                             )}

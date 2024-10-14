@@ -5,12 +5,10 @@ import api from '../../../apiClient';
 
 function Buying() {
     
-    
     // user 데이터 불러오기
     let [useruuid, setUseruuid] = useState(null);
     let [userData, setUserData] = useState(null);
     let [UpdateUserData, setUpdateUserData] = useState(null);
-    
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -162,18 +160,7 @@ function Buying() {
                         console.log('주문자주소'+res.buyer_addr);
                         console.log('결제액'+res.paid_amount);
                         console.log('결제승인시각'+res.paid_at);
-                        console.log('물품 수량'+res.paid_qty);
-
-                        console.log("보내는 데이터2:", JSON.stringify({
-                            imp_uid: response.imp_uid,
-                            apply_num: response.apply_num,
-                            merchant_uid: response.merchant_uid,
-                            user_data: UpdateUserData,
-                            buyer_addr: response.buyer_addr,
-                            paid_amount: response.paid_amount,
-                            paid_at: response.paid_at,
-                            paid_qty: totalQuantity
-                        }, null, 2));
+                        console.log('물품 수량'+res.paid_qty)
 
                         if (!notifiedO.ok) {
                             console.error('응답 오류:', notifiedO.statusText);
@@ -188,11 +175,10 @@ function Buying() {
                         const responseData = await notifiedO.json();
                         console.log("notifiedO 응답 데이터:", JSON.stringify(responseData, null, 2));
 
-
-
                         // 테이블에 저장된 ordres 데이터를 기존 세션/변수에 덮어쓰기
-                        sessionStorage.setItem("ordersData", JSON.stringify(notifiedO.body));
-                        setOrdersData(notifiedO.body);
+                        sessionStorage.setItem("ordersData", JSON.stringify(responseData));
+                        setOrdersData(responseData);
+                        console.log("저장된 ordersData : "+ordersData);
 
                         //OrdersDetail 테이블에 데이터 저장
                         const notifiedD = await fetch (`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
@@ -224,27 +210,11 @@ function Buying() {
                         alert('결제가 성공적으로 완료되었습니다.');
     
                         // 구매 완료 페이지로 네비게이트 
-                        console.log('navigate : /shop/buy/bought');
+                        console.log('navigate: /shop/buy/bought');
                         navigate('/shop/buy/bought');
                     } catch (error){
-                        //일단 Orders 테이블에 들어갈게 다 나오는지 보자
-                        console.log('유저데이터 생일 나오나'+UpdateUserData.birth);
-                        console.log('유저데이터 생일 타입은?'+typeof UpdateUserData.birth);
-
-                        console.log("보내는 데이터:", JSON.stringify(response, null, 2));
-                        console.log('포트원 결제 id'+response.imp_uid);
-                        console.log('신용카드 승인번호'+response.apply_num);
-                        console.log('주문번호'+response.merchant_uid);
-                        console.log('유저데이터'+UpdateUserData);
-                        console.log('주문자주소'+response.buyer_addr);
-                        console.log('결제액'+response.paid_amount);
-                        console.log('결제승인시각'+response.paid_at);
-                        console.log('물품 수량'+totalQuantity);
-
                         // 결제 실패 처리
                         console.error('서버 통신 중 오류 발생:', error);
-                        
-
                         alert('결제 정보를 처리하는 중 오류가 발생했습니다.');
                         navigate(`/shop/cart/list`);
                     }

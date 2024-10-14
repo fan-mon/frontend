@@ -92,7 +92,8 @@ function GoodsList() {
                   <div className="col-md-3 col-sm-4" key={gprod.goodsuuid}>
                       <div className="single-goods">
                       <div className="single-goods-bg">
-                          <img src={`${process.env.PUBLIC_URL}/shop/goods/${gprod.fname}`} alt={gprod.fname} />
+                      {/* ../../../../../backend/src/main/web/resources/goodsimg/${gprod.fname} */}
+                          <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/goodsimg/${gprod.fname}`} alt={gprod.fname} />
                           <div className="single-goods-bg-overlay"></div>
                       </div>
                       <h4>{gprod.name}</h4>
