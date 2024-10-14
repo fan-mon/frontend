@@ -7,6 +7,8 @@ import axios from "axios";
 import {getMessageList, getChatInfo,blockuser} from "./chatAPI/chat";
 import api from "../../apiClient";
 import { useLocation } from "react-router-dom";
+import Profile from "./Profile";
+import './css/ChatRoom.css'
 const ChatPage = () => {
     const [stompClient, setStompClient] = useState(null);
     const [messages, setMessages] = useState([]);
@@ -198,8 +200,7 @@ const ChatPage = () => {
         }
     };
     return (
-        <div>
-            <h1>{role} Chat Page</h1>
+        <div className="chat-page-wrap">
             <ChatRoom role={role}
                       messages={messages}
                       sendMessage={sendMessage}
@@ -208,6 +209,7 @@ const ChatPage = () => {
                       chatuuid={chatuuid}
                       data={data}
             />
+            <Profile />
         </div>
     );
 };

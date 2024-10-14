@@ -1,7 +1,7 @@
 import React, {useState,useRef,useEffect} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../meetingroom/fonts/bootstrap-icons.min.css'
-import './css/ChatRoom.css'
+
 import axios from "axios";
 import {getArtistData} from "./chatAPI/subscription";
 const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser, data}) => {
@@ -52,7 +52,6 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     return (
         <body>
         <div className="artist-chat">
-            <h2>{role === 'USER' ? 'Fan Chat' : 'Artist Chat'}</h2>
             <div className={`chatroom-area`}>
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
