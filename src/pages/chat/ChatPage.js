@@ -209,7 +209,11 @@ const ChatPage = () => {
                       chatuuid={chatuuid}
                       data={data}
             />
-            <Profile />
+            {role==='USER'?
+                (<Profile data={location.state}/>)
+                :
+                null
+            }
         </div>
     );
 };

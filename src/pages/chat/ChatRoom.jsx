@@ -50,7 +50,6 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     }
 
     return (
-        <body>
         <div className="artist-chat">
             <div className={`chatroom-area`}>
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
@@ -168,7 +167,6 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                 </div>
             </div>
         </div>
-        </body>
     );
 };
 

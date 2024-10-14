@@ -13,7 +13,8 @@ const TeamProfile = ({teamuuid}) => {
     useEffect(() => {
         const fetchGroupData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/board/members/${teamuuid}`);
+                const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam/${teamuuid}`);
+                console.log(response.data)
                 setGroup(response.data);
             } catch (err) {
                 setError('데이터를 가져오는 데 오류가 발생했습니다.');
@@ -43,15 +44,15 @@ const TeamProfile = ({teamuuid}) => {
             {group && (
             <>
                 <div className="team-name">
-                    <h2>TEAM name</h2>
+                    {group.length > 0 ? group[0].team.name : '팀 이름 없음'}
                 </div>
                 <div
                     className="member-wrap">
                     {group.map((member, index) => (
                         <div key={index} className="member-info" onClick={()=>openModal(member)} >
-                            <img className="member-photo" src={`http://localhost:8080/resources/artistimg/${member.fname}`}/>
+                            <img className="member-photo" src={`http://localhost:8080/resources/artistimg/${member.artist.fname}`}/>
                             <div  className="member-name">
-                                {member.name}
+                                {member.artist.name}
                             </div>
                         </div>
                     ))}

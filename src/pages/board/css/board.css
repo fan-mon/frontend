@@ -36,10 +36,10 @@ body {
      background-color: rgba(25, 28, 36, 1);
      border-radius: 7px;
  }
- .team-profile .team-name {
+ .whole-page .team-profile .team-name {
      flex: 1;
      font-size: 20px;
-     margin-bottom: 15px;
+     margin-bottom: 10px;
  }
  .team-profile .member-wrap{
      display: flex;
