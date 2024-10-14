@@ -105,7 +105,7 @@ const TeamForm = () => {
 
     return (
         <body className="teamform">
-            <div className="artist-form-container">
+            <div className="team-form-container">
                 <h2 id="title">팀 등록</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -133,16 +133,6 @@ const TeamForm = () => {
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                            className="form-control"
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>팔로워 수</label>
-                        <input
-                            type="number"
-                            value={followers}
-                            onChange={(e) => setFollowers(e.target.value)}
                             className="form-control"
                             required
                         />
