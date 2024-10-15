@@ -1,8 +1,9 @@
 import {useState, useEffect, useRef} from "react";
 import axios from "axios";
-import {getList, handleImageSelect} from "./boardAPI/boardAPI";
+import {handleImageSelect} from "./boardAPI/boardAPI";
+import {useParams} from "react-router-dom";
 
-const ArtistBoard = () => {
+const ArtistBoard = ({teamUuid}) => {
     const [artistBoards, setArtistBoards] = useState([]);
     const [content, setContent] = useState("");
     const fileInputRef = useRef(null);
@@ -11,8 +12,7 @@ const ArtistBoard = () => {
     const [image, setImage] = useState(null);
     const [editcontent, setEditcontent] = useState("");
     const ARTIST_BOARD_API_URL=`${process.env.REACT_APP_BACKEND_API_URL}/board/artistboard`
-    const teamUuid='70d7f41e-86e4-11ef-b4db-0a2a78c30fc9'
-    const artistUuid='29f343ca-86e4-11ef-b4db-0a2a78c30fc9'
+    const artistUuid=localStorage.getItem("uuid")
 
     const artistBoardDataForm=(data=null, postContent=null)=>{
         console.log(data)
@@ -49,12 +49,19 @@ const ArtistBoard = () => {
         }
         return postData;
     }
+    const getList = async () => {
+        console.log(`teamuudi : ${teamUuid}`)
+        try {
+            const response = await axios.get(`http://localhost:8080/board/artistboard/${teamUuid}`);
+            setArtistBoards(response.data);
+            console.log(response.data);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     useEffect(() => {
-        getList({
-            API_URL: ARTIST_BOARD_API_URL,
-            teamuuid: teamUuid,
-            setArtistBoards: setArtistBoards,});
+        getList();
     },[teamUuid]);
 
     // create

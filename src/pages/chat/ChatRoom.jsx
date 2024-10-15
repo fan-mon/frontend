@@ -102,9 +102,11 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                     </div>
                     <div className="chat-bottom">
                         <div className="input-area">
-                            <button className="btn btn-ico btn-chat-plus" onClick={toggleChatPlus}>
-                                <i className="bi bi-plus-circle-fill"></i>
-                            </button>
+                            {role === 'USER' ?
+                                null :
+                                (<button className="btn btn-ico btn-chat-plus" onClick={toggleChatPlus}>
+                                    <i className="bi bi-plus-circle-fill"></i>
+                                </button>)}
                             <div className="form-group in-chat-wrap">
                                 <input className="form-control in-chat"
                                        type="text"

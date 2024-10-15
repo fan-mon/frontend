@@ -1,9 +1,9 @@
 import {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
+import './css/login.css'
 const TempLogin = () => {
-    const [user, setUser] = useState('');
     const [uuid, setUuid] = useState('');
-    const [stat, setStat] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -21,7 +21,7 @@ const TempLogin = () => {
     // 로그인 함수
     const login = ( user, uuid, stat ) => {
         localStorage.setItem("uuid",uuid);
-        localStorage.setItem("role",user)
+        localStorage.setItem("role",'ARTIST')
         console.log("login success")
     };
     // 로그아웃 함수
@@ -32,16 +32,34 @@ const TempLogin = () => {
         // 상태 업데이트 등 추가 작업 수행
     };
 
+    const navigate = useNavigate();
+    const goMain = () => {
+        navigate(`/artist/main`)
+    };
+
     return (
-        <div>
-            <input
-                type="text"
-                value={uuid}
-                onChange={(e) => setUuid(e.target.value)}
-                placeholder="uuid"
-            />
-            <button onClick={handleLogin}>Login</button>
+        <body>
+        <div className="login-wrap">
+            <div className='input-top'>아티스트 코드 입력
+                <input
+                    className='code-input'
+                    type="text"
+                    value={uuid}
+                    onChange={(e) => setUuid(e.target.value)}
+                    placeholder="artist code"
+                />
+            </div>
+
+            <div className="input-bottom">
+                <button className='code-button'
+                        onClick={()=> {
+                            handleLogin()
+                            goMain()
+                        }}>CHECK</button>
+            </div>
         </div>
+        </body>
+
     );
 };
 
