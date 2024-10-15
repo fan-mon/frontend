@@ -14,7 +14,7 @@ const TeamProfile = ({teamuuid}) => {
         const fetchGroupData = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artistTeam/${teamuuid}`);
-                console.log(response.data)
+                // console.log("팀 데이터 "+JSON.stringify(response.data))
                 setGroup(response.data);
             } catch (err) {
                 setError('데이터를 가져오는 데 오류가 발생했습니다.');

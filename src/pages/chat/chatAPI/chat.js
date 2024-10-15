@@ -18,6 +18,13 @@ const getChatInfo = async(chatuuid)=>{
     }
 }
 
+// 채팅 목록 전부
+const findAllChat= async ()=>{
+    const res = await axios.get(`${CHAT_API_URI}/allchat`)
+    // console.log(JSON.stringify(res.data))
+    return res.data;
+}
+
 // 유저 밴 함수
 const blockuser= async (useruuid)=>{
     try {
@@ -53,4 +60,4 @@ const sendImage = (image, sendMessage) => {
 };
 
 
-export {getMessageList, getChatInfo,blockuser};
+export {getMessageList, getChatInfo,blockuser,findAllChat};
