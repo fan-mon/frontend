@@ -1,17 +1,15 @@
 import axios from "axios";
 
 //read
-const getList=async ({API_URL, teamuuid, setArtistBoards})=>{
-    try{
-        console.log(API_URL)
-        const response=await axios.get(`${API_URL}/${teamuuid}`)
+const getList = async (teamuuid, setArtistBoards) => {
+    try {
+        const response = await axios.get(`http://localhost:8080/board/artistboard/${teamuuid}`);
         setArtistBoards(response.data);
-        console.log(response.data)
-    }catch (e) {
+        console.log(response.data);
+    } catch (e) {
         console.log(e);
-    }finally {
     }
-}
+};
 
 //image
 const handleImageSelect = (event, setImage) => {

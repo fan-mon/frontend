@@ -67,6 +67,11 @@ body {
 p {
     line-height: 1.5;
 }
+@media (max-width: 960px) {
+    .header-wrap:not(.side-min) .artist-chat .chatroom-area {
+        display: block;
+    }
+}
 .contents-box {
     margin-top: 24px;
     margin-bottom: 24px;
@@ -473,6 +478,8 @@ p {
 .chat-page-wrap{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .chat-page-wrap .profile-wrap{
     margin: 20px;
@@ -480,4 +487,28 @@ p {
     background-color: rgba(25, 28, 36, 1);
     height: calc(100vh - 80px - 24px * 2);
     border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding: 50px 30px;
+    align-items: center;
+}
+.chat-page-wrap .profile-wrap .profile{
+    width: 120px;
+    height: 120px;
+    /*background-color: white;*/
+    border-radius: 100px;
+    border: 1px solid white;
+}
+.chat-page-wrap .profile-wrap .board{
+    background: grey;
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.chat-page-wrap .profile-wrap .board:hover{
+    background-color: #FFC700;
+    color: black;
 }

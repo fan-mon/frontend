@@ -44,7 +44,9 @@ import ArtistLogin from './pages/management/artist/ArtistLogin';
 import TeamForm from './pages/management/team/TeamForm';
 import TeamDetail from './pages/management/team/TeamDetail';
 import MyProfile from './pages/user/MyProfile';
-// import ManagementMyProfile from './pages/management/ManagementMyProfile;'
+import UpdateProfile from './pages/user/UpdateProfile';
+import ManagementMyProfile from './pages/management/ManagementMyProfile';
+import UpdateManagement from './pages/management/UpdateManagement';
 
 
 
@@ -125,7 +127,9 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
           <Route path="/management/dashboard" element={<DashBoard />} />
           <Route path="/management/managementmypage" element={<ManagementMyPage />} />
           <Route path="/user/myprofile" element={<MyProfile />} />
-          {/* <Route path="/management/managementmyprofile" element={<ManagementMyProfile />} /> */}
+          <Route path="/user/updateprofile" element={<UpdateProfile />} />
+          <Route path="/management/managementmyprofile" element={<ManagementMyProfile />} />
+          <Route path="/management/updatemanagement" element={<UpdateManagement />} />
         </Routes>
         </div>
       </div>
