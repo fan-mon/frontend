@@ -24,6 +24,9 @@ jobs:
         run: npm install
 
       - name: Build static file
+        env: 
+          REACT_APP_BACKEND_API_URL: ${{ secrets.REACT_APP_BACKEND_API_URL }}
+          REACT_APP_FRONTEND_API_URL: ${{ secrets.REACT_APP_FRONTEND_API_URL }}
         run: npm run build
 
       - name: Configure AWS Credentials
