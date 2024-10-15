@@ -147,6 +147,7 @@ const ArtistForm = () => {
                             type="file"
                             onChange={(e) => setUploadfile(e.target.files[0])}
                             className="form-control"
+                            required
                         />
                     </div>
                     <button type="submit" id="submitBtn">등록</button>

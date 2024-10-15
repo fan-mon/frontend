@@ -143,6 +143,7 @@ const GoodsForm = () => {
                             id="uploadfile"
                             accept="image/*" //이미지 파일만 선택 가능
                             onChange={(e) => setUploadfile(e.target.files[0])}
+                            required
                         //여러개의 파일을 올렸을 경우 첫번째 파일 참조
                         />
                     </div>
