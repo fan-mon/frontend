@@ -129,6 +129,16 @@ const TeamForm = () => {
                         />
                     </div>
                     <div className="form-group">
+                        <label>팔로워수</label>
+                        <input
+                            type="number"
+                            value={followers}
+                            onChange={(e) => setFollowers(e.target.value)}
+                            className="form-control"
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
                         <label>설명</label>
                         <textarea
                             value={description}
@@ -143,6 +153,7 @@ const TeamForm = () => {
                             type="file"
                             onChange={(e) => setFile(e.target.files[0])}
                             className="form-control"
+                            required
                         />
                     </div>
                     <div className="form-group">
