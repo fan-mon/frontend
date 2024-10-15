@@ -58,7 +58,6 @@ function UserMain() {
     return (
         <body className='usermain'>
             <div className='main-container'>
-                <h1>!!Welcome to FANMON!!</h1>
                 <div className='slide-container'>
                     <Slider {...settings}>
                         <div className='slide-card'>
@@ -80,24 +79,28 @@ function UserMain() {
                             </div>
                         </div>
                         <div>
-                            <h3>2</h3>
-                        </div>
-                        <div>
-                            <h3>3</h3>
-                        </div>
-                        <div>
-                            <h3>4</h3>
-                        </div>
-                        <div>
-                            <h3>5</h3>
-                        </div>
-                        <div>
-                            <h3>6</h3>
+                        <div className="ps-3 pe-3">
+                                <div className="row">
+                                    <div className="col-8 card-text-area">
+                                        <div class="card-text">
+                                            <h1>DAY6</h1>
+                                            <p>DAY6 영통 팬싸인회</p>
+                                            <a href="#">바로가기</a>
+                                        </div>
+                                    </div>
+                                    <div className="col">
+                                        <div class="card-image">
+                                            <img src={`${process.env.PUBLIC_URL}/main/데식.jpg`} alt="Taylor Swift" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </Slider>
                 </div>
             </div>
             <div className='team-list-container'>
+                <h3>What's new</h3>
                 <h2>새로운 아티스트의 <strong>팬몬</strong>이 되어보세요!</h2>
                 <div className='team-list'>
                     {teamList.map((team) => (

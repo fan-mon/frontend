@@ -63,3 +63,28 @@ h2 {
     margin-top: 10px; /* 상단 여백 */
     color: white; /* 메시지 글씨색 */
 }
+
+.email-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.email-check-container {
+    display: flex;
+    align-items: center;
+}
+
+.email-check-container input {
+    flex: 3; /* 이메일 입력창 너비를 3배로 */
+    margin-right: 10px; /* 버튼과 간격 */
+}
+
+.email-check-container button {
+    flex: 1; /* 버튼 너비를 1배로 */
+    height: 45px;
+}
+
+.email-check-container span {
+    margin-top: 10px;
+    color: #EAB70E;
+}
