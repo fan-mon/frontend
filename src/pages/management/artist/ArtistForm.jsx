@@ -17,6 +17,9 @@ const ArtistForm = () => {
     const [uploadfile, setUploadfile] = useState(null);
     const [message, setMessage] = useState('');
 
+    const [emailCheck, setEmailCheck] = useState(false);
+    const [emailCheckText, setEmailCheckText] = useState('');
+
     //로그인한 management 정보 가져오기
     const fetchManagementInfo = async () => {
         try {
@@ -35,6 +38,17 @@ const ArtistForm = () => {
     useEffect(() => {
         fetchManagementInfo();
     }, []);
+
+    const duplicateCheck = async(email)=>{
+        try{
+            const response = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/management/artist/dupliCheck/${email}`)
+            setEmailCheck(response.data);
+            console.log(response.data);
+            setEmailCheckText(response.data ? '이미 등록된 이메일 입니다.' : '사용가능한 이메일 입니다.');
+        }catch(error){
+            console.error("이메일 중복체크 오류:", error);
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -93,8 +107,9 @@ const ArtistForm = () => {
                             required
                         />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group email-group">
                         <label>이메일</label>
+                        <div className="email-check-container">
                         <input
                             type="email"
                             value={email}
@@ -102,6 +117,9 @@ const ArtistForm = () => {
                             className="form-control"
                             required
                         />
+                        <button className="email-check" onClick={()=> duplicateCheck(email)}>중복확인</button>
+                        </div>
+                        {emailCheckText && <span>{emailCheckText}</span>}
                     </div>
                     <div className="form-group">
                         <label>비밀번호</label>
