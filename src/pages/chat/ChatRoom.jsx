@@ -16,7 +16,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    };  //TODO 스크롤 작동 안됌..
+    };
 
     useEffect(() => {
         scrollToBottom();
@@ -26,7 +26,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     useEffect(() => {
         getArtistData(chatuuid, setChatInfo)
         // console.log(chatInfo)
-    }, [messages],[chatuuid]);
+    }, [chatuuid]);
 
     const openChatRoom = () => setIsChatOpen(true);
     const closeChatRoom = () => setIsChatOpen(false);
