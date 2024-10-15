@@ -10,6 +10,7 @@ jobs:
     env:
       CI: false
       REACT_APP_BACKEND_API_URL: ${{ secrets.REACT_APP_BACKEND_API_URL }}
+      REACT_APP_FRONTEND_API_URL: ${{ secrets.REACT_APP_FRONTEND_API_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
