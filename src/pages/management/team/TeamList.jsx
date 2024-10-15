@@ -65,7 +65,7 @@ const TeamList = () => {
         <div className="team-list-container">
             {/* 아티스트 목록 */}
             <div className="team-section">
-                <h2 id="title">{team[0].management.name}의 그룹(팀) 목록</h2>
+                <h2 id="title">{mgName}의 그룹(팀) 목록</h2>
                 <div className="team-form">
                     <button className="team-form-btn" onClick={() => { navigate(`/management/teamForm/${managementuuid}`) }}>팀 등록</button>
                 </div>
