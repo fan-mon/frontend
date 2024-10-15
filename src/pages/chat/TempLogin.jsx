@@ -6,7 +6,7 @@ const TempLogin = () => {
     const [uuid, setUuid] = useState('');
 
     const handleLogin = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         try{
             console.log("uuid : "+uuid);
             const response = await axios.post(`${process.env.REACT_APP_BACKEND_API_URL}/chat/login`, {     

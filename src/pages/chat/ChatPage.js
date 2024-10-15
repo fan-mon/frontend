@@ -35,42 +35,44 @@ const ChatPage = () => {
             console.error("사용자 정보 가져오기 오류:", error);
         }
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            if (role === 'USER') {
-                const userData = location.state; // USER 데이터
-                setData(userData);
-                setArtistuuid(userData.chat.artist.artistuuid);
-                setUseruuid(userData.user.useruuid);
-            } else if (role === 'ARTIST') {
-                const artistuuid = localStorage.getItem("uuid");
-                setArtistuuid(artistuuid);
-                try {
-                    const chatInfo = await getChatInfo(chatuuid);
-                    setData(chatInfo); // ARTIST 데이터 설정
-                    setUseruuid(chatInfo.user.useruuid); // 유저 UUID 설정
-                } catch (error) {
-                    console.error("채팅 정보 가져오기 오류: ", error);
-                }
+    const fetchData = async () => {
+        if (role === 'USER') {
+            const userData = location.state; // USER 데이터
+            setData(userData);
+            setArtistuuid(userData.chat.artist.artistuuid);
+            setUseruuid(userData.user.useruuid);
+        } else if (role === 'ARTIST') {
+            const artistuuid = localStorage.getItem("uuid");
+            setArtistuuid(artistuuid);
+            try {
+                const chatInfo = await getChatInfo(chatuuid);
+                setData(chatInfo); // ARTIST 데이터 설정
+                // console.log(chatInfo)
+                // setUseruuid(chatInfo.user.useruuid); // 유저 UUID 설정
+            } catch (error) {
+                console.error("채팅 정보 가져오기 오류: ", error);
             }
-        };
+        }
+    };
+    useEffect(() => {
         fetchData();
-    }, [role, location.state, chatuuid]);
+        console.log("user data : "+data)
+    }, [role, data, chatuuid, destination]);
     const fetchMessages = async () => {
         if (!data) {
             console.warn("data 또는 user 정보가 없습니다.");
             return;
         }
-        const messages = await getMessageList(chatuuid);
-        if (messages) {
-            setMessages(messages);
+        const newMessages = await getMessageList(chatuuid);
+        if (newMessages) {
+            setMessages(newMessages);
             console.log("메세지 로드 완료")
         }
     };
     // artistuuid가 변경될 때 destination을 설정해줌
     useEffect(() => {
         fetchMessages();
-    }, [data, chatuuid, role]);
+    }, [data, chatuuid]);
 
     useEffect(() => {
         if (artistuuid) {
@@ -82,10 +84,10 @@ const ChatPage = () => {
                 console.log("user destination : " + destination)
             }
         }
-        console.log(`useruuid : ${useruuid}`)
-        console.log(`artistuuid : ${artistuuid}`)
-        console.log(`role : ${role}`)
-        console.log(`chatuuid : ${chatuuid}`)
+        // console.log(`useruuid : ${useruuid}`)
+        // console.log(`artistuuid : ${artistuuid}`)
+        // console.log(`role : ${role}`)
+        // console.log(`chatuuid : ${chatuuid}`)
     }, [artistuuid, useruuid, role, data]);
 
     useEffect(() => {
@@ -100,13 +102,16 @@ const ChatPage = () => {
                 console.log("receive message : "+message.body)
                 const parsedMsg=JSON.parse(message.body);
                 if (role==='ARTIST'||parsedMsg.user.useruuid===localStorage.getItem("uuid")){   //TODO 여기도 세션 수정 필요
-                    setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
+                    // setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
+                    setMessages(prevMessages => [...prevMessages, parsedMsg]);
                 }
             });
             // 아티스트가 보낸 메세지는 아티스트와 유저 둘 다 구독
             client.subscribe(`/sub/${artistuuid}/toFans`, (message) => {
                 console.log("receive message : "+message.body)
-                setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
+                // setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
+                const parsedMsg = JSON.parse(message.body);
+                setMessages(prevMessages => [...prevMessages, parsedMsg]);
             });
             setStompClient(client);
         }, (error) => {
@@ -192,6 +197,7 @@ const ChatPage = () => {
             const updatedMessages = await getMessageList(chatuuid);
             if (updatedMessages) {
                 setMessages(updatedMessages);
+                console.log("모든 메세지"+messages);
             } else {
                 console.warn("메시지 리스트를 가져오는 데 실패했습니다.");
             }
