@@ -105,7 +105,9 @@ function UserMain() {
                 <div className='team-list'>
                     {teamList.map((team) => (
                         <div key={team.teamuuid}>
-                            <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} alt={team.name} className="team-image"></img>
+                            <img src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/teamimg/${team.fname}`} 
+                            alt={team.name} className="team-image"
+                            onClick={()=>{navigate(`../../board/${team.teamuuid}`)}}></img>
                             <p>{team.name}</p>
                         </div>
                     ))}
