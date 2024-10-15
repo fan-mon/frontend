@@ -125,7 +125,12 @@
 }
 
 .team-list-container .team-image {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     object-fit: cover;
+    cursor: pointer;
+}
+
+.team-list-container .team-image:hover {
+    transform: scale(1.1); /* 1.1배 확대 */
 }
