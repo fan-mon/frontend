@@ -29,7 +29,7 @@ function GoodsNav({ teamuuid, glist  }){
 
     return (
         <>
-            <Navbar bg="#000000" data-bs-theme="dark">
+            <Navbar data-bs-theme="dark" className='nav-box'>
                 <Nav className="me-auto">
                     <Nav.Link href={`/shop/goods/list/${teamuuid}/all`} className={`hover-color ${currentPath === `/shop/goods/list/${teamuuid}/all` ? 'selected-category' : ''}`}>All</Nav.Link>
                     {gcategory.map((categoriList)=>(

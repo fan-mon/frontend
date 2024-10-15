@@ -1,5 +1,11 @@
-/* .goods-frame {padding: 100px;} */
-#goodsmain-content{margin: 0 80px;}
+.goods-frame {
+    /* height: 850px; */
+    /* padding-top: 200px; */
+    margin-left: 60px;
+    /* margin-top: -500px; */
+    width: 1450px;
+}
+#goodsmain-content{margin: 80px 80px;}
 #goodsmain-title{
     font-size: 30px;
     margin-bottom: 50px;
