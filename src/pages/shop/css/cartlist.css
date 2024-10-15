@@ -6,14 +6,13 @@
 .cart-content h2{
     font-size: 2em;
     padding: 0;
+    text-align: center;
 }
 
 .cart-content-list{
     margin:50px 0;
-    width: 90%;
     font-size: 15px;
     line-height: 50px;
-
 }
 
 .cart-content-list *{

@@ -47,8 +47,11 @@ function CartList(){
     // 장바구니에 담은 상품들의 총 수량과 총 가격 계산
     const totalQuantity = clist.reduce((total, crecord) => total + parseInt(crecord.qty), 0)
     const totalPrice = clist.reduce((total, crecord) => total + (crecord.goods.price * crecord.qty), 0);
+
     const deliveryFee = 2500;
+
     const finalAmount = totalPrice+deliveryFee;
+
     const handleQuantityChange = async (id, newQty) => {
         // newQty가 유효한지 확인 (1에서 10 사이의 값)
         if (newQty < 1 || newQty > 10 || isNaN(newQty)) {
@@ -115,11 +118,18 @@ function CartList(){
                 totalcost: crecord.goods.price * crecord.qty,  // 각 상품의 총 금액
                 goodsuuid: crecord.goods.goodsuuid,  // 각 상품의 UUID
                 ordersuuid: null,  // ordersuuid가 아직 존재하지 않음
-                useruuid: useruuid
+                useruuid: useruuid, // 유저 uuid
+                category: crecord.goods.category // 상품의 카테고리 
             }));
 
             // ordersDetailList 업데이트
             setOrdersDetailList(ordersDetailList);
+            
+           // 배송비 조정 - 모든 상품의 category가 SUBSCRIBE인 경우
+            if (ordersDetailList.every(item => item.category === 'SUBSCRIBE')) {
+                deliveryFee = 0;
+            }
+
             // sessionStorage에 저장
             sessionStorage.setItem('DetailData', JSON.stringify(ordersDetailList));
             console.log("ordersDetailList",ordersDetailList);
