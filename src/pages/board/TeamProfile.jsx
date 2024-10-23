@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import {getList} from "../chat/chatAPI/subscription";
 import ProfileModal from "./ProfileModal";
 
 const TeamProfile = ({teamuuid}) => {

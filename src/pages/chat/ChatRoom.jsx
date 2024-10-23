@@ -74,7 +74,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                                               alt=""/>)
                                         :
                                         (<img className="profile"
-                                              src={msg.artist.fname}
+                                              // src={`${process.env.PUBLIC_URL}/resources/artistimg/${msg.artist.fname}`}
                                               alt=""/>)
                                     }
                                     <div className="content-wrap">

@@ -9,7 +9,7 @@ const ProfileModal = ({ isOpen, onClose, data }) => {
     const [chatuuid, setChatuuid] = useState(null);
     const [chatInfo, setChatInfo] = useState(null);
     const useruuid = localStorage.getItem("uuid");
-    const goodsuuid = '66f9c803-b769-4b95-9247-a0ec9869e90c';
+    const goodsuuid = '846e98f5-84f4-4116-bf6d-b19e30ef550c';
     const [list, setList] = useState([]);
     const [isChat, setIsChat] = useState(false);
 
@@ -137,9 +137,7 @@ const ProfileModal = ({ isOpen, onClose, data }) => {
             <div className="profile-modal-wrap" onClick={(e) => e.stopPropagation()}>
                 <div className="info-top">
                     <div className="member-info">
-                        <div className="member-photo">
-                            member photo
-                        </div>
+                        <img className="member-photo"  src={`http://localhost:8080/resources/artistimg/${data.artist.fname}`}/>
                         <div className="member-name">
                             {data.artist.name}
                         </div>

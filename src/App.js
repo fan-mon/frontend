@@ -82,9 +82,10 @@ const Content = ({useruuid, teamuuid, artistUuid, chatuuid}) => {
   const renderHeader = () => {
     if (role === 'MANAGEMENT') {
       return <ManagementHeader/>;
-    } else if (role === 'ARTIST') {
-      return <ArtistHeader/>; // 아티스트용 헤더 추가
     }
+    // else if (role === 'ARTIST') {
+    //   return <ArtistHeader/>; // 아티스트용 헤더 추가
+    // }
     return <Header/>; // 기본 헤더
   };
 

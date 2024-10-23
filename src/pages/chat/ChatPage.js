@@ -22,7 +22,7 @@ const ChatPage = () => {
     // 파라미터 teamuuid 받아오기
     const {chatuuid} = useParams();
     
-    // 유저 식별
+    // 유저 role 식별
     const role=localStorage.getItem("role");
 
     const fetchUserInfo = async () => {
@@ -57,10 +57,11 @@ const ChatPage = () => {
     useEffect(() => {
         fetchData();
         console.log("user data : "+data)
-    }, [role, data, chatuuid, destination]);
+    }, [role, chatuuid, destination]);
+
     const fetchMessages = async () => {
         if (!data) {
-            console.warn("data 또는 user 정보가 없습니다.");
+            console.warn("chat 또는 user 정보가 없습니다.");
             return;
         }
         const newMessages = await getMessageList(chatuuid);
@@ -72,7 +73,7 @@ const ChatPage = () => {
     // artistuuid가 변경될 때 destination을 설정해줌
     useEffect(() => {
         fetchMessages();
-    }, [data, chatuuid]);
+    }, [chatuuid]);
 
     useEffect(() => {
         if (artistuuid) {
@@ -84,11 +85,7 @@ const ChatPage = () => {
                 console.log("user destination : " + destination)
             }
         }
-        // console.log(`useruuid : ${useruuid}`)
-        // console.log(`artistuuid : ${artistuuid}`)
-        // console.log(`role : ${role}`)
-        // console.log(`chatuuid : ${chatuuid}`)
-    }, [artistuuid, useruuid, role, data]);
+    }, [artistuuid, useruuid, role]);
 
     useEffect(() => {
 
