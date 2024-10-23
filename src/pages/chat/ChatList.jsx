@@ -8,8 +8,9 @@ const ChatList=({chatList=[]})=>{
     const navigate = useNavigate();
     const [data, setData] = useState([]);
 
-    const handleChatClick = (data) => {
-        navigate(`/chat/ws/${data.chatuuid}`, { state: data }); // URL로 이동
+    const handleChatClick = (index) => {
+        const stataData = chatList[index]
+        navigate(`/chat/ws/${stataData.chat.chatuuid}`, { state: stataData }); // URL로 이동
     };
     useEffect(() => {
         const role=localStorage.getItem("role");
@@ -24,9 +25,9 @@ const ChatList=({chatList=[]})=>{
     return (
         <>
             {data.length > 0 ?
-                (data.map(data => (
-                        <div key={data.chatuuid} // 유일한 key 추가
-                            onClick={() => handleChatClick(data)}
+                (data.map((data,index) => (
+                        <div key={index} // 유일한 key 추가
+                            onClick={() => handleChatClick(index)}
                             className="chat-room-list">
                             {data.artist && data.artist.fname ? (
                                 <img className="profile-photo" src={`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${data.artist.fname}`} alt={data.artist.name} />
