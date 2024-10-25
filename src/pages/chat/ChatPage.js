@@ -66,7 +66,16 @@ const ChatPage = () => {
         }
         const newMessages = await getMessageList(chatuuid);
         if (newMessages) {
-            setMessages(newMessages);
+            if (role==='ARTIST'){
+                setMessages(newMessages)
+            }else if (role==='USER'){
+                const filteredMsg = newMessages.filter(item =>
+                    item.type === 'ARTIST' || item.user.useruuid === useruuid
+                );
+                setMessages(filteredMsg);
+            }else{
+                console.log("해당하는 role이 없습니다.")
+            }
             console.log("메세지 로드 완료")
         }
     };
@@ -98,7 +107,7 @@ const ChatPage = () => {
             client.subscribe(`/sub/${artistuuid}/fromFans`, (message) => {
                 console.log("receive message : "+message.body)
                 const parsedMsg=JSON.parse(message.body);
-                if (role==='ARTIST'||parsedMsg.user.useruuid===localStorage.getItem("uuid")){   //TODO 여기도 세션 수정 필요
+                if (role==='ARTIST'||parsedMsg.user.useruuid===useruuid){   //TODO 여기도 세션 수정 필요
                     // setMessages(prevMessages => [...prevMessages, JSON.parse(message.body)]);
                     setMessages(prevMessages => [...prevMessages, parsedMsg]);
                 }
@@ -191,13 +200,7 @@ const ChatPage = () => {
                 console.log("messageData : "+JSON.stringify(messageData))
                 stompClient.send(destination, {}, JSON.stringify(messageData));
             }
-            const updatedMessages = await getMessageList(chatuuid);
-            if (updatedMessages) {
-                setMessages(updatedMessages);
-                console.log("모든 메세지"+messages);
-            } else {
-                console.warn("메시지 리스트를 가져오는 데 실패했습니다.");
-            }
+            fetchMessages();
         } else {
             console.error("STOMP client is not connected");
         }
@@ -211,7 +214,6 @@ const ChatPage = () => {
                       blockuser={blockuser}
                       chatuuid={chatuuid}
                       data={data}
-                      // 여기에 useruuid도 보내서 메세지 판별해서 출력해주기!!!
             />
             {role==='USER'?
                 (<Profile data={location.state}/>)
