@@ -119,7 +119,10 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                                        value={inputMessage}
                                        onChange={(e) => setInputMessage(e.target.value)}
                                        placeholder="Enter message"/>
-                                <button className="btn btn-ico btn-chat-submit" onClick={handleSend}></button>
+                                <button className="btn btn-ico btn-chat-submit"
+                                        onClick={()=>{
+                                            handleSend()
+                                            scrollToBottom()}}></button>
                             </div>
                         </div>
                     </div>
