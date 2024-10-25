@@ -44,9 +44,14 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
         }
     };
     const handleMessage=(msg)=> {
-        let uuid=msg.user.useruuid;
-        console.log("block user 실행 : " + uuid)
-        blockuser(uuid.toString());
+        const isConfirmed = window.confirm("해당 유저를 정말 차단하시겠습니까?");
+        if (isConfirmed) {
+            let uuid = msg.user.useruuid;
+            console.log("block user 실행 : " + uuid);
+            blockuser(uuid.toString());
+        } else {
+            console.log("차단이 취소되었습니다.");
+        }
     }
 
     return (
