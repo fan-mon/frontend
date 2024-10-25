@@ -80,7 +80,8 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                                               alt=""/>)
                                         :
                                         (<img className="profile"
-                                              // src={`${process.env.PUBLIC_URL}/resources/artistimg/${msg.artist.fname}`}
+                                              src={role==='ARTIST'?`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${data.artist.fname}`:
+                                                  `${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${data.chat.artist.fname}`}
                                               alt=""/>)
                                     }
                                     <div className="content-wrap">

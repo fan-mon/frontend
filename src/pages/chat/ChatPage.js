@@ -196,6 +196,7 @@ const ChatPage = () => {
                     timestamp: null,
                     artist: {
                         artistuuid: artistuuid,  // 아티스트 UUID
+                        fname: data.artist.fname,
                     },
                     chat: {
                         chatuuid: chatuuid,  // 채팅 UUID
