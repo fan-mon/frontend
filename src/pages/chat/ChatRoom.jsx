@@ -12,7 +12,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     const messagesEndRef = useRef(null);
     const [chatInfo, setChatInfo] = useState([]);
     const scrollToBottom = () => {
-        // console.log("스크롤 작동!!")
+        console.log("스크롤 작동!!")
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
@@ -20,7 +20,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    },[messages]);
     // 스크롤 맨 아래로
 
     useEffect(() => {
@@ -72,7 +72,8 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                         {messages.map((msg, index) => (
                             <div key={index} className="chat-wrap">
                                 <div className={msg.type === role ? "mine" : "yours"}
-                                     onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}>
+                                     onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}
+                                     ref={messages.length-1===index?messagesEndRef:null}>
                                     {msg.type === 'USER' ?
                                         (<img className="profile"
                                               src={`${process.env.PUBLIC_URL}/common/logo_black.png`}
