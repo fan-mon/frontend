@@ -55,9 +55,9 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
                         <div>{role === 'USER' && data ? (
-                            data.chat.artist.name // USER일 때
+                            data.chat.artist.name // USER일 때 -> 구독 데이터
                         ) : role === 'ARTIST' && data ? (
-                            data.artist.name // ARTIST일 때
+                            data.artist.name // ARTIST일 때 -> 채팅 정보 데이터
                         ) : (
                             <div>No artist information available.</div> // 데이터가 없을 때 표시할 메시지
                         )}</div>
@@ -78,7 +78,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                                               alt=""/>)
                                     }
                                     <div className="content-wrap">
-                                        <p className="name">{msg.type}</p>
+                                        <p className="name">{msg.type==='USER'&&msg.user? msg.user.name : msg.type}</p>
                                         <div className="same-time">
                                             <div className="bubble-wrap">
                                                 <div className="bubble">

@@ -178,6 +178,7 @@ const ChatPage = () => {
                     },
                     user: {
                         useruuid: useruuid,  // 유저 UUID
+                        name : data.user.name,
                     },
                     chat: {
                         chatuuid: chatuuid,  // 채팅 UUID
