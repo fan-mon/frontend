@@ -60,7 +60,7 @@ const ChatPage = () => {
     useEffect(() => {
         fetchData();
         console.log("user data : "+useruuid)
-    }, [role, chatuuid, destination]);
+    }, [role, chatuuid]);
 
     const fetchMessages = async () => {
         if (!data) {
@@ -85,7 +85,7 @@ const ChatPage = () => {
 
     useEffect(() => {
         fetchMessages();
-    });
+    },[data]);
 
     useEffect(() => {
         if (artistuuid) {
