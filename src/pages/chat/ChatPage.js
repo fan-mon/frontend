@@ -28,13 +28,16 @@ const ChatPage = () => {
     const fetchUserInfo = async () => {
         try {
             const response = await api.get('/users/myprofile');
-            // setUseruuid(response.data.useruuid);
             console.log("유저정보 가져오기 완료!"+response.data.useruuid)
+            setStatus(response.data.status);
             return response.data;
         } catch (error) {
             console.error("사용자 정보 가져오기 오류:", error);
         }
     };
+    useEffect(()=>{
+        fetchUserInfo();
+    },[])
     const fetchData = async () => {
         if (role === 'USER') {
             const userData = location.state; // USER 데이터
@@ -79,10 +82,10 @@ const ChatPage = () => {
             console.log("메세지 로드 완료")
         }
     };
-    // artistuuid가 변경될 때 destination을 설정해줌
+
     useEffect(() => {
         fetchMessages();
-    }, []);
+    });
 
     useEffect(() => {
         if (artistuuid) {
