@@ -9,10 +9,18 @@ const ChatList=({chatList=[]})=>{
     const [data, setData] = useState([]);
 
     const handleChatClick = (index) => {
-        const stataData = chatList[index]
-        navigate(`/chat/ws/${stataData.chat.chatuuid}`, { state: stataData }); // URL로 이동
+        // user는 subscribe 데이터 사용
+        // artist는 chat data 사용
+        const stataData = Array.isArray(chatList) && chatList.length > 0 ?
+            chatList[index]
+            : chatList;
+        const navigatePath = Array.isArray(chatList) && chatList.length > 0 ?
+            chatList[index].chat.chatuuid
+            : chatList.chatuuid;
+        navigate(`/chat/ws/${navigatePath}`, { state: stataData }); // URL로 이동
     };
     useEffect(() => {
+        console.log(`artist chatlist : ${JSON.stringify(chatList)}`)
         const role=localStorage.getItem("role");
         if (role==='USER'){
             const userChatList = chatList.map(item => item.chat);

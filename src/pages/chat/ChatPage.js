@@ -56,7 +56,7 @@ const ChatPage = () => {
     };
     useEffect(() => {
         fetchData();
-        console.log("user data : "+data)
+        console.log("user data : "+useruuid)
     }, [role, chatuuid, destination]);
 
     const fetchMessages = async () => {
@@ -73,7 +73,7 @@ const ChatPage = () => {
     // artistuuid가 변경될 때 destination을 설정해줌
     useEffect(() => {
         fetchMessages();
-    }, [chatuuid]);
+    }, []);
 
     useEffect(() => {
         if (artistuuid) {
@@ -211,6 +211,7 @@ const ChatPage = () => {
                       blockuser={blockuser}
                       chatuuid={chatuuid}
                       data={data}
+                      // 여기에 useruuid도 보내서 메세지 판별해서 출력해주기!!!
             />
             {role==='USER'?
                 (<Profile data={location.state}/>)
