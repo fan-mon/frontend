@@ -8,7 +8,7 @@ const Profile = ({data})=>{
     };
     return (
         <div className="profile-wrap">
-            <img className="profile" src={data.chat.artist.fname}></img>
+            <img className="profile" src={`http://localhost:8080/resources/artistimg/${data.chat.artist.fname}`}></img>
             <div className="artistinfo">{data.chat.artist.name}</div>
             <div className="board" onClick={goBoard}>메인으로 돌아가기</div>
         </div>

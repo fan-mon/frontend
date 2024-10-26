@@ -12,7 +12,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
     const messagesEndRef = useRef(null);
     const [chatInfo, setChatInfo] = useState([]);
     const scrollToBottom = () => {
-        // console.log("스크롤 작동!!")
+        console.log("스크롤 작동!!")
         if (messagesEndRef.current) {
             messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
@@ -20,7 +20,7 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
 
     useEffect(() => {
         scrollToBottom();
-    }, [messages]);
+    },[messages]);
     // 스크롤 맨 아래로
 
     useEffect(() => {
@@ -44,9 +44,14 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
         }
     };
     const handleMessage=(msg)=> {
-        let uuid=msg.user.useruuid;
-        console.log("block user 실행 : " + uuid)
-        blockuser(uuid.toString());
+        const isConfirmed = window.confirm("해당 유저를 정말 차단하시겠습니까?");
+        if (isConfirmed) {
+            let uuid = msg.user.useruuid;
+            console.log("block user 실행 : " + uuid);
+            blockuser(uuid.toString());
+        } else {
+            console.log("차단이 취소되었습니다.");
+        }
     }
 
     return (
@@ -55,9 +60,9 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                 <div className="contents-box contents-scroll-box chatroom opacity-100">
                     <div className="chat-top">
                         <div>{role === 'USER' && data ? (
-                            data.chat.artist.name // USER일 때
+                            data.chat.artist.name // USER일 때 -> 구독 데이터
                         ) : role === 'ARTIST' && data ? (
-                            data.artist.name // ARTIST일 때
+                            data.artist.name // ARTIST일 때 -> 채팅 정보 데이터
                         ) : (
                             <div>No artist information available.</div> // 데이터가 없을 때 표시할 메시지
                         )}</div>
@@ -67,18 +72,20 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                         {messages.map((msg, index) => (
                             <div key={index} className="chat-wrap">
                                 <div className={msg.type === role ? "mine" : "yours"}
-                                     onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}>
+                                     onClick={role === 'ARTIST' && msg.type === 'USER' ? () => handleMessage(msg) : null}
+                                     ref={messages.length-1===index?messagesEndRef:null}>
                                     {msg.type === 'USER' ?
                                         (<img className="profile"
                                               src={`${process.env.PUBLIC_URL}/common/logo_black.png`}
                                               alt=""/>)
                                         :
                                         (<img className="profile"
-                                              src={msg.artist.fname}
+                                              src={role==='ARTIST'?`${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${data.artist.fname}`:
+                                                  `${process.env.REACT_APP_BACKEND_API_URL}/resources/artistimg/${data.chat.artist.fname}`}
                                               alt=""/>)
                                     }
                                     <div className="content-wrap">
-                                        <p className="name">{msg.type}</p>
+                                        <p className="name">{msg.type==='USER'&&msg.user? msg.user.name : msg.type}</p>
                                         <div className="same-time">
                                             <div className="bubble-wrap">
                                                 <div className="bubble">
@@ -113,7 +120,10 @@ const ChatRoom = ({ chatuuid, role, messages, sendMessage, sendImage, blockuser,
                                        value={inputMessage}
                                        onChange={(e) => setInputMessage(e.target.value)}
                                        placeholder="Enter message"/>
-                                <button className="btn btn-ico btn-chat-submit" onClick={handleSend}></button>
+                                <button className="btn btn-ico btn-chat-submit"
+                                        onClick={()=>{
+                                            handleSend()
+                                            scrollToBottom()}}></button>
                             </div>
                         </div>
                     </div>

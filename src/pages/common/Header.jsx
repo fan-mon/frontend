@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import api from '../../apiClient';
 import ChatList from "../chat/ChatList";
 import {getList} from "../chat/chatAPI/subscription";
+import axios from "axios";
 
 const Header = () => {
     const [userName, setUserName] = useState('이름 없음');
@@ -30,7 +31,18 @@ const Header = () => {
     };
 
     useEffect(()=>{
-        getList(useruuid, setChatList);
+        const chatByRole = async ()=>{
+            const role = localStorage.getItem("role");
+            if (role==='USER'){
+                const userChatList = await getList(useruuid);
+
+                setChatList(userChatList);
+            }else if (role==='ARTIST'){
+                const res = await axios.get(`${process.env.REACT_APP_BACKEND_API_URL}/chat/chatinfo/${localStorage.getItem("uuid")}`);
+                setChatList(res.data);
+            }
+        }
+        chatByRole();
     },[useruuid])
 
 
@@ -123,7 +135,7 @@ const Header = () => {
                                   }
                               }}
                         >{userName}</span>
-                            <div className="user-role">일반회원</div>
+                            <div className="user-role">{localStorage.getItem("role")}</div>
                         </div>
                         <div className="btn btn-ico btn-dropdown" onClick={toggleLogoutMenu}>
                             <ThreeDotsVertical/>

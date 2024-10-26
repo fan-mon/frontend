@@ -67,11 +67,20 @@ body {
 p {
     line-height: 1.5;
 }
-@media (max-width: 960px) {
+@media (max-width: 460px) {
     .header-wrap:not(.side-min) .artist-chat .chatroom-area {
         display: block;
     }
+    .chat-page-wrap{
+        display: flex;
+        flex-direction: row;
+    }
 }
+@media (max-width: 768px) {
+    .artist-chat .chatroom-area {
+    }
+}
+
 .contents-box {
     margin-top: 24px;
     margin-bottom: 24px;
