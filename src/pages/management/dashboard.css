@@ -156,7 +156,13 @@ ol li {
     vertical-align: middle; /* 수직 정렬을 가운데로 설정 */
 }
 
-.dashboard-content tr:hover{
+.followers-card tr:hover{
+    background-color: #EAB70E; /* hover 시 색상 변화 */
+    cursor: pointer; /* 커서 모양 변경 */
+    color: black;
+}
+
+.sales-ranking-card tr:hover{
     background-color: #EAB70E; /* hover 시 색상 변화 */
     cursor: pointer; /* 커서 모양 변경 */
     color: black;
