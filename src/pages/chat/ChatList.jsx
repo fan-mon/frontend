@@ -22,10 +22,10 @@ const ChatList=({chatList=[]})=>{
     useEffect(() => {
         console.log(`artist chatlist : ${JSON.stringify(chatList)}`)
         const role=localStorage.getItem("role");
-        if (role==='USER'){
+        if (role==='USER'&&chatList.length>0){
             const userChatList = chatList.map(item => item.chat);
             setData(userChatList)
-        }else if (role === 'ARTIST') {
+        }else if (role === 'ARTIST' && chatList) {
             setData([chatList]);    // 아티스트는 배열로 변경해서 넣어주기
         }
     }, [chatList]);
