@@ -30,14 +30,16 @@ const ChatPage = () => {
             const response = await api.get('/users/myprofile');
             console.log("유저정보 가져오기 완료!"+response.data.useruuid)
             setStatus(response.data.status);
-            return response.data;
+            return response.data.status;
         } catch (error) {
             console.error("사용자 정보 가져오기 오류:", error);
         }
     };
-    useEffect(()=>{
-        fetchUserInfo();
-    },[])
+    // useEffect(()=>{
+    //     if (status==='BANNED'){
+    //         alert("차단 당한 유저입니다.")
+    //     }
+    // },[status])
     const fetchData = async () => {
         if (role === 'USER') {
             const userData = location.state; // USER 데이터
@@ -161,13 +163,14 @@ const ChatPage = () => {
 
     // 메세지 전송 함수
     const sendMessage = async (message) => {
+        const currentStatus=await fetchUserInfo();
         if (destination===''||!destination){
             console.log("전송에 실패했습니다.")
             return
         }
         if (stompClient && stompClient.connected) {
-            if (status==='BANNED'){
-                alert("차단 당한 유저입니다.")
+            if (currentStatus==='BANNED'){
+                alert("차단당한 유저입니다.")
                 return;
             }
             let messageData;
