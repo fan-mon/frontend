@@ -16,7 +16,7 @@
 | <img width="160px" src="https://avatars.githubusercontent.com/u/98440593?v=4" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/152257506?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/89964419?s=64&v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/71312414?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/169978756?v=4"/> |
 | [@kz770](https://github.com/kz770) | [@qordpsem](https://github.com/qordpsem) | [@mochoi42](https://github.com/mochoi42) | @nk2200 | [@ccc700](https://github.com/ccc700) |
 | Full-Stack | Back-end | Back-end | Full-Stack | Full-Stack |
-| - 채팅 기능 |  |  | - 매니지먼트 관리 기능 |  |
+| - 채팅 기능 |  |  | - 매니지먼트 관리 기능 | - 이커머스 기능 |
 | - 게시판 기능 ||| - 메인 페이지 ||
 
 
@@ -66,9 +66,9 @@
 - 장바구니에 넣은 상품 결제
 
 
-![이커머스1](https://github.com/user-attachments/assets/4674ae46-aec9-45ec-84ee-c22fd99d8f45)  
-![이커머스2](https://github.com/user-attachments/assets/96540463-8742-44aa-b33d-5344cabcf3e6)  
-![이커머스3](https://github.com/user-attachments/assets/e0c0436b-bd1d-4dfa-b18c-2366a7b8c45c)  
+| <img width="800px" src="https://github.com/user-attachments/assets/4674ae46-aec9-45ec-84ee-c22fd99d8f45"/> | <img width="800px" src="https://github.com/user-attachments/assets/96540463-8742-44aa-b33d-5344cabcf3e6"/>  | 
+| --- | --- |
+|<img width="800px" src="https://github.com/user-attachments/assets/e0c0436b-bd1d-4dfa-b18c-2366a7b8c45c"/> | |
   
 ### 6. 1대1 영상팬미팅
 
