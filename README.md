@@ -14,7 +14,7 @@
 | 유현진 | 박규희 | 최모래 | 최가은 | 김예은 |
 | --- | --- | --- | --- | --- |
 | <img width="160px" src="https://avatars.githubusercontent.com/u/98440593?v=4" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/152257506?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/89964419?s=64&v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/71312414?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/169978756?v=4"/> |
-| [@kz770](https://github.com/kz770) | [@qordpsem](https://github.com/qordpsem) | [@mochoi42](https://github.com/mochoi42) | @nk2200 | [@ccc700](https://github.com/ccc700) |
+| [@kz770](https://github.com/kz770) | [@qordpsem](https://github.com/qordpsem) | [@mochoi42](https://github.com/mochoi42) | [@nk2200](https://github.com/nk2200) | [@ccc700](https://github.com/ccc700) |
 | Full-Stack | Back-end | Back-end | Full-Stack | Full-Stack |
 | - 채팅 기능 |  |  | - 매니지먼트 관리 기능 | - 이커머스 기능 |
 | - 게시판 기능 ||| - 메인 페이지 ||
