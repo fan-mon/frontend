@@ -99,133 +99,122 @@ function Buying() {
         }
     }, [useruuid, UpdateUserData]);
 
-    const handlePayment = () => {
+    async function handlePayment() {
         if (window.IMP) {
             console.log('IMP 객체가 정상적으로 로드되었습니다.');
-            
-            // 세션에서 데이터 가져오기
-            const totalQuantity = ordersData ? ordersData.qty : 0; // ordersData가 null일 경우를 대비
-
-            // detailData가 유효한지 확인
-            let name = null;
-            if (detailData && detailData.length > 0) { // detailData가 배열이고 길이가 0보다 큰 경우
-                name = detailData.length > 1 
+    
+            const totalQuantity = ordersData ? ordersData.qty : 0; // 주문 수량
+            let name = detailData && detailData.length > 0 
+                ? detailData.length > 1 
                     ? detailData[0].name + ' 외 ' + (detailData.length - 1) + '개' 
-                    : detailData[0].name;
-            }
-
-            //총액 계산
-            const amount = ordersData.totalcost;
-
-            // 결제 요청 실행
+                    : detailData[0].name 
+                : "상품명 없음";
+    
+            const amount = ordersData.totalcost; // 총 결제 금액
+    
             window.IMP.init('imp10888263');
             window.IMP.request_pay(
                 {
-                    pg: 'kcp', // PG사 구분 코드
-                    pay_method: 'card', // 결제 방법
-                    merchant_uid: `payment-${crypto.randomUUID()}`, // 승인번호
-                    name: name, //상품명
-                    amount: amount, //결제 예정 금액
-                    buyer_email: UpdateUserData.email, //이메일
-                    buyer_name: UpdateUserData.name, //구매자 이름
-                    buyer_tel: UpdateUserData.phone, //구매자 연락처
-                    buyer_addr: UpdateUserData.address, //구매자 주소
-                    buyer_postcode: UpdateUserData.postcode //구매자 우편번호
+                    pg: 'kcp',
+                    pay_method: 'card',
+                    merchant_uid: `payment-${crypto.randomUUID()}`,
+                    name: name,
+                    amount: amount,
+                    buyer_email: UpdateUserData.email,
+                    buyer_name: UpdateUserData.name,
+                    buyer_tel: UpdateUserData.phone,
+                    buyer_addr: UpdateUserData.address,
+                    buyer_postcode: UpdateUserData.postcode
                 },
                 async (response) => {
-                    
-                    // 결제 성공 처리
-                    try{
-
-                        //Orders 테이블에 데이터 저장
-                        const notifiedO = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendO/${useruuid}`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                imp_uid: response.imp_uid,  // 포트원 결제ID
-                                apply_num: response.apply_num,  // 신용카드 승인 번호
-                                merchant_uid: response.merchant_uid,    // 주문번호
-                                user_data: UpdateUserData, // 유저 데이터
-                                buyer_addr: response.buyer_addr,    // 주문자 주소
-                                paid_amount: response.paid_amount,  // 결제 금액
-                                paid_at: response.paid_at,  // 결제 승인 시각
-                                paid_qty: totalQuantity // 물품 수량
-                            }), 
-                        });
-                        const res = await notifiedO.json();
-                        console.log("보내는 데이터:", JSON.stringify(res, null, 2));
-                        console.log('포트원 결제 id'+res.imp_uid);
-                        console.log('신용카드 승인번호'+res.apply_num);
-                        console.log('주문번호'+res.merchant_uid);
-                        console.log('유저데이터'+UpdateUserData);
-                        console.log('주문자주소'+res.buyer_addr);
-                        console.log('결제액'+res.paid_amount);
-                        console.log('결제승인시각'+res.paid_at);
-                        console.log('물품 수량'+res.paid_qty)
-
-                        if (!notifiedO.ok) {
-                            console.error('응답 오류:', notifiedO.statusText);
-                            const errorText = await notifiedO.text(); // 오류 메시지 출력
-                            console.error('서버 응답 본문:', errorText);
-                            return;
-                            // console.log("notifiedO 에러 응답:", JSON.stringify(await notifiedO.json(), null, 2));
-                            // throw new Error(`Orders 데이터 저장 실패: ${notifiedO.status}`);
-                        }
-
-                        // 성공적인 응답 출력
-                        const responseData = await notifiedO.json();
-                        console.log("notifiedO 응답 데이터:"+ JSON.stringify(responseData, null, 2));
-
-                        // 테이블에 저장된 ordres 데이터를 기존 세션/변수에 덮어쓰기
-                        sessionStorage.setItem("ordersData", JSON.stringify(responseData));
-                        setOrdersData(responseData);
-                        console.log("저장된 ordersData : "+ordersData);
-
-                        //OrdersDetail 테이블에 데이터 저장
-                        const notifiedD = await fetch (`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                user_data: UpdateUserData,// 유저 데이터
-                                orders_data: ordersData,// Orders 데이터
-                                goods_data: detailData.goodsuuid,// 굿즈 데이터
-                                detail_amount: detailData.amount,// 동일 상품 총액
-                                detail_qty: detailData.qty// 동일 상품 총수량
-                            }),
-                        });
-                        if (!notifiedD.ok) {
-                            throw new Error(`OrdersDetail 데이터 저장 실패: ${notifiedD.status}`);
-                        }
-                        const responseDetail = await notifiedD.json();
-                        console.log("notifiedD"+ JSON.stringify(responseDetail, null, 2));
+                    if (response.success) {
+                        try {
+                            // **Orders 데이터 저장 요청**
+                            const notifiedO = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendO/${useruuid}`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    imp_uid: response.imp_uid,
+                                    apply_num: response.apply_num,
+                                    merchant_uid: response.merchant_uid,
+                                    user_data: UpdateUserData,
+                                    buyer_addr: response.buyer_addr,
+                                    paid_amount: response.paid_amount,
+                                    paid_at: response.paid_at,
+                                    paid_qty: totalQuantity
+                                })
+                            });
     
-                        // 세션 삭제
-                        sessionStorage.removeItem('ordersData');
-                        sessionStorage.removeItem('DetailData');
-
-                        // Cart 테이블 비우기
-                        const deleteCartResponse = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/deleteAll/${useruuid}`, {
-                            method: "GET",
-                        });
-                        
-                        console.log('결제 성공:', response);
-                        alert('결제가 성공적으로 완료되었습니다.');
+                            if (!notifiedO.ok) {
+                                const errorResponse = await notifiedO.json();
+                                console.error("Orders 저장 실패:", errorResponse.message);
+                                alert(`Orders 저장 실패: ${errorResponse.message}`);
+                                return;
+                            }
     
-                        // 구매 완료 페이지로 네비게이트 
-                        console.log('navigate: /shop/buy/bought');
-                        navigate('/shop/buy/bought');
-                    } catch (error){
-                        // 결제 실패 처리
-                        console.error('서버 통신 중 오류 발생:', error);
-                        alert('결제 정보를 처리하는 중 오류가 발생했습니다.');
-                        navigate(`/shop/cart/list`);
+                            const ordersResponse = await notifiedO.json();
+                            console.log("Orders 저장 성공:", ordersResponse);
+    
+                            // 세션에 저장
+                            sessionStorage.setItem("ordersData", JSON.stringify(ordersResponse));
+                            setOrdersData(ordersResponse);
+    
+                            // **OrdersDetail 데이터 저장 요청**
+                            const notifiedD = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    user_data: UpdateUserData, // 사용자 정보
+                                    orders_data: ordersData, // Orders 데이터
+                                    goods_data: detailData.goodsuuid,// 굿즈 데이터
+                                    detail_amount: detailData.amount,// 동일 상품 총액
+                                    detail_qty: detailData.qty// 동일 상품 총수량
+                                })
+                            });
+    
+                            if (!notifiedD.ok) {
+                                const errorDetailResponse = await notifiedD.json();
+                                console.error("OrdersDetail 저장 실패:", errorDetailResponse.message);
+                                alert(`OrdersDetail 저장 실패: ${errorDetailResponse.message}`);
+                                return;
+                            }
+    
+                            const detailResponse = await notifiedD.json();
+                            console.log("OrdersDetail 저장 성공:", detailResponse);
+    
+                            // 세션 데이터 삭제
+                            sessionStorage.removeItem("ordersData");
+                            sessionStorage.removeItem("DetailData");
+    
+                            // **장바구니 데이터 비우기**
+                            const deleteCartResponse = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/deleteAll/${useruuid}`, {
+                                method: "GET"
+                            });
+    
+                            if (!deleteCartResponse.ok) {
+                                console.error("Cart 데이터 삭제 실패");
+                                alert("장바구니 비우기에 실패했습니다. 관리자에게 문의하세요.");
+                            }
+    
+                            // 성공 메시지 및 페이지 이동
+                            alert("결제가 성공적으로 완료되었습니다.");
+                            navigate('/shop/buy/bought');
+                        } catch (error) {
+                            console.error("결제 처리 중 오류 발생:", error);
+                            alert("결제 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                        }
+                    } else {
+                        console.error("결제 실패:", response.error_msg);
+                        alert(`결제 실패: ${response.error_msg}`);
+                        navigate('/shop/cart/list');
                     }
                 }
             );
         } else {
             console.error('IMP 객체가 로드되지 않았습니다.');
         }
-    };
+    }
+    
 
     if (error) {
         return <div>Error: {error.message}</div>; // 에러 발생 시 표시
