@@ -154,6 +154,9 @@ function Buying() {
     
                             const ordersResponse = await notifiedO.json();
                             console.log("Orders 저장 성공:", ordersResponse);
+
+                            // ordersuuid를 응답에서 추출
+                            console.log("저장된 Orders UUID:", ordersResponse.ordersuuid);
     
                             // 세션에 저장
                             sessionStorage.setItem("ordersData", JSON.stringify(ordersResponse));
@@ -165,10 +168,10 @@ function Buying() {
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({
                                     user_data: UpdateUserData, // 사용자 정보
-                                    orders_data: ordersData, // Orders 데이터
+                                    orders_data: ordersResponse.ordersuuid, // Orders 데이터
                                     goods_data: detailData.goodsuuid,// 굿즈 데이터
                                     detail_amount: detailData.amount,// 동일 상품 총액
-                                    detail_qty: detailData.qty// 동일 상품 총수량
+                                    detail_qty: detailData.qty,// 동일 상품 총수량
                                 })
                             });
     
