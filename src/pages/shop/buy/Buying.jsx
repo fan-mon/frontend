@@ -47,18 +47,18 @@ function Buying() {
         console.log('세션 받아올게요');
 
         // ordersData 불러오기
-        const storedOrdersData = sessionStorage.getItem('ordersData');
+        let storedOrdersData = sessionStorage.getItem('ordersData');
         if (storedOrdersData) {
-            const parsedOrdersData = JSON.parse(storedOrdersData);
+            let parsedOrdersData = JSON.parse(storedOrdersData);
             setOrdersData(parsedOrdersData);
             console.log('ordersData'+parsedOrdersData);
         }
     
 
         // detailData 불러오기
-        const storedDetailData = sessionStorage.getItem('DetailData');
+        let storedDetailData = sessionStorage.getItem('DetailData');
         if (storedDetailData) {
-            const parsedDetailData = JSON.parse(storedDetailData);
+            let parsedDetailData = JSON.parse(storedDetailData);
             setDetailData(parsedDetailData);
             console.log('detail data:'+parsedDetailData); // 여기에서 바로 로그를 출력
         }
@@ -154,36 +154,47 @@ function Buying() {
     
                             const ordersResponse = await notifiedO.json();
                             console.log("Orders 저장 성공:", ordersResponse);
-
-                            // ordersuuid를 응답에서 추출
-                            console.log("저장된 Orders UUID:", ordersResponse.ordersuuid);
-    
+                               
                             // 세션에 저장
                             sessionStorage.setItem("ordersData", JSON.stringify(ordersResponse));
                             setOrdersData(ordersResponse);
-    
-                            // **OrdersDetail 데이터 저장 요청**
-                            const notifiedD = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    user_data: UpdateUserData, // 사용자 정보
-                                    orders_data: ordersResponse.ordersuuid, // Orders 데이터
-                                    goods_data: detailData.goodsuuid,// 굿즈 데이터
-                                    detail_amount: detailData.amount,// 동일 상품 총액
-                                    detail_qty: detailData.qty,// 동일 상품 총수량
-                                })
-                            });
-    
-                            if (!notifiedD.ok) {
-                                const errorDetailResponse = await notifiedD.json();
-                                console.error("OrdersDetail 저장 실패:", errorDetailResponse.message);
-                                alert(`OrdersDetail 저장 실패: ${errorDetailResponse.message}`);
-                                return;
+
+                            // ordersuuid를 응답에서 추출
+                            const oData  = JSON.parse(sessionStorage.getItem('ordersData'));
+                            console.log("저장된 Orders UUID:", oData.ordersuuid);
+
+                             // DetailData 세션에 ordersuuid 저장
+                             const updateDetail = detailData.map((item) => ({
+                                ...item,
+                                ordersuuid: ordersData.ordersuuid, // 새로운 ordersuuid 값 설정
+                            }));
+                            let flag = sessionStorage.setItem('DetailData', JSON.stringify(updateDetail));
+
+                            if(flag){
+
+                                // OrdersDetail 데이터 저장 요청
+                                const notifiedD = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/bought/sendD/${useruuid}`, {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({
+                                        user_data: UpdateUserData, // 사용자 정보
+                                        orders_data: oData.ordersuuid, // Orders 데이터
+                                        goods_data: detailData.goodsuuid,// 굿즈 데이터
+                                        detail_amount: detailData.amount,// 동일 상품 총액
+                                        detail_qty: detailData.qty,// 동일 상품 총수량
+                                    })
+                                });
+        
+                                if (!notifiedD.ok) {
+                                    const errorDetailResponse = await notifiedD.json();
+                                    console.error("OrdersDetail 저장 실패:", errorDetailResponse.message);
+                                    alert(`OrdersDetail 저장 실패: ${errorDetailResponse.message}`);
+                                    return;
+                                }
+        
+                                const detailResponse = await notifiedD.json();
+                                console.log("OrdersDetail 저장 성공:", detailResponse);
                             }
-    
-                            const detailResponse = await notifiedD.json();
-                            console.log("OrdersDetail 저장 성공:", detailResponse);
     
                             // 세션 데이터 삭제
                             sessionStorage.removeItem("ordersData");
