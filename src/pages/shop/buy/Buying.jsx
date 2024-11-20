@@ -201,13 +201,13 @@ function Buying() {
                             sessionStorage.removeItem("DetailData");
     
                             // **장바구니 데이터 비우기**
-                            const deleteCartResponse = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/buy/deleteAll/${useruuid}`, {
+                            const deleteCartResponse = await fetch(`${process.env.REACT_APP_BACKEND_API_URL}/shop/cart/deleteAll/${useruuid}`, {
                                 method: "GET"
                             });
     
                             if (!deleteCartResponse.ok) {
                                 console.error("Cart 데이터 삭제 실패");
-                                alert("장바구니 비우기에 실패했습니다. 관리자에게 문의하세요.");
+                                alert("장바구니 비우기에 실패했습니다.");
                             }
     
                             // 성공 메시지 및 페이지 이동
@@ -215,7 +215,7 @@ function Buying() {
                             navigate('/shop/buy/bought');
                         } catch (error) {
                             console.error("결제 처리 중 오류 발생:", error);
-                            alert("결제 처리 중 오류가 발생했습니다. 관리자에게 문의하세요.");
+                            alert("결제 처리 중 오류가 발생했습니다.");
                         }
                     } else {
                         console.error("결제 실패:", response.error_msg);
