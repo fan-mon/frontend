@@ -1,75 +1,100 @@
-# Getting Started with Create React App
+## 프로젝트 개요
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+종합 엔터테인먼트 어플리케이션
 
 
-# frontend
-frontend
->>>>>>> 5678e3f053e922732311cbae026fb252dd47daf7
+
+## 아키텍쳐
+
+
+
+
+## 팀원 소개
+
+| 유현진 | 박규희 | 최모래 | 최가은 | 김예은 |
+| --- | --- | --- | --- | --- |
+| <img width="160px" src="https://avatars.githubusercontent.com/u/98440593?v=4" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/152257506?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/89964419?s=64&v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/71312414?v=4"/> | <img width="160px" src="https://avatars.githubusercontent.com/u/169978756?v=4"/> |
+| [@kz770](https://github.com/kz770) | [@qordpsem](https://github.com/qordpsem) | [@mochoi42](https://github.com/mochoi42) | [@nk2200](https://github.com/nk2200) | [@ccc700](https://github.com/ccc700) |
+| Full-Stack | Back-end | Back-end | Full-Stack | Full-Stack |
+| - 채팅 기능 |  |  | - 매니지먼트 관리 기능 | - 이커머스 기능 |
+| - 게시판 기능 ||| - 메인 페이지 ||
+
+
+
+## 담당 파트 소개
+
+
+
+
+### 1. 회원가입  및 로그인
+
+- 오어스를 이용한 회원가입과 로그인
+
+  
+
+### 2. 채팅 기능
+
+- 아티스트와 팬 채팅기능
+- 불량유저 차단
+- 채팅 구독 기능
+
+
+
+
+### 3. 매니지먼트 관리
+
+- 아티스트 가입 및 관리
+- 그룹(팀) 관리
+- 굿즈 관리
+- 현황 대시보드
+
+  
+
+### 4. 게시판
+
+- 아티스트 전용 게시판
+- 팬 전용 게시판
+- 매니지먼트 공지란
+- 팀에 소속된 아티스트 프로필
+
+  
+
+### 5. 굿즈 이커머스
+
+- 상품 둘러보기
+- 장바구니에 상품 넣기
+- 장바구니에 넣은 상품 결제
+
+
+| <img width="800px" src="https://github.com/user-attachments/assets/4674ae46-aec9-45ec-84ee-c22fd99d8f45"/> | <img width="800px" src="https://github.com/user-attachments/assets/96540463-8742-44aa-b33d-5344cabcf3e6"/>  | 
+| --- | --- |
+|<img width="800px" src="https://github.com/user-attachments/assets/e0c0436b-bd1d-4dfa-b18c-2366a7b8c45c"/> | |
+  
+### 6. 1대1 영상팬미팅
+
+- 방 추가
+- 대기방
+- 미팅방
+- 대기방 목록
+
+  
+
+## 기술 스택
+
+| Back-End | Front-End | Deployment | DataBase |
+| --- | --- | --- | --- |
+| - JAVA | - HTML/CSS | - AWS EC2 | - MySQL |
+| - Spring boot | - React.js | - docker | - AWS rds |
+| - Gradle | - Axios | - GIT |  |
+
+
+
+## DB ERD
+
+
+
+## 발표자료
+
+[PPT 자료](https://www.canva.com/design/DAGRLUhuJSw/JqBb5Iam5T0RQ-fe8Yr9vw/view?utm_content=DAGRLUhuJSw&utm_campaign=designshare&utm_medium=link&utm_source=editor) 
+
+[파이널시연영상 (1).mp4](https://prod-files-secure.s3.us-west-2.amazonaws.com/f2509ea0-785d-43c6-9c49-a91d23f5c657/17809270-28fb-4d0a-b44c-7123fca203b3/%ED%8C%8C%EC%9D%B4%EB%84%90%EC%8B%9C%EC%97%B0%EC%98%81%EC%83%81_(1).mp4)
