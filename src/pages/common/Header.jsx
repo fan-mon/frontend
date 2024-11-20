@@ -170,7 +170,7 @@ const Header = () => {
                                 {isChatListVisible && <ChatList chatList={chatList}/>}
                             </li>
                             <li className="sidemenu-item sidemenu-goods">
-                                <Link to="/">
+                                <Link to="/shop/goods/main">
                                     <span className="ico"><CartFill/></span>
                                     <span className="txt">굿즈샵</span>
                                 </Link>
